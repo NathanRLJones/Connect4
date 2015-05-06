@@ -1,9 +1,8 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Board {
 	
-	private List<ArrayList<Token>> columns;
+	private ArrayList<ArrayList<Token>> columns;
 	private int height;
 	private int width;
 	
@@ -13,22 +12,28 @@ public class Board {
 		this.width = width;
 	}
 	
+	//assume column < width
 	public Token getToken(int column, int row) {
-		// TODO stub
+		ArrayList<Token> rows = columns.get(column);
+		if(rows.size() > row) return rows.get(row);
 		return null;
 	}
 	
 	public void placeToken(int column, Token token) {
-		// TODO stub
+		ArrayList<Token> level = columns.get(column);
+		if(!isColumnFull(column)){
+			level.add(token);
+		}
 	}
 	
 	public boolean isColumnFull(int column) {
-		// TODO stub
-		return true;
+		ArrayList<Token> level = columns.get(column);
+		return (level.size()==height);
 	}
 	
 	public void removeToken(int column) {
-		// TODO stub
+		ArrayList<Token> levels = columns.get(column);
+		if(!levels.isEmpty()) levels.remove(levels.size()-1);
 	}
 	
 }
