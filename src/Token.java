@@ -6,4 +6,8 @@ public class Token {
 		this.owner = owner;
 	}
 	
+	public Player getOwner() {
+		return owner;
+	}
+	
 }

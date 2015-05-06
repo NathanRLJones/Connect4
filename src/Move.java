@@ -8,4 +8,12 @@ public class Move {
 		this.token = token;
 	}
 	
+	public int getColumn() {
+		return column;
+	}
+	
+	public Token getToken() {
+		return token;
+	}
+	
 }

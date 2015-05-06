@@ -19,8 +19,10 @@ public class ConnectFour {
 	}
 	
 	public boolean isLegal(Move move) {
-		// TODO stub
-		return true;
+		boolean legal = true;
+		if(board.isColumnFull(move.getColumn())) legal = false;
+		if(whoseTurnIsIt() != move.getToken().getOwner()) legal = false;
+		return legal;
 	}
 	
 	public void doMove(Move move) {
