@@ -1,21 +1,21 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class ConnectFour {
 	
 	private Board board;
 	private int turnNumber;
 	private List<Player> players;
-	private List<Move> moveHistory;
-	private List<Move> undoneMoves;
+	private Stack<Move> moveHistory;
+	private Stack<Move> undoneMoves;
 	
 	public ConnectFour() {
 		board = new Board(6, 7);
 		turnNumber = 0;
 		players = new ArrayList<Player>();
-		moveHistory = new LinkedList<Move>();
-		undoneMoves = new LinkedList<Move>();
+		moveHistory = new Stack<Move>();
+		undoneMoves = new Stack<Move>();
 	}
 	
 	public boolean isLegal(Move move) {
@@ -30,6 +30,8 @@ public class ConnectFour {
 		int column = move.getColumn();
 		
 		board.placeToken(column, token);
+		moveHistory.add(move);
+		undoneMoves.clear();
 	}
 	
 	public boolean isGameOver() {
@@ -100,11 +102,19 @@ public class ConnectFour {
 	}
 	
 	public void undo() {
-		// TODO stub
+		if(!moveHistory.isEmpty()) {
+			Move lastMove = moveHistory.pop();
+			board.removeToken(lastMove.getColumn());
+			undoneMoves.add(lastMove);
+		}
 	}
 	
 	public void redo() {
-		// TODO stub
+		if(!undoneMoves.isEmpty()) {
+			Move lastUndoneMove = undoneMoves.pop();
+			board.placeToken(lastUndoneMove.getColumn(), lastUndoneMove.getToken());
+			moveHistory.add(lastUndoneMove);
+		}
 	}
 	
 	public Board getBoardImage() {
