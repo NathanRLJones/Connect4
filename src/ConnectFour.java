@@ -11,7 +11,7 @@ public class ConnectFour {
 	private List<Move> undoneMoves;
 	
 	public ConnectFour() {
-		board = new Board(7, 6);
+		board = new Board(6, 7);
 		turnNumber = 0;
 		players = new ArrayList<Player>();
 		moveHistory = new LinkedList<Move>();
@@ -30,7 +30,12 @@ public class ConnectFour {
 	}
 	
 	public boolean isGameOver() {
-		// TODO stub
+		int height = board.getHeight();
+		int width = board.getWidth();
+		
+		for(int i = 0; i < height; i++){
+			
+		}
 		return true;
 	}
 	

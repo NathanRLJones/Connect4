@@ -10,6 +10,11 @@ public class Board {
 		columns = new ArrayList<ArrayList<Token>>();
 		this.height = height;
 		this.width = width;
+		
+		for(int i = 0; i < width; i++){
+			ArrayList<Token> column = new ArrayList<Token>();
+			columns.add(column);
+		}
 	}
 	
 	//assume column < width
@@ -36,4 +41,11 @@ public class Board {
 		if(!levels.isEmpty()) levels.remove(levels.size()-1);
 	}
 	
+	public int getHeight(){
+		return height;
+	}
+	
+	public int getWidth(){
+		return width;
+	}
 }
