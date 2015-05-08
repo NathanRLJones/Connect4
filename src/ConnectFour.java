@@ -42,17 +42,17 @@ public class ConnectFour {
 		
 		// Check for a vertical line of 4 same-colour tokens
 		columnloop:
-			for(int i = 0; i < width; i++){
+			for(int col = 0; col < width; col++){
 				rowloop:
-					for(int j = 0; j < height; j++){
-						if(noOfTokens == 4) return true;
-						if(height-j+noOfTokens < 4) continue columnloop;
+					for(int row = 0; row < height; row++){
+						if(height-row+noOfTokens < 4) continue columnloop;
 						
-						currToken = board.getToken(i, j);
-						if(currToken == null) continue rowloop;
+						currToken = board.getToken(col, row);
+						if(currToken == null) break;
 						currPlayer = currToken.getOwner();
 						if(currPlayer == possibleWinner){
 							noOfTokens++;
+							if(noOfTokens == 4) return true;
 						}else{
 							possibleWinner = currPlayer;
 							noOfTokens = 1;
@@ -65,13 +65,12 @@ public class ConnectFour {
 		
 		//Check for a horizontal line of 4 same-colour tokens
 		rowloop:
-			for(int j = 0; j < height; j++){
+			for(int row = 0; row < height; row++){
 				columnloop:
-					for(int i = 0; i < width; i++){
-						if(noOfTokens == 4) return true;
-						if(width-i+noOfTokens < 4) continue rowloop;
+					for(int col = 0; col < width; col++){
+						if(width-col+noOfTokens < 4) continue rowloop;
 						
-						currToken = board.getToken(i, j);
+						currToken = board.getToken(col, row);
 						if (currToken == null){
 							possibleWinner = null;
 							noOfTokens = 0;
@@ -80,6 +79,7 @@ public class ConnectFour {
 						currPlayer = currToken.getOwner();
 						if(currPlayer == possibleWinner){
 							noOfTokens++;
+							if(noOfTokens == 4) return true;
 						}else{
 							possibleWinner = currPlayer;
 							noOfTokens = 1;
