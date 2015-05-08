@@ -96,8 +96,7 @@ public class ConnectFour {
 	}
 	
 	public Player whoseTurnIsIt() {
-		// TODO stub
-		return null;
+		return players.get(turnNumber % players.size());
 	}
 	
 	public void undo() {
