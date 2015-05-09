@@ -89,15 +89,15 @@ public class ConnectFour {
 					}
 			}
 		
-		//Check for a horizontal line of 4 same-colour tokens
+		//Check for a diagonal line of 4 same-colour tokens
 		for(int col = 0; col < width-3; col++) {
 			for(int row = 0; row < height; row++) {
-				// Check diagonally downwards
+				// Check diagonally upwards
 				possibleWinner = null;
 				noOfTokens = 0;
-				if(row > 2) {
+				if(row < height-3) {
 					for(int offset = 0; offset < 4; offset++) {
-						currToken = board.getToken(col+offset, row-offset);
+						currToken = board.getToken(col+offset, row+offset);
 						if(currToken == null) break;
 						currPlayer = currToken.getOwner();
 						if(offset == 0) possibleWinner = currPlayer;
@@ -109,12 +109,12 @@ public class ConnectFour {
 						}
 					}
 				}
-				// Check diagonally upwards
+				// Check diagonally downwards
 				possibleWinner = null;
 				noOfTokens = 0;
-				if(row < height-3) {
+				if(row > 2) {
 					for(int offset = 0; offset < 4; offset++) {
-						currToken = board.getToken(col+offset, row+offset);
+						currToken = board.getToken(col+offset, row-offset);
 						if(currToken == null) break;
 						currPlayer = currToken.getOwner();
 						if(offset == 0) possibleWinner = currPlayer;
