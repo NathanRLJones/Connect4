@@ -128,8 +128,13 @@ public class ConnectFour {
 				}
 			}
 		}
-
-		return false;
+		
+		// Check for a tie
+		for(int col = 0; col < width; col++){
+			if(!board.isColumnFull(col))
+				return false;
+		}
+		return true;
 	}
 	
 	public Player whoseTurnIsIt() {
