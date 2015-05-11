@@ -18,4 +18,8 @@ public class Gui {
 		mainFrame.setVisible(true);
 	}
 	
+	public void repaint(){
+		mainFrame.repaint();
+	}
+	
 }

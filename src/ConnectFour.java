@@ -138,7 +138,11 @@ public class ConnectFour {
 	}
 	
 	public Player whoseTurnIsIt() {
-		return players.get(turnNumber % players.size());
+		if(players.size() > 0){
+			return players.get(turnNumber % players.size());
+		}else{
+			return null;
+		}
 	}
 	
 	public void undo() {

@@ -31,16 +31,47 @@ public class GameManager {
 	
 	public void run(){
 		//here is where we will run our game
+		Player currPlayer = game.whoseTurnIsIt();
+		
+		if(currPlayer == null){
+			//The game has been started with no players,
+			//so abort.
+			return;
+		}
+		
 		//loop while window is open
-		//	-display gui
-		//	-
-		//	-see if current player has decided on a move
-		//	-if move has been decided
-		//		-make move
-		//		-tell the gui the move
-		//		-get next player
-		//		-tell next player it is their turn
-		//		-if it is a human player, tell the gui
+		while(true){
+			//sleep for a bit, we don't need to run as fast as possible
+			//this could be changed over to hold at a max fps by storing
+			//the time between frames.
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			//repaint gui
+			gui.repaint();
+			
+			//get the player's move (returns null if undecided)
+			Move currMove = currPlayer.getMove();
+			if(currMove != null){
+				game.doMove(currMove);
+				//gui.showMove(currMove);
+				currPlayer = game.whoseTurnIsIt();
+				//currPlayer.isYourTurn();
+				
+				//The following won't be needed if
+				//the gui can ask the game whose turn it is,
+				//and then ask the player if they are human
+				//if(currPlayer.isHuman()){
+					//gui.interactiveTurn();
+				//}else{
+					//gui.noninteractiveTurn();
+				//}
+			}
+		}
+
 	}
 	
 }
