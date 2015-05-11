@@ -10,6 +10,7 @@ public class GameManager {
 		ConnectFour game = new ConnectFour();
 		Gui gui = new Gui();
 		GameManager manager = new GameManager(game, gui);
+		manager.run();
 	}
 	
 	public GameManager(ConnectFour game, Gui gui) {
@@ -26,6 +27,20 @@ public class GameManager {
 	        	gui.display();
 	        }
 	    });
+	}
+	
+	public void run(){
+		//here is where we will run our game
+		//loop while window is open
+		//	-display gui
+		//	-
+		//	-see if current player has decided on a move
+		//	-if move has been decided
+		//		-make move
+		//		-tell the gui the move
+		//		-get next player
+		//		-tell next player it is their turn
+		//		-if it is a human player, tell the gui
 	}
 	
 }
