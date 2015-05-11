@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Board {
+public class Board implements BoardInterface{
 	
 	private ArrayList<ArrayList<Token>> columns;
 	private int height;
@@ -30,7 +30,7 @@ public class Board {
 			level.add(token);
 		}
 	}
-	
+
 	public boolean isColumnFull(int column) {
 		ArrayList<Token> level = columns.get(column);
 		return (level.size()==height);
@@ -41,11 +41,26 @@ public class Board {
 		if(!levels.isEmpty()) levels.remove(levels.size()-1);
 	}
 	
+	@Override
 	public int getHeight(){
 		return height;
 	}
 	
+	@Override
 	public int getWidth(){
 		return width;
+	}
+
+	@Override
+	public boolean isSpaceTaken(int column, int row) {
+		return (columns.get(column).get(row) != null);
+	}
+
+	@Override
+	public boolean isPlayersToken(Player player, int column, int row){
+		if(isSpaceTaken(column, row)){
+			return columns.get(column).get(row).getOwner() == player;
+		}
+		return false;
 	}
 }
