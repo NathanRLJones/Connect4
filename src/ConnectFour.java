@@ -9,7 +9,10 @@ public class ConnectFour {
 	private List<Player> players;
 	private Stack<Move> moveHistory;
 	private Stack<Move> undoneMoves;
-	
+
+	/**
+	 * Default constructor for creating empty board and new players
+	 */
 	public ConnectFour() {
 		board = new Board(6, 7);
 		turnNumber = 0;
@@ -17,14 +20,24 @@ public class ConnectFour {
 		moveHistory = new Stack<Move>();
 		undoneMoves = new Stack<Move>();
 	}
-	
+
+	/**
+	 * Method to check if the move is legal
+	 * @param move the player's move
+	 * @return true if the board is not full and specified player's turn
+	 * 		   false otherwise
+	 */
 	public boolean isLegal(Move move) {
 		boolean legal = true;
 		if(board.isColumnFull(move.getColumn())) legal = false;
 		if(whoseTurnIsIt() != move.getToken().getOwner()) legal = false;
 		return legal;
 	}
-	
+
+	/**
+	 * Method to place a token on the board
+	 * @param move the player's move
+	 */
 	public void doMove(Move move) {
 		Token token = move.getToken();
 		int column = move.getColumn();
@@ -33,7 +46,12 @@ public class ConnectFour {
 		moveHistory.add(move);
 		undoneMoves.clear();
 	}
-	
+
+	/**
+	 * Method to check if the game is over
+	 * @return true if there are 4 connected same-colour tokens
+	 *         false otherwise
+	 */
 	public boolean isGameOver() {
 		int height = board.getHeight();
 		int width = board.getWidth();
@@ -136,7 +154,11 @@ public class ConnectFour {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * Method to check who has to make a move
+	 * @return the player based on how many players and turn number
+	 */
 	public Player whoseTurnIsIt() {
 		if(players.size() > 0){
 			return players.get(turnNumber % players.size());
@@ -144,7 +166,10 @@ public class ConnectFour {
 			return null;
 		}
 	}
-	
+
+	/**
+	 * Method to undo a move
+	 */
 	public void undo() {
 		if(!moveHistory.isEmpty()) {
 			Move lastMove = moveHistory.pop();
@@ -152,7 +177,10 @@ public class ConnectFour {
 			undoneMoves.add(lastMove);
 		}
 	}
-	
+
+	/**
+	 * Method to redo a move
+	 */
 	public void redo() {
 		if(!undoneMoves.isEmpty()) {
 			Move lastUndoneMove = undoneMoves.pop();
@@ -160,7 +188,11 @@ public class ConnectFour {
 			moveHistory.add(lastUndoneMove);
 		}
 	}
-	
+
+	/**
+	 * Method to get the image of the board from a file
+	 * @return the image at specified location
+	 */
 	public Board getBoardImage() {
 		// TODO stub
 		return null;

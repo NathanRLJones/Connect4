@@ -4,7 +4,11 @@ public class GameManager {
 
 	private ConnectFour game;
 	private Gui gui;
-	
+
+	/**
+	 * Main method for the ConnectFour
+	 * @param args are ignored
+	 */
 	public static void main(String[] args) {
 		// Entry point
 		ConnectFour game = new ConnectFour();
@@ -12,14 +16,22 @@ public class GameManager {
 		GameManager manager = new GameManager(game, gui);
 		manager.run();
 	}
-	
+
+	/**
+	 * Default constructor for the game manager
+	 * @param game the game skeleton/mechanic
+	 * @param gui the graphic user interface
+	 */
 	public GameManager(ConnectFour game, Gui gui) {
 		this.game = game;
 		this.gui = gui;
 		
 		startGui();
 	}
-	
+
+	/**
+	 * Method to display the window
+	 */
 	public void startGui() {
 		// display the main window in a different thread.
 		SwingUtilities.invokeLater(new Runnable() {
@@ -28,7 +40,10 @@ public class GameManager {
 	        }
 	    });
 	}
-	
+
+	/**
+	 * Method to run the game
+	 */
 	public void run(){
 		//here is where we will run our game
 		Player currPlayer = game.whoseTurnIsIt();
