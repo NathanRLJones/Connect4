@@ -17,11 +17,12 @@ public class Gui {
 		boardPanel = new BoardPanel();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game = newGame;
+		lastMove = -1;
 		boardPanel.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent e) {
 		    	int colNum;
 		    	colNum = boardPanel.getColumnNumber(e.getX(), e.getY());
-		    	if (colNum != -1) {
+		    	if (!boardPanel.isProcessing() && colNum != -1) {
 		    		lastMove = colNum;
 		    	}
 		    }
