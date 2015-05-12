@@ -17,8 +17,7 @@ public class Human implements Player {
 		color = tokenColor;
 	}
 	
-	@Override
-	public void addGui(Gui newGui){
+	public void setGui(Gui newGui){
 		gui = newGui;
 	}
 

@@ -43,6 +43,7 @@ public class ConnectFour {
 	 * 		   false otherwise
 	 */
 	public boolean isLegal(Move move) {
+		if(move == null)return false;
 		boolean legal = true;
 		if(board.isColumnFull(move.getColumn())) legal = false;
 		if(whoseTurnIsIt() != move.getToken().getOwner()) legal = false;
@@ -54,6 +55,9 @@ public class ConnectFour {
 	 * @param move the player's move
 	 */
 	public void doMove(Move move) {
+		System.out.println("Adding a token: " + move.getToken().getOwner().getName());
+		
+		turnNumber++;
 		Token token = move.getToken();
 		int column = move.getColumn();
 		
@@ -187,6 +191,7 @@ public class ConnectFour {
 	 */
 	public void undo() {
 		if(!moveHistory.isEmpty()) {
+			turnNumber--;
 			Move lastMove = moveHistory.pop();
 			board.removeToken(lastMove.getColumn());
 			undoneMoves.add(lastMove);
