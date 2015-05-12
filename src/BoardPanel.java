@@ -208,7 +208,7 @@ public class BoardPanel extends JPanel implements ActionListener,
         action = "add";
         actionColumn = colNum;
         actionColor = tok.getOwner().getColor();
-        timer.start();        
+        timer.start();
     }
 
     public void setPlayer(Player player) {
