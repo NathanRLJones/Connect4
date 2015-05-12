@@ -17,7 +17,7 @@ public class Gui {
 	}
 	
 	public void doMove(Move move){
-		//boardPanel.add(move.getColumn(), move.getToken());
+		boardPanel.addToken(move.getToken(), move.getColumn());
 	}
 	
 	public void updateCurrentPlayer(){
@@ -28,10 +28,10 @@ public class Gui {
 	
 	public Move getMove(){
 		Move newMove = null;
-		int col;
+		int col = -1;
 		
 		if(game.whoseTurnIsIt().isInteractive()){
-			col = boardPanel.getCol();
+			//col = boardPanel.getCol();
 			if(col >= 0){
 				newMove = new Move(col, new Token(game.whoseTurnIsIt()));
 			}
