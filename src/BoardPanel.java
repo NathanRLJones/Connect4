@@ -51,7 +51,7 @@ public class BoardPanel extends JPanel implements ActionListener,
 	/**
 	 * Constructor for a soduku panel
 	 */
-	public BoardPanel() {
+	public BoardPanel(int col, int row) {
         super();
         this.setOpaque(true);
         this.setBackground(Color.WHITE);
@@ -62,8 +62,8 @@ public class BoardPanel extends JPanel implements ActionListener,
         delay = 40;
         time = 0;
         
-        cols = 7;
-        rows = 6;
+        cols = col;
+        rows = row;
 
         action = "";
         actionColor = Color.YELLOW;

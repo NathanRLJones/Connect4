@@ -18,7 +18,7 @@ public class Gui {
 		defaultWidth = 1024;
 		defaultHeight = 800;
 		mainFrame = new JFrame("Connect 4");
-		boardPanel = new BoardPanel();
+		boardPanel = new BoardPanel(newGame.getBoard().getColumns(), newGame.getBoard().getRows());
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game = newGame;
 		lastMove = -1;

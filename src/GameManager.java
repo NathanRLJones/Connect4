@@ -18,9 +18,11 @@ public class GameManager {
 		ArrayList<Player> players = new ArrayList<Player>();
 		Human p1 = new Human("p1", Color.RED);
 		RandomAI p2 = new RandomAI("p2", Color.BLUE);
+		RandomAI p3 = new RandomAI("p3", Color.GREEN);
 		players.add(p1);
 		players.add(p2);
-		ConnectFour game = new ConnectFour(7, 6, players);
+		players.add(p3);
+		ConnectFour game = new ConnectFour(12, 6, players);
 		Gui gui = new Gui(game);
 		p1.setGui(gui);
 		//p2.setGui(gui);
