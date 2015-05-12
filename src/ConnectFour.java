@@ -4,6 +4,8 @@ import java.util.Stack;
 
 public class ConnectFour {
 	
+	private static int winTokens = 4;
+	
 	private Board board;
 	private int turnNumber;
 	private List<Player> players;
@@ -11,7 +13,7 @@ public class ConnectFour {
 	private Stack<Move> undoneMoves;
 
 	/**
-	 * Default constructor for creating empty board and new players
+	 * Default constructor for creating empty 6x7 board and new players
 	 */
 	public ConnectFour() {
 		board = new Board(6, 7);
@@ -68,7 +70,7 @@ public class ConnectFour {
 
 	/**
 	 * Method to check if the game is over
-	 * @return true if there are 4 connected same-colour tokens
+	 * @return true if there are winTokens connected same-colour tokens
 	 *         false otherwise
 	 */
 	public boolean isGameOver() {
@@ -79,68 +81,74 @@ public class ConnectFour {
 		Player currPlayer;
 		Token currToken;
 		
-		// Check for a vertical line of 4 same-colour tokens
-		columnloop:
-			for(int col = 0; col < width; col++){
-				rowloop:
-					for(int row = 0; row < height; row++){
-						if(height-row+noOfTokens < 4) continue columnloop;
-						
-						currToken = board.getToken(col, row);
-						if(currToken == null) break;
-						currPlayer = currToken.getOwner();
-						if(currPlayer == possibleWinner){
-							noOfTokens++;
-							if(noOfTokens == 4) return true;
-						}else{
-							possibleWinner = currPlayer;
-							noOfTokens = 1;
-						}
+		// Check for a vertical line of winTokens same-colour tokens
+		for(int col = 0; col < width; col++){
+			noOfTokens = 0;
+			possibleWinner = null;
+			for(int row = 0; row < height; row++){
+				if(height-row+noOfTokens < winTokens) break;
+				
+				currToken = board.getToken(col, row);
+				if(currToken == null) break;
+				currPlayer = currToken.getOwner();
+				if(currPlayer == possibleWinner){
+					noOfTokens++;
+					if(noOfTokens == winTokens) {
+						return true;
 					}
+				}else{
+					possibleWinner = currPlayer;
+					noOfTokens = 1;
+				}
 			}
+		}
 		
 		noOfTokens = 0;
 		possibleWinner = null;
 		
-		//Check for a horizontal line of 4 same-colour tokens
-		rowloop:
+		//Check for a horizontal line of winTokens same-colour tokens
 			for(int row = 0; row < height; row++){
-				columnloop:
-					for(int col = 0; col < width; col++){
-						if(width-col+noOfTokens < 4) continue rowloop;
-						
-						currToken = board.getToken(col, row);
-						if (currToken == null){
-							possibleWinner = null;
-							noOfTokens = 0;
-							continue columnloop;
-						}
-						currPlayer = currToken.getOwner();
-						if(currPlayer == possibleWinner){
-							noOfTokens++;
-							if(noOfTokens == 4) return true;
-						}else{
-							possibleWinner = currPlayer;
-							noOfTokens = 1;
-						}
+				noOfTokens = 0;
+				possibleWinner = null;
+				for(int col = 0; col < width; col++){
+					if(width-col+noOfTokens < winTokens) break;
+					
+					currToken = board.getToken(col, row);
+					if (currToken == null){
+						possibleWinner = null;
+						noOfTokens = 0;
+						continue;
 					}
+					currPlayer = currToken.getOwner();
+					if(currPlayer == possibleWinner){
+						noOfTokens++;
+						if(noOfTokens == winTokens) {
+							return true;
+						}
+					}else{
+						possibleWinner = currPlayer;
+						noOfTokens = 1;
+					}
+				}
 			}
 		
-		//Check for a diagonal line of 4 same-colour tokens
-		for(int col = 0; col < width-3; col++) {
+		//Check for a diagonal line of winTokens same-colour tokens
+		for(int col = 0; col < width - winTokens+1; col++) {
 			for(int row = 0; row < height; row++) {
 				// Check diagonally upwards
 				possibleWinner = null;
 				noOfTokens = 0;
-				if(row < height-3) {
-					for(int offset = 0; offset < 4; offset++) {
+				if(row < height - winTokens+1) {
+					for(int offset = 0; offset < winTokens; offset++) {
 						currToken = board.getToken(col+offset, row+offset);
 						if(currToken == null) break;
 						currPlayer = currToken.getOwner();
 						if(offset == 0) possibleWinner = currPlayer;
 						if(currPlayer == possibleWinner){
 							noOfTokens++;
-							if(noOfTokens == 4) return true;
+							if(noOfTokens == winTokens) {
+								return true;
+							}
 						}else{
 							break;
 						}
@@ -149,15 +157,17 @@ public class ConnectFour {
 				// Check diagonally downwards
 				possibleWinner = null;
 				noOfTokens = 0;
-				if(row > 2) {
-					for(int offset = 0; offset < 4; offset++) {
+				if(row > winTokens-2) {
+					for(int offset = 0; offset < winTokens; offset++) {
 						currToken = board.getToken(col+offset, row-offset);
 						if(currToken == null) break;
 						currPlayer = currToken.getOwner();
 						if(offset == 0) possibleWinner = currPlayer;
 						if(currPlayer == possibleWinner){
 							noOfTokens++;
-							if(noOfTokens == 4) return true;
+							if(noOfTokens == winTokens) {
+								return true;
+							}
 						}else{
 							break;
 						}

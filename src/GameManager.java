@@ -65,6 +65,8 @@ public class GameManager {
 			return;
 		}
 		
+		gui.updateCurrentPlayer();
+		
 		//loop while window is open
 		while(true){
 			//sleep for a bit, we don't need to run as fast as possible

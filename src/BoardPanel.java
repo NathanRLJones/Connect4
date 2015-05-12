@@ -58,7 +58,7 @@ public class BoardPanel extends JPanel implements ActionListener,
 
     	mouseX = 0;
     	mouseY = 0;
-        duration = 1000;
+        duration = 500;
         delay = 40;
         time = 0;
         
