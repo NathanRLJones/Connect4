@@ -4,13 +4,12 @@ import java.util.Stack;
 
 public class ConnectFour {
 	
-	private static int winTokens = 4;
-	
 	private Board board;
 	private int turnNumber;
 	private List<Player> players;
 	private Stack<Move> moveHistory;
 	private Stack<Move> undoneMoves;
+	private int winTokens = 4;
 
 	/**
 	 * Default constructor for creating empty 6x7 board and new players
