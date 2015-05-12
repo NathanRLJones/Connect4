@@ -36,7 +36,7 @@ public class BoardPanelDemo {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// create the soduku panel
-		boardPanel = new BoardPanel();
+		boardPanel = new BoardPanel(7, 6);
 		
 		// Create a new button and add the action listener.
 		newGameButton = new JButton("New Game");
