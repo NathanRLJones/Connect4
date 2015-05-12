@@ -86,9 +86,14 @@ public class GameManager {
 				game.doMove(currMove);
 				gui.doMove(currMove);
 				currPlayer = game.whoseTurnIsIt();
+				
+				//check if game is over
+				if(game.isGameOver()){
+					System.out.println("GAME IS OVER");
+					break;
+				}
+				
 				gui.updateCurrentPlayer();
-				//add for AI
-				//currPlayer.isYourTurn();
 				
 				//The following won't be needed if
 				//the gui can ask the game whose turn it is,
@@ -98,11 +103,6 @@ public class GameManager {
 				//}else{
 					//gui.noninteractiveTurn();
 				//}
-				
-				//check if game is over
-				if(game.isGameOver()){
-					break;
-				}
 			}
 		}
 
