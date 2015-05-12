@@ -16,17 +16,17 @@ public class GameManager {
 		// Entry point
 		//ConnectFour game = new ConnectFour();
 		ArrayList<Player> players = new ArrayList<Player>();
-		//Human p1 = new Human("p1", Color.RED);
+		Human p1 = new Human("p1", Color.RED);
 		RandomAI a1 = new RandomAI("a1", Color.ORANGE);
 		RandomAI a2 = new RandomAI("a2", Color.BLUE);
-		RandomAI a3 = new RandomAI("a3", Color.GREEN);
-		//players.add(p1);
+		//RandomAI a3 = new RandomAI("a3", Color.GREEN);
+		players.add(p1);
 		players.add(a1);
 		players.add(a2);
-		players.add(a3);
-		ConnectFour game = new ConnectFour(20,20, players);
+		//players.add(a3);
+		ConnectFour game = new ConnectFour(12,10, players);
 		Gui gui = new Gui(game);
-		//p1.setGui(gui);
+		p1.setGui(gui);
 		//p2.setGui(gui);
 		GameManager manager = new GameManager(game, gui);
 		manager.run();
