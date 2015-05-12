@@ -42,4 +42,9 @@ public class Human implements Player {
 		return color;
 	}
 	
+	@Override
+	public boolean isInteractive(){
+		return true;
+	}
+	
 }

@@ -72,12 +72,12 @@ public class Board implements BoardInterface{
 	}
 	
 	@Override
-	public int getHeight(){
+	public int getRows(){
 		return height;
 	}
 	
 	@Override
-	public int getWidth(){
+	public int getColumns(){
 		return width;
 	}
 

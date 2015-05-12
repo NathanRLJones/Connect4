@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.util.ArrayList;
+
 import javax.swing.SwingUtilities;
 
 public class GameManager {
@@ -11,7 +14,11 @@ public class GameManager {
 	 */
 	public static void main(String[] args) {
 		// Entry point
-		ConnectFour game = new ConnectFour();
+		//ConnectFour game = new ConnectFour();
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(new Human("player1", Color.RED));
+		players.add(new Human("player1", Color.BLUE));
+		ConnectFour game = new ConnectFour(7, 6, players);
 		Gui gui = new Gui();
 		GameManager manager = new GameManager(game, gui);
 		manager.run();
@@ -66,7 +73,8 @@ public class GameManager {
 			}
 			
 			//repaint gui
-			gui.repaint();
+			//hanlded by timer in the BoardPanel
+			//gui.repaint();
 			
 			//get the player's move (returns null if undecided)
 			Move currMove = currPlayer.getMove();
@@ -84,6 +92,11 @@ public class GameManager {
 				//}else{
 					//gui.noninteractiveTurn();
 				//}
+				
+				//check if game is over
+				if(game.isGameOver()){
+					break;
+				}
 			}
 		}
 

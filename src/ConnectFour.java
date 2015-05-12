@@ -20,6 +20,17 @@ public class ConnectFour {
 		moveHistory = new Stack<Move>();
 		undoneMoves = new Stack<Move>();
 	}
+	
+	/**
+	 * Constructor with board size and players defined
+	 */
+	public ConnectFour(int cols, int rows, ArrayList<Player> gamePlayers) {
+		board = new Board(rows, cols);
+		turnNumber = 0;
+		players = gamePlayers;
+		moveHistory = new Stack<Move>();
+		undoneMoves = new Stack<Move>();
+	}
 
 	/**
 	 * Method to check if the move is legal
@@ -53,8 +64,8 @@ public class ConnectFour {
 	 *         false otherwise
 	 */
 	public boolean isGameOver() {
-		int height = board.getHeight();
-		int width = board.getWidth();
+		int height = board.getRows();
+		int width = board.getColumns();
 		Player possibleWinner = null;
 		int noOfTokens = 0;
 		Player currPlayer;
