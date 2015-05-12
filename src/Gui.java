@@ -7,16 +7,15 @@ import javax.swing.JFrame;
 
 public class Gui {
 
+	public static final int DEFAULT_WIDTH = 1024;
+	public static final int DEFAULT_HEIGHT = 800;
+	
 	private JFrame mainFrame;
 	private BoardPanel boardPanel;
 	private ConnectFour game;
 	private int lastMove;
-	private int defaultWidth;
-	private int defaultHeight;
 	
 	public Gui(ConnectFour newGame) {
-		defaultWidth = 1024;
-		defaultHeight = 800;
 		mainFrame = new JFrame("Connect 4");
 		boardPanel = new BoardPanel();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +61,7 @@ public class Gui {
 	}
 	
 	public void display() {
-		mainFrame.setPreferredSize(new Dimension(defaultWidth, defaultHeight));
+		mainFrame.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		mainFrame.getContentPane().add(boardPanel,BorderLayout.CENTER);
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
