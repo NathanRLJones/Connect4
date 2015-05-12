@@ -4,7 +4,8 @@ public class Human implements Player {
 
 	private Color color;
 	private String name;
-
+	private Gui gui;
+	
 	/**
 	 * Default constructor for players
 	 * @param humanName name for the player
@@ -14,6 +15,11 @@ public class Human implements Player {
 		// TODO stub
 		name = humanName;
 		color = tokenColor;
+	}
+	
+	@Override
+	public void addGui(Gui newGui){
+		gui = newGui;
 	}
 
 	/**
@@ -25,13 +31,7 @@ public class Human implements Player {
 		
 		int column = 0;
 		
-		/*
-		 * Wait for GUI to trigger a MoveChosenEvent
-		 * which should contain a column
-		 * 
-		 */
-		
-		return new Move(column, new Token(this));
+		return gui.getMove();
 	}
 	
 	public String getName() {

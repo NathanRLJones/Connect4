@@ -31,6 +31,10 @@ public class ConnectFour {
 		moveHistory = new Stack<Move>();
 		undoneMoves = new Stack<Move>();
 	}
+	
+	public BoardInterface getBoard(){
+		return board;
+	}
 
 	/**
 	 * Method to check if the move is legal

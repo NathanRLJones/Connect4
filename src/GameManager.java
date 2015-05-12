@@ -19,7 +19,7 @@ public class GameManager {
 		players.add(new Human("player1", Color.RED));
 		players.add(new Human("player1", Color.BLUE));
 		ConnectFour game = new ConnectFour(7, 6, players);
-		Gui gui = new Gui();
+		Gui gui = new Gui(game);
 		GameManager manager = new GameManager(game, gui);
 		manager.run();
 	}
@@ -80,8 +80,10 @@ public class GameManager {
 			Move currMove = currPlayer.getMove();
 			if(currMove != null){
 				game.doMove(currMove);
-				//gui.showMove(currMove);
+				gui.doMove(currMove);
 				currPlayer = game.whoseTurnIsIt();
+				gui.updateCurrentPlayer();
+				//add for AI
 				//currPlayer.isYourTurn();
 				
 				//The following won't be needed if

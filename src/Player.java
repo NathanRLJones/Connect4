@@ -6,5 +6,5 @@ public interface Player {
 	public String getName();
 	public Color getColor();
 	public boolean isInteractive();
-	
+	public void addGui(Gui gui);
 }
