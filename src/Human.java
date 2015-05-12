@@ -25,7 +25,7 @@ public class Human implements Player {
 	 * Method to get player's move
 	 * @return the move of the player
 	 */
-	public Move getMove() {
+	public Move getMove(BoardInterface board) {
 		// TODO stub
 		
 		int column = 0;

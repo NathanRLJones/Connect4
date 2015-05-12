@@ -58,6 +58,9 @@ public class Board implements BoardInterface{
 	 * 		   false otherwise
 	 */
 	public boolean isColumnFull(int column) {
+		if(column < 0 || column >= width){
+			return false;
+		}
 		ArrayList<Token> level = columns.get(column);
 		return (level.size()==height);
 	}
