@@ -43,6 +43,7 @@ public class ConnectFour {
 	 * 		   false otherwise
 	 */
 	public boolean isLegal(Move move) {
+		if(move == null)return false;
 		boolean legal = true;
 		if(board.isColumnFull(move.getColumn())) legal = false;
 		if(whoseTurnIsIt() != move.getToken().getOwner()) legal = false;

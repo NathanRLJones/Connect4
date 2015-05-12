@@ -16,10 +16,14 @@ public class GameManager {
 		// Entry point
 		//ConnectFour game = new ConnectFour();
 		ArrayList<Player> players = new ArrayList<Player>();
-		players.add(new Human("player1", Color.RED));
-		players.add(new Human("player1", Color.BLUE));
+		Human p1 = new Human("p1", Color.RED);
+		Human p2 = new Human("p2", Color.BLUE);
+		players.add(p1);
+		players.add(p2);
 		ConnectFour game = new ConnectFour(7, 6, players);
 		Gui gui = new Gui(game);
+		p1.setGui(gui);
+		p2.setGui(gui);
 		GameManager manager = new GameManager(game, gui);
 		manager.run();
 	}
