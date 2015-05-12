@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class BoardPanel extends JPanel implements ActionListener,
-                                                  MouseListener,
                                                   MouseMotionListener {
 	private int mouseX;
 	private int mouseY;
@@ -69,7 +68,7 @@ public class BoardPanel extends JPanel implements ActionListener,
         action = "";
         actionColor = Color.YELLOW;
         actionColumn = 0;
-        currentColor = Color.YELLOW;
+        currentColor = null;
         
         board = new ArrayList<>();
         for (int i = 0; i < cols; i++) {
@@ -105,8 +104,6 @@ public class BoardPanel extends JPanel implements ActionListener,
         
         timer.setRepeats(true);
         addMouseMotionListener(this);
-        addMouseListener(this);
-
     }
 	
     /**
@@ -157,7 +154,7 @@ public class BoardPanel extends JPanel implements ActionListener,
             
         }
         int indicatorX = x;
-        if (action.equals("")) {
+        if (currentColor != null) {
                 indicatorX = mouseX - (squareSize/2);
                 token.setFrame(indicatorX,
                             y - squareSize,
@@ -192,6 +189,31 @@ public class BoardPanel extends JPanel implements ActionListener,
 
     }
 
+    public boolean isProcessing() {
+        return (!action.equals(""));
+    }
+
+    public int getColumnNumber(int x, int y) {
+        int relX = x - this.x;
+        int col = -1;
+        if (relX > 0 && relX < boardWidth && currentColor != null) {
+            col = relX / squareSize;
+        }
+        return col;
+    }
+
+    public void addToken(Token tok, int colNum) {
+        currentColor = null;
+        time = 0;
+        action = "add";
+        actionColumn = colNum;
+        actionColor = tok.getOwner().getColor();
+        timer.start();        
+    }
+
+    public void setPlayer(Player player) {
+        currentColor = player.getColor();
+    }
 
     public int easeOutBounce (int start, int end) {
         double p = (double)time/(double)duration;
@@ -218,42 +240,6 @@ public class BoardPanel extends JPanel implements ActionListener,
     	mouseX = e.getX();
     	mouseY = e.getY();
     	repaint();
-    }
-
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    public void mouseEntered(MouseEvent e) {
-
-    }
-    
-    public void mouseReleased(MouseEvent e) {
-
-    }
-    
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    public void mouseClicked(MouseEvent e) {
-
-        int relX = e.getX() - x;
-        int col = -1;
-        if (relX > 0 && relX < boardWidth && action.equals("")) {
-        	col = relX/ squareSize;
-        	time = 0;
-            action = "add";
-            actionColor = currentColor;
-            if (actionColor == Color.YELLOW){
-            	currentColor = Color.RED;
-            } else {
-            	currentColor = Color.YELLOW;
-            }
-           
-            actionColumn = col;
-        	timer.start();
-        }
     }
 
 
