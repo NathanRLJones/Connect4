@@ -49,7 +49,7 @@ public class BoardPanel extends JPanel implements ActionListener,
 
     private ArrayList<ArrayList<Color>> board;
 	/**
-	 * Constructor for a soduku panel
+	 * Constructor for a panel
 	 */
 	public BoardPanel() {
         super();
