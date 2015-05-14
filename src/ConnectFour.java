@@ -76,8 +76,8 @@ public class ConnectFour {
 	public boolean isGameOver() {
 		int height = board.getRows();
 		int width = board.getColumns();
-		Player possibleWinner = null;
-		int noOfTokens = 0;
+		Player possibleWinner;
+		int noOfTokens;
 		Player currPlayer;
 		Token currToken;
 		
@@ -102,35 +102,32 @@ public class ConnectFour {
 				}
 			}
 		}
-		
-		noOfTokens = 0;
-		possibleWinner = null;
-		
+
 		//Check for a horizontal line of TOKENS_TO_WIN same-colour tokens
-			for(int row = 0; row < height; row++){
-				noOfTokens = 0;
-				possibleWinner = null;
-				for(int col = 0; col < width; col++){
-					if(width-col+noOfTokens < TOKENS_TO_WIN) break;
-					
-					currToken = board.getToken(col, row);
-					if (currToken == null){
-						possibleWinner = null;
-						noOfTokens = 0;
-						continue;
+		for(int row = 0; row < height; row++){
+			noOfTokens = 0;
+			possibleWinner = null;
+			for(int col = 0; col < width; col++){
+				if(width-col+noOfTokens < TOKENS_TO_WIN) break;
+				
+				currToken = board.getToken(col, row);
+				if (currToken == null){
+					possibleWinner = null;
+					noOfTokens = 0;
+					continue;
+				}
+				currPlayer = currToken.getOwner();
+				if(currPlayer == possibleWinner){
+					noOfTokens++;
+					if(noOfTokens == TOKENS_TO_WIN) {
+						return true;
 					}
-					currPlayer = currToken.getOwner();
-					if(currPlayer == possibleWinner){
-						noOfTokens++;
-						if(noOfTokens == TOKENS_TO_WIN) {
-							return true;
-						}
-					}else{
-						possibleWinner = currPlayer;
-						noOfTokens = 1;
-					}
+				}else{
+					possibleWinner = currPlayer;
+					noOfTokens = 1;
 				}
 			}
+		}
 		
 		//Check for a diagonal line of TOKENS_TO_WIN same-colour tokens
 		for(int col = 0; col < width - TOKENS_TO_WIN+1; col++) {
@@ -213,6 +210,7 @@ public class ConnectFour {
 	 */
 	public void redo() {
 		if(!undoneMoves.isEmpty()) {
+			turnNumber++;
 			Move lastUndoneMove = undoneMoves.pop();
 			board.placeToken(lastUndoneMove.getColumn(), lastUndoneMove.getToken());
 			moveHistory.add(lastUndoneMove);
