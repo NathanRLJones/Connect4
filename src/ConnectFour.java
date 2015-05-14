@@ -26,7 +26,7 @@ public class ConnectFour {
 	/**
 	 * Constructor with board size and players defined
 	 */
-	public ConnectFour(int cols, int rows, ArrayList<Player> gamePlayers) {
+	public ConnectFour(int rows, int cols, ArrayList<Player> gamePlayers) {
 		board = new Board(rows, cols);
 		turnNumber = 0;
 		players = gamePlayers;

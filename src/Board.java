@@ -11,7 +11,7 @@ public class Board implements BoardInterface{
 	 * @param height the height of the board
 	 * @param width the width of the board
 	 */
-	public Board(int height, int width) {
+	public Board(int width, int height) {
 		columns = new ArrayList<ArrayList<Token>>();
 		this.height = height;
 		this.width = width;
