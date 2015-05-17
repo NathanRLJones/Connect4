@@ -9,12 +9,11 @@ public class AIPlayer implements Player {
 	Color color;
 	int difficultyLevel; //Depth of search 
 	Board board;
-	boolean isGameOver;
 	
 	public AIPlayer(String aiName, Color aiColor, int difficultyLevel){
 		name = aiName;
 		color = aiColor;
-		this.difficultyLevel = difficultyLevel;
+		this.difficultyLevel = difficultyLevel; //TODO: difficultyLevel * noOfPlayers
 	}
 	
 	@Override
@@ -29,7 +28,7 @@ public class AIPlayer implements Player {
 		for(int i = 0; i < columns; i++){
 			if(!board.isColumnFull(i)){
 				board.placeToken(i, token);
-				int newScore = alphaBetaSearch(Integer.MIN_VALUE, Integer.MAX_VALUE, 0, nextPlayer);
+				int newScore = minMaxSearch(0, nextPlayer);
 				if(newScore > maxScore){
 					maxScore = newScore;
 					maxScoreColumn = i;
@@ -122,7 +121,7 @@ public class AIPlayer implements Player {
 		return false;
 	}
 	
-	public boolean isGameOver(){
+	private boolean isGameOver(){
 		int height = board.getHeight();
 		int width = board.getWidth();
 		Player possibleWinner;
@@ -221,34 +220,39 @@ public class AIPlayer implements Player {
 		 		}
 		 	}
 		 }
-		
-		 // Check for a tie
-		 for(int col = 0; col < width; col++){
-		 	if(!board.isColumnFull(col))
-		 		return false;
-		 }
-		 return true;
+		 return false;
 	}
 	
-	public int alphaBetaSearch(int alpha, int beta, int depth, Player currTurn){
-		//TODO
-		ArrayList<Move> availableMoves = new ArrayList<>();
-		Token token;
-		int columns = board.getWidth();
+	private int minMaxSearch(int depth, Player currTurn){
+		ArrayList<Integer> availableColumns = new ArrayList<>();
+		Token token = new Token(currTurn);
+		int score;
+		Player nextTurn = null; //TODO: get a list of all players
 		
-		if(depth == difficultyLevel || isGameOver){
-			isGameOver = false;
+		if(depth == difficultyLevel || isGameOver())
 			return calculateScore();
-		}
-		
-		token = new Token(currTurn);
-		for(int i = 0; i < columns; i++){
-			if(!board.isColumnFull(i)){
-				availableMoves.add(new Move(i, token));
+		for(int i = 0; i < board.getWidth(); i++){
+			if(!board.isColumnFull(i))
+				availableColumns.add(i);
+		}		
+		if(availableColumns.size()==0) 
+			return 0;
+		if(currTurn == this){
+			score = Integer.MIN_VALUE;
+			for(int column:availableColumns){
+				board.placeToken(column, token);
+				score = Math.max(score, minMaxSearch(depth+1, nextTurn));
+				board.removeToken(column);
 			}
-		}
-		
-		return 0;
+		}else{
+			score = Integer.MAX_VALUE;
+			for(int column: availableColumns){
+				board.placeToken(column, token);
+				score = Math.min(score, minMaxSearch(depth+1, nextTurn));
+				board.removeToken(column);
+			}
+		}		
+		return score;
 	}
 
 }
