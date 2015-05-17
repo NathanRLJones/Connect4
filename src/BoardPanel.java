@@ -1,252 +1,233 @@
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Ellipse2D.Double;
-import java.util.Random;
-import java.util.ArrayList;
+import java.util.*;
+import javax.swing.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
-public class BoardPanel extends JPanel implements ActionListener,
-                                                  MouseMotionListener {
-	private int mouseX;
-	private int mouseY;
-	
-	private int cols;
-	private int rows;
+public class BoardPanel extends JPanel implements MouseMotionListener,
+                                                  MouseListener,
+                                                  ComponentListener,
+                                                  AnimationListener {
 
-    private int duration;
-    private int delay;
-    private int time;
+    private LinkedList<BoardAction> actions;    // Actions queue
+    private BoardListener listener;             // Board listener
+    private Animation animation;                // Animation controller
+    private Board board;                        // Board state
+    private Token input;                        // Token to be slotted
+    private int inputX;                         // X coordinate of input
+    private int cols;                           // Number of columns
+    private int rows;                           // Number of rows
+    private int tokenSize;                      // Token size pixels
+    private int width;                          // Board width pixel
+    private int height;                         // Board height pixels
+    private int x;                              // Board X coordinate
+    private int y;                              // Board Y coordinate
 
-    private String action;
-    private Color actionColor;
-    private int actionColumn;
-    private Timer timer;
-    private Color currentColor;
 
-    private  int pad;
-    private  int h;
-    private  int w;
-    private  int x;
-    private  int y;
-    private  int squareSize;
-    private  int boardWidth;
-    private  int boardHeight;
-
-    private ArrayList<ArrayList<Color>> board;
 	/**
 	 * Constructor for a panel
 	 */
-	public BoardPanel(int col, int row) {
+	public BoardPanel(BoardListener listener) {
         super();
-        this.setOpaque(true);
-        this.setBackground(Color.WHITE);
-
-    	mouseX = 0;
-    	mouseY = 0;
-        duration = 500;
-        delay = 40;
-        time = 0;
-        
-        cols = col;
-        rows = row;
-
-        action = "";
-        actionColor = Color.YELLOW;
-        actionColumn = 0;
-        currentColor = null;
-        
-        board = new ArrayList<>();
-        for (int i = 0; i < cols; i++) {
-        	board.add(new ArrayList<Color>());
-        } 
-
-        timer = new Timer(delay, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                time += delay;
-                time = Math.min(time, duration);
-                repaint();  // Refresh the JFrame, callback paintComponent()
-            }
-        });
-        addComponentListener(new ComponentAdapter(){
-        	public void componentResized(ComponentEvent e) {
-                pad = 20;
-                h = getHeight();
-                w = getWidth();
-                
-                squareSize = (w-pad*2)/cols;
-                squareSize = Math.min(squareSize, (h-pad*2)/(rows+1));
-                boardWidth = squareSize * cols;
-                boardHeight = squareSize * rows;
-                x = (w - boardWidth)/2;
-                
-                y = (h - boardHeight - squareSize)/2;
-                y += squareSize;
-
-        	}
-        	
-        });
-        
-        timer.setRepeats(true);
+        setOpaque(true);
+        setBackground(Color.WHITE);
+        this.listener = listener;
+        animation = new Animation(this);
         addMouseMotionListener(this);
+        addMouseListener(this);
+        addComponentListener(this);
+        setBoardSize(7, 6);
     }
 	
+    public void setBoardSize(int width, int height) {
+        animation.stop();
+        actions = new LinkedList<BoardAction>();
+        input = null;
+        board = new Board(width, height);
+        calculateMetrics();
+        repaint();
+    }
+
     /**
      * Set the size of the panel
      */
 	public Dimension getPreferredSize() {
-        return new Dimension(460,460);
+        return new Dimension(500,500);
+    }
+
+    public void newFrame() {
+        repaint();
+    }
+
+    public void lastFrame() {
+        BoardAction action = actions.poll();
+        String name = action.getName();
+        int column = action.getColumn();
+        Token token = action.getToken();
+
+        if (name.equals("place")) {
+            board.placeToken(column, token);
+        } else if (name.equals("remove")) {
+            board.removeToken(column);
+        }
+
+        if (!actions.isEmpty())
+            animation.start();
+
+        repaint();
     }
 
 	/**
 	 * Method to paint the board on the screen
 	 */
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);       
+        Graphics2D g2;          // 2D graphics context
+        super.paintComponent(g);
+        g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                            RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2.translate(x, y);
+        paintBoardLines(g2);
+        paintPlacedTokens(g2);
+        paintInputToken(g2);
+        paintActionToken(g2);
+        g2.translate(-x, -y);
 
-        Ellipse2D token;
-        ArrayList<Color> column;
+    }
 
-        // convert the graphics component into graphics 2D
-        Graphics2D g2 = (Graphics2D) g;
-        token = new Ellipse2D.Double();
-        // g2.setRenderingHints(Graphics2D.ANTIALIASING,Graphics2D.ANTIALIAS_ON);
-        		
-        for (int i = 0; i < rows + 1; i++) {
-        	g2.setStroke(new BasicStroke(1));
-        	g2.drawLine(x, y + i*squareSize, x + boardWidth, y + i*squareSize);
-        	
+    public void calculateMetrics() {
+        cols = board.getWidth();
+        rows = board.getHeight();
+        tokenSize = Math.min(getWidth()/cols, getHeight()/(rows+1));
+        width = tokenSize * cols;
+        height = tokenSize * rows;
+        x = (getWidth() - width)/2;
+        y = ((getHeight() - height - tokenSize)/2) + tokenSize;
+    }
+
+    public int getColumnNumber() {
+        int column = -1;        // selected column
+        int relX = inputX - x;  // calculate relative input x coordinate
+        if (relX > 0 && relX <  width)
+            column = relX / tokenSize;
+        return column;
+    }
+
+    public void placeToken(int column, Token token) {
+        actions.add(new BoardAction("place", column, token));
+        if (actions.size() == 1)
+            animation.start();
+    }
+
+    public void removeToken(int column) {
+        actions.add(new BoardAction("remove", column, null));
+        if (actions.size() == 1)
+            animation.start();
+    }
+
+    public void setInput(Token token) {
+        input = token;
+    }
+
+    public void paintBoardLines(Graphics2D g2) {
+        Point temp;
+        temp = new Point();
+        g2.setColor(Color.LIGHT_GRAY);
+        g2.setStroke(new BasicStroke(1));
+               
+        for (int i = 0; i < rows + 1; i++){
+            temp.y = i*tokenSize;
+            g2.drawLine(0, temp.y, width,  temp.y);
         }
         for (int i = 0; i < cols + 1; i++) {
-        	g2.setStroke(new BasicStroke(1));
-        	g2.drawLine(x + i*squareSize, y , x + i*squareSize, y + boardHeight);
-        	
+            temp.x = i*tokenSize;
+            g2.drawLine(temp.x, 0,  temp.x, height);
         }
-        //Point pt = this.getMousePosition();
-        // draw discs
+    }
+
+    public void paintPlacedTokens(Graphics2D g2) {
+        Token token;
+        Point temp;
+        int level;
+        temp = new Point();
         for (int i = 0; i < cols; i++) {
-            column = board.get(i);
-            for (int j = 0; j < column.size(); j++) {
-
-                token.setFrame(x + i*squareSize,
-                            y + boardHeight - j*squareSize - squareSize,
-                            squareSize,
-                            squareSize);
-                g2.setColor(column.get(j));
-
-                g2.fill(token);
-            }
-            
-        }
-        int indicatorX = x;
-        if (currentColor != null) {
-                indicatorX = mouseX - (squareSize/2);
-                token.setFrame(indicatorX,
-                            y - squareSize,
-                            squareSize,
-                            squareSize);
-                g2.setColor(currentColor);
-                g2.fill(token);
-        }
-
-        // paint action
-        if (action.equals("add")) {        
-            column = board.get(actionColumn);
-            int start = y - squareSize;
-            int end = y + boardHeight - column.size()*squareSize - squareSize;
-            int current = easeOutBounce(start, end);
-
-            token.setFrame(x + actionColumn*squareSize, current,
-                        squareSize,
-                        squareSize);
-            g2.setColor(actionColor);
-            g2.fill(token);        
-
-            if (time == duration) {
-                time = 0;
-                timer.stop();
-                board.get(actionColumn).add(actionColor);
-                action = "";
-                repaint();
+            level = board.getColumnLevel(i);
+            for (int j = 0; j < level; j++) {
+                token = board.getToken(i, j);
+                temp.x = i*tokenSize;
+                temp.y = height - (j+1)*tokenSize;
+                paintToken(g2, token, temp.x, temp.y);
             }
         }
-
-
     }
 
-    public boolean isProcessing() {
-        return (!action.equals(""));
+    public void paintInputToken(Graphics2D g2) {
+        if (input != null && actions.isEmpty())
+            paintToken(g2, input, inputX-x-(tokenSize/2), -tokenSize);
     }
 
-    public int getColumnNumber(int x, int y) {
-        int relX = x - this.x;
-        int col = -1;
-        if (relX > 0 && relX < boardWidth && currentColor != null) {
-            col = relX / squareSize;
+    public void paintActionToken(Graphics2D g2) {
+        BoardAction action;     // A polled action to draw
+        Token token;            // Token
+        Point temp;             // Coordinate
+        int level;              // Column level
+        int column;             // Column
+
+        temp = new Point();
+        if (!actions.isEmpty()) {
+            action = actions.peek();
+            token = action.getToken();
+            column = action.getColumn();
+            level = board.getColumnLevel(column) + 1;
+            temp.x = column*tokenSize;
+            temp.y = (rows - level) * tokenSize;
+            if (action.getName().equals("place")) {
+                temp.y = animation.easeOutBounce(-tokenSize, temp.y);
+                paintToken(g2, token, temp.x, temp.y);
+            } else if (action.getName().equals("remove")) {
+                temp.y = animation.easeLinear(temp.y, -tokenSize*2);
+                paintToken(g2, token, temp.x, temp.y);
+            }
         }
-        return col;
     }
 
-    public void addToken(Token tok, int colNum) {
-        currentColor = null;
-        time = 0;
-        action = "add";
-        actionColumn = colNum;
-        actionColor = tok.getOwner().getColor();
-        timer.start();
-    }
-
-    public void setPlayer(Player player) {
-        currentColor = player.getColor();
-    }
-
-    public int easeOutBounce (int start, int end) {
-        double p = (double)time/(double)duration;
-        int change = end - start ;
-        int current = start;
-        
-        if (p < 0.6) {
-            current += change*(2.7778*p*p);
-        } else if (p < 0.9) {
-            p -= 0.75;
-            current += change*(2.7778*p*p + 0.9375);
-        } else {
-            p -= 0.95;
-            current += change*(2.7778*p*p + 0.9931);
-        }
-        return current;
-    }
-
-    public void mouseDragged(MouseEvent e) {
-
+    public void paintToken(Graphics2D g2, Token token, int x, int y) {
+        Ellipse2D circle = new Ellipse2D.Double();
+        int diff = (int)(tokenSize * 0.15);
+        int size = tokenSize - diff*2;
+        circle.setFrame(x+diff, y+diff, size, size);
+        g2.setColor(token.getColor());
+        g2.fill(circle);
     }
 
     public void mouseMoved(MouseEvent e) {
-    	mouseX = e.getX();
-    	mouseY = e.getY();
-    	repaint();
+        inputX = e.getX();
+        repaint();
     }
 
+    public void mouseClicked(MouseEvent e) {
+        // non interactive state
+        if (!actions.isEmpty() || input == null) 
+            return;
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// now repaint the board on the screen
-		repaint();
-	}  
+        // interactive state
+        int column = getColumnNumber();    
+        if (!board.isColumnFull(column))
+            listener.columnSelected(column);
+    };
 
+    public void componentResized(ComponentEvent e) {
+        calculateMetrics();
+    };
+
+    public void mouseDragged(MouseEvent e) {};
+    public void mouseEntered(MouseEvent e) {};
+    public void mouseExited(MouseEvent e) {};
+    public void mousePressed(MouseEvent e) {};
+    public void mouseReleased(MouseEvent e) {};
+    public void componentHidden(ComponentEvent e) {};
+    public void componentMoved(ComponentEvent e) {};
+    public void componentShown(ComponentEvent e) {};
 }

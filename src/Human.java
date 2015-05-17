@@ -16,21 +16,13 @@ public class Human implements Player {
 		name = humanName;
 		color = tokenColor;
 	}
-	
-	public void setGui(Gui newGui){
-		gui = newGui;
-	}
 
 	/**
 	 * Method to get player's move
 	 * @return the move of the player
 	 */
 	public Move getMove(BoardInterface board) {
-		// TODO stub
-		
-		int column = 0;
-		
-		return gui.getMove();
+		return null;
 	}
 	
 	public String getName() {

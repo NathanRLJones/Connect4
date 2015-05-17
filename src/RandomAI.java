@@ -18,18 +18,12 @@ public class RandomAI implements Player {
 	public Move getMove(BoardInterface board) {
 		Move randomMove = null;
 		
-		int col = rand.nextInt(board.getColumns());
+		int col = rand.nextInt(board.getWidth());
 		
 		while(board.isColumnFull(col)){
-			col = rand.nextInt(board.getColumns());
+			col = rand.nextInt(board.getWidth());
 		}
 		
-		try {
-			Thread.sleep(600);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return new Move(col, new Token(this));
 	}
 

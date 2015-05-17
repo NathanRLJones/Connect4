@@ -49,6 +49,15 @@ public class Board implements BoardInterface{
 			level.add(token);
 		}
 	}
+	
+	/**
+	 * Method to remove token from the board
+	 * @param column the column position on the board
+	 */
+	public void removeToken(int column) {
+		ArrayList<Token> levels = columns.get(column);
+		if(!levels.isEmpty()) levels.remove(levels.size()-1);
+	}
 
 	/**
 	 * Method to check if the column is full
@@ -58,29 +67,24 @@ public class Board implements BoardInterface{
 	 * 		   false otherwise
 	 */
 	public boolean isColumnFull(int column) {
-		if(column < 0 || column >= width){
-			return false;
-		}
-		ArrayList<Token> level = columns.get(column);
-		return (level.size()==height);
+		return (getColumnLevel(column) == height);
+	}
+	
+	public int getColumnLevel(int column) {
+		return (isValidColumn(column) ? columns.get(column).size() : 0);
 	}
 
-	/**
-	 * Method to remove token from the board
-	 * @param column the column position on the board
-	 */
-	public void removeToken(int column) {
-		ArrayList<Token> levels = columns.get(column);
-		if(!levels.isEmpty()) levels.remove(levels.size()-1);
+	public boolean isValidColumn(int column) {
+		return (column >= 0 || column < width);
 	}
 	
 	@Override
-	public int getRows(){
+	public int getHeight(){
 		return height;
 	}
 	
 	@Override
-	public int getColumns(){
+	public int getWidth(){
 		return width;
 	}
 
