@@ -23,13 +23,11 @@ public class Board implements BoardInterface{
 	}
 
 	/**
-	 * Method to get token's position
+	 * Method to get the token located in the given position
 	 * @param column the column position on the board
 	 * @param row the row position on the board
-	 * @return row position of the token if the size of the row
-	 * 		   assigned from the token is within the range of the
-	 * 		   board.
-	 * 		   null otherwise
+	 * @return the token in the given row and column. 
+	 * 		   null if the given position is empty or outside the board size limit
 	 */
 	//assume column < width
 	public Token getToken(int column, int row) {
