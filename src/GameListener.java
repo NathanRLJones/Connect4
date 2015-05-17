@@ -10,7 +10,7 @@ public interface GameListener {
     public void gameStarted();
 
     public void gameWon(Player player, 
-                        int row1, int col1, int row2, int col2);
+                        int col1, int row1, int col2, int row2);
 
     public void gameDrawn();
 

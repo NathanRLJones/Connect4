@@ -53,7 +53,7 @@ public class ConnectFour {
 
 	}
 
-	public BoardInterface getBoard(){
+	public BoardInterface getBoard() {
 		return board;
 	}
 
@@ -63,9 +63,7 @@ public class ConnectFour {
 
 	public void advance() {
 		int index;
-		int column;
 		Move move;
-		Token token;
 
 		if (currentPlayer.isInteractive()) {
 			move = suggestedMove;
@@ -73,26 +71,18 @@ public class ConnectFour {
 			move = currentPlayer.getMove(getBoard());
 		}
 
-		System.out.println("Adding a token: " + 
-							move.getToken().getOwner().getName());
-		token = move.getToken();
-		column = move.getColumn();
-		
-		board.placeToken(column, token);
+		System.out.println("Adding a token: " + currentPlayer.getName());
+		board.placeToken(move.getColumn(), move.getToken());
 		moveHistory.add(move);
 		undoneMoves.clear();
 
-		// next player
-		index = (players.indexOf(currentPlayer) + 1) % players.size();
-		currentPlayer = players.get(index);
-		
-
 		listener.tokenPlaced(move.getColumn(), move.getToken());
-		
-		//***************************************
-		//todo check status of game (╯°□°）╯︵ ┻━┻) 
-		//***************************************
-		listener.newTurn(currentPlayer);
+		if (!isGameOver()) {
+			// Move to a new player
+			index = (players.indexOf(currentPlayer) + 1) % players.size();
+			currentPlayer = players.get(index);
+			listener.newTurn(currentPlayer);
+		}
 	}
 
 
@@ -102,115 +92,105 @@ public class ConnectFour {
 	 *         false otherwise
 	 */
 	public boolean isGameOver() {
-		// int height = board.getRows();
-		// int width = board.getColumns();
-		// Player possibleWinner;
-		// int noOfTokens;
-		// Player currPlayer;
-		// Token currToken;
+		Token currToken;
+		int numOfTokens;
+		int height = board.getHeight();
+		int width = board.getWidth();
 		
-		// // Check for a vertical line of TOKENS_TO_WIN same-colour tokens
-		// for(int col = 0; col < width; col++){
-		// 	noOfTokens = 0;
-		// 	possibleWinner = null;
-		// 	for(int row = 0; row < height; row++){
-		// 		if(height-row+noOfTokens < TOKENS_TO_WIN) break;
-				
-		// 		currToken = board.getToken(col, row);
-		// 		if(currToken == null) break;
-		// 		currPlayer = currToken.getOwner();
-		// 		if(currPlayer == possibleWinner){
-		// 			noOfTokens++;
-		// 			if(noOfTokens == TOKENS_TO_WIN) {
-		// 				return true;
-		// 			}
-		// 		}else{
-		// 			possibleWinner = currPlayer;
-		// 			noOfTokens = 1;
-		// 		}
-		// 	}
-		// }
+		// Check for a vertical line of TOKENS_TO_WIN same-colour tokens
+		for (int col = 0; col < width; col++) {
+			numOfTokens = 0;
+			for (int row = 0; row < height; row++) {
+				if (height-row+numOfTokens < TOKENS_TO_WIN) break;
+				currToken = board.getToken(col, row);
+				if (currToken == null) break;
+				if (currToken.getOwner() == currentPlayer) {
+					numOfTokens++;
+					if (numOfTokens == TOKENS_TO_WIN) {
+						listener.gameWon(currentPlayer, 
+								    col, row-TOKENS_TO_WIN+1, col, row);
+						return true;
+					}
+				} else {
+					numOfTokens = 0;
+				}
+			}
+		}
 
-		// //Check for a horizontal line of TOKENS_TO_WIN same-colour tokens
-		// for(int row = 0; row < height; row++){
-		// 	noOfTokens = 0;
-		// 	possibleWinner = null;
-		// 	for(int col = 0; col < width; col++){
-		// 		if(width-col+noOfTokens < TOKENS_TO_WIN) break;
-				
-		// 		currToken = board.getToken(col, row);
-		// 		if (currToken == null){
-		// 			possibleWinner = null;
-		// 			noOfTokens = 0;
-		// 			continue;
-		// 		}
-		// 		currPlayer = currToken.getOwner();
-		// 		if(currPlayer == possibleWinner){
-		// 			noOfTokens++;
-		// 			if(noOfTokens == TOKENS_TO_WIN) {
-		// 				return true;
-		// 			}
-		// 		}else{
-		// 			possibleWinner = currPlayer;
-		// 			noOfTokens = 1;
-		// 		}
-		// 	}
-		// }
+		//Check for a horizontal line of TOKENS_TO_WIN same-colour tokens
+		for (int row = 0; row < height; row++) {
+			numOfTokens = 0;
+			for (int col = 0; col < width; col++) {
+				if ( width-col+numOfTokens < TOKENS_TO_WIN) break;
+				currToken = board.getToken(col, row);
+				if (currToken == null) {
+					numOfTokens = 0;
+					continue;
+				}
+				if (currToken.getOwner() == currentPlayer) {
+					numOfTokens++;
+					if (numOfTokens == TOKENS_TO_WIN) {
+						listener.gameWon(currentPlayer, 
+								    col-TOKENS_TO_WIN+1, row, col, row);
+						return true;
+					}
+				} else {
+					numOfTokens = 0;
+				}
+			}
+		}
 		
-		// //Check for a diagonal line of TOKENS_TO_WIN same-colour tokens
-		// for(int col = 0; col < width - TOKENS_TO_WIN+1; col++) {
-		// 	for(int row = 0; row < height; row++) {
-		// 		// Check diagonally upwards
-		// 		possibleWinner = null;
-		// 		noOfTokens = 0;
-		// 		if(row < height - TOKENS_TO_WIN+1) {
-		// 			for(int offset = 0; offset < TOKENS_TO_WIN; offset++) {
-		// 				currToken = board.getToken(col+offset, row+offset);
-		// 				if(currToken == null) break;
-		// 				currPlayer = currToken.getOwner();
-		// 				if(offset == 0) possibleWinner = currPlayer;
-		// 				if(currPlayer == possibleWinner){
-		// 					noOfTokens++;
-		// 					if(noOfTokens == TOKENS_TO_WIN) {
-		// 						return true;
-		// 					}
-		// 				}else{
-		// 					break;
-		// 				}
-		// 			}
-		// 		}
-		// 		// Check diagonally downwards
-		// 		possibleWinner = null;
-		// 		noOfTokens = 0;
-		// 		if(row > TOKENS_TO_WIN-2) {
-		// 			for(int offset = 0; offset < TOKENS_TO_WIN; offset++) {
-		// 				currToken = board.getToken(col+offset, row-offset);
-		// 				if(currToken == null) break;
-		// 				currPlayer = currToken.getOwner();
-		// 				if(offset == 0) possibleWinner = currPlayer;
-		// 				if(currPlayer == possibleWinner){
-		// 					noOfTokens++;
-		// 					if(noOfTokens == TOKENS_TO_WIN) {
-		// 						return true;
-		// 					}
-		// 				}else{
-		// 					break;
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
+		//Check for a diagonal line of TOKENS_TO_WIN same-colour tokens
+		for (int col = 0; col < width - TOKENS_TO_WIN+1; col++) {
+			for (int row = 0; row < height; row++) {
+				// Check diagonally upwards
+				numOfTokens = 0;
+				if (row < height - TOKENS_TO_WIN+1) {
+					for (int offset = 0; offset < TOKENS_TO_WIN; offset++) {
+						currToken = board.getToken(col+offset, row+offset);
+						if (currToken == null) break;
+						if (currToken.getOwner() == currentPlayer) {
+							numOfTokens++;
+							if (numOfTokens == TOKENS_TO_WIN) {
+								listener.gameWon(currentPlayer, 
+									  col, row, col+offset, row+offset);
+								return true;
+							}
+						} else {
+							break;
+						}
+					}
+				}
+				// Check diagonally downwards
+				numOfTokens = 0;
+				if (row > TOKENS_TO_WIN-2) {
+					for (int offset = 0; offset < TOKENS_TO_WIN; offset++) {
+						currToken = board.getToken(col+offset, row-offset);
+						if (currToken == null) break;
+						if (currToken.getOwner() == currentPlayer) {
+							numOfTokens++;
+							if (numOfTokens == TOKENS_TO_WIN) {
+								listener.gameWon(currentPlayer, 
+									  col, row, col+offset, row-offset);
+								return true;
+							}
+						} else {
+							break;
+						}
+					}
+				}
+			}
+		}
 		
-		// // Check for a tie
-		// for(int col = 0; col < width; col++){
-		// 	if(!board.isColumnFull(col))
-		// 		return false;
-		// }
-		// return true;
-		return false;
+		// Check for a tie
+		for (int col = 0; col < width; col++) {
+			if (!board.isColumnFull(col))
+				return false;
+		}
+		listener.gameDrawn();
+
+		return true;
 	}
-
-
 
 	/**
 	 * Method to get the current player
@@ -224,8 +204,7 @@ public class ConnectFour {
 	 * Method to undo a move
 	 */
 	public void undo() {
-		// if(!moveHistory.isEmpty()) {
-		// 	turnNumber--;
+		// if (!moveHistory.isEmpty()) {
 		// 	Move lastMove = moveHistory.pop();
 		// 	board.removeToken(lastMove.getColumn());
 		// 	undoneMoves.add(lastMove);
@@ -236,10 +215,10 @@ public class ConnectFour {
 	 * Method to redo a move
 	 */
 	public void redo() {
-		// if(!undoneMoves.isEmpty()) {
-		// 	turnNumber++;
+		// if (!undoneMoves.isEmpty()) {
 		// 	Move lastUndoneMove = undoneMoves.pop();
-		// 	board.placeToken(lastUndoneMove.getColumn(), lastUndoneMove.getToken());
+		// 	board.placeToken(lastUndoneMove.getColumn(), 
+		// 					 lastUndoneMove.getToken());
 		// 	moveHistory.add(lastUndoneMove);
 		// }
 	}

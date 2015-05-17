@@ -52,13 +52,14 @@ public class Gui implements GameListener, BoardListener{
     }
 
     public void gameWon(Player player, 
-                        int row1, int col1, int row2, int col2) {
-        // TODO
+                        int col1, int row1, int col2, int row2) {
+        System.out.println(player.getName() + " has won!");
+        //TODO
     }
 
     public void gameDrawn() {
+        System.out.println("Game is drawn!");
         //TODO
-
     }
 
     public void columnSelected(int column) {
