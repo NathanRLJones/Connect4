@@ -15,7 +15,6 @@ public class AIPlayer implements Player {
 		name = aiName;
 		color = aiColor;
 		this.difficultyLevel = difficultyLevel;
-		isGameOver = false;
 	}
 	
 	@Override
@@ -95,7 +94,6 @@ public class AIPlayer implements Player {
 					if(noOfTokens == TOKENS_TO_WIN){
 						if(currTokenOwner == this) score+=100;
 						else score-=100;
-						isGameOver = true;
 						break;
 					}
 				}
@@ -122,6 +120,114 @@ public class AIPlayer implements Player {
 	@Override
 	public boolean isInteractive() {
 		return false;
+	}
+	
+	public boolean isGameOver(){
+		int height = board.getHeight();
+		int width = board.getWidth();
+		Player possibleWinner;
+		int noOfTokens;
+		Player currPlayer;
+		Token currToken;
+		
+		// Check for a vertical line of TOKENS_TO_WIN same-colour tokens
+		for(int col = 0; col < width; col++){
+		 	noOfTokens = 0;
+		 	possibleWinner = null;
+		 	for(int row = 0; row < height; row++){
+		 		if(height-row+noOfTokens < TOKENS_TO_WIN) break;
+				
+		 		currToken = board.getToken(col, row);
+		 		if(currToken == null) break;
+		 		currPlayer = currToken.getOwner();
+		 		if(currPlayer == possibleWinner){
+		 			noOfTokens++;
+		 			if(noOfTokens == TOKENS_TO_WIN) {
+		 				return true;
+		 			}
+		 		}else{
+		 			possibleWinner = currPlayer;
+		 			noOfTokens = 1;
+		 		}
+		 	}
+		 }
+
+		 //Check for a horizontal line of TOKENS_TO_WIN same-colour tokens
+		 for(int row = 0; row < height; row++){
+		 	noOfTokens = 0;
+		 	possibleWinner = null;
+		 	for(int col = 0; col < width; col++){
+		 		if(width-col+noOfTokens < TOKENS_TO_WIN) break;
+				
+				currToken = board.getToken(col, row);
+		 		if (currToken == null){
+		 			possibleWinner = null;
+		 			noOfTokens = 0;
+		 			continue;
+		 		}
+		 		currPlayer = currToken.getOwner();
+		 		if(currPlayer == possibleWinner){
+		 			noOfTokens++;
+		 			if(noOfTokens == TOKENS_TO_WIN) {
+		 				return true;
+		 			}
+		 		}else{
+		 			possibleWinner = currPlayer;
+		 			noOfTokens = 1;
+		 		}
+		 	}
+		 }
+		
+		 //Check for a diagonal line of TOKENS_TO_WIN same-colour tokens
+		 for(int col = 0; col < width - TOKENS_TO_WIN+1; col++) {
+		 	for(int row = 0; row < height; row++) {
+		 		// Check diagonally upwards
+		 		possibleWinner = null;
+		 		noOfTokens = 0;
+		 		if(row < height - TOKENS_TO_WIN+1) {
+		 			for(int offset = 0; offset < TOKENS_TO_WIN; offset++) {
+		 				currToken = board.getToken(col+offset, row+offset);
+		 				if(currToken == null) break;
+		 				currPlayer = currToken.getOwner();
+		 				if(offset == 0) possibleWinner = currPlayer;
+		 				if(currPlayer == possibleWinner){
+		 					noOfTokens++;
+		 					if(noOfTokens == TOKENS_TO_WIN) {
+		 						return true;
+		 					}
+		 				}else{
+		 					break;
+		 				}
+		 			}
+		 		}
+		 		// Check diagonally downwards
+		 		possibleWinner = null;
+		 		noOfTokens = 0;
+		 		if(row > TOKENS_TO_WIN-2) {
+		 			for(int offset = 0; offset < TOKENS_TO_WIN; offset++) {
+		 				currToken = board.getToken(col+offset, row-offset);
+		 				if(currToken == null) break;
+		 				currPlayer = currToken.getOwner();
+		 				if(offset == 0) possibleWinner = currPlayer;
+		 				if(currPlayer == possibleWinner){
+		 					noOfTokens++;
+		 					if(noOfTokens == TOKENS_TO_WIN) {
+		 						return true;
+		 					}
+		 				}else{
+		 					break;
+		 				}
+		 			}
+		 		}
+		 	}
+		 }
+		
+		 // Check for a tie
+		 for(int col = 0; col < width; col++){
+		 	if(!board.isColumnFull(col))
+		 		return false;
+		 }
+		 return true;
 	}
 	
 	public int alphaBetaSearch(int alpha, int beta, int depth, Player currTurn){
