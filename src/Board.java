@@ -100,4 +100,13 @@ public class Board implements BoardInterface{
 		}
 		return false;
 	}
+
+	@Override
+	public Player whoOwnsToken(int column, int row) {
+		Token token = getToken(column, row);
+		if(token == null) return null;
+		return token.getOwner();
+	}
+
+
 }
