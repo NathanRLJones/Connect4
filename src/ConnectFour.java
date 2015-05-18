@@ -95,6 +95,7 @@ public class ConnectFour {
 	
 		//find the column and row of the last move made
 		Player lastPlayer = moveHistory.peek().getToken().getOwner();
+		int height = board.getHeight();
 		int column = moveHistory.peek().getColumn();
 		int row;
 		for(row = height - 1; row >= 0; row--){
@@ -102,7 +103,7 @@ public class ConnectFour {
 				break;
 			}
 		}
-		
+
 		int dRow = 0;
 		int dCol = 0;
 		
