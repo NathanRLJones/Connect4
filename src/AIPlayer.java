@@ -102,7 +102,57 @@ public class AIPlayer implements Player {
 				}
 			}
 		}
-		//TODO: Horizontal and diagonal scores
+		
+		//check for scores horizontally
+		for (int row = 0; row < width; row++) {
+			noOfTokens = 0;
+			prevTokenOwner = null;
+			currTokenOwner = null;
+			for (int col = 0; col < height; col++) {
+				if (width - col + noOfTokens < TOKENS_TO_WIN)
+					break;
+				currTokenOwner = board.whoOwnsToken(col, row);
+				if(currTokenOwner == null){
+					if (prevTokenOwner == this){
+						switch(noOfTokens){
+						case 1: score+=1;
+						break;
+						case 2: score+=4;
+						break;
+						case 3: score+=6;
+						break;
+						default: break;
+						}
+					}
+					else if (prevTokenOwner != null){
+						switch(noOfTokens){
+						case 1: score-=1;
+						break;
+						case 2: score-=4;
+						break;
+						case 3: score-=6;
+						break;
+						default: break;
+						}
+					}
+					break;
+				}
+				if (currTokenOwner == prevTokenOwner) {
+					noOfTokens++;
+					if(noOfTokens == TOKENS_TO_WIN){
+						if(currTokenOwner == this) score+=100;
+						else score-=100;
+						break;
+					}
+				}
+				else{
+					prevTokenOwner = currTokenOwner;
+					noOfTokens = 1;
+				}
+			}
+		}
+		
+		//TODO: diagonal scores
 		return score;
 	}
 	
