@@ -92,11 +92,7 @@ public class ConnectFour {
 	 *         false otherwise
 	 */
 	public boolean isGameOver() {
-		Token currToken;
-		int numOfTokens;
-		int height = board.getHeight();
-		int width = board.getWidth();
-		
+	
 		//find the column and row of the last move made
 		Player lastPlayer = moveHistory.peek().getToken().getOwner();
 		int column = moveHistory.peek().getColumn();
@@ -131,7 +127,7 @@ public class ConnectFour {
 	
 	/**
 	 * Finds the number of adjacent tokens owned by the given player, where the
-	 * next checked token is dCol columns away and dRow rows away.
+	 * next checked token is at column: current column + dCol and row: current row + dRow.
 	 * 
 	 * @param player The Player whose tokens will be counted as valid.
 	 * @param column The starting column.
