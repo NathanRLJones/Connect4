@@ -82,6 +82,8 @@ public class ConnectFour {
 			index = (players.indexOf(currentPlayer) + 1) % players.size();
 			currentPlayer = players.get(index);
 			listener.newTurn(currentPlayer);
+		} else {
+			// TODO check whether it was a draw or win and by who
 		}
 	}
 
