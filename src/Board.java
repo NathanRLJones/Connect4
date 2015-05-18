@@ -97,6 +97,8 @@ public class Board implements BoardInterface{
 
 	@Override
 	public boolean isPlayersToken(Player player, int column, int row){
+		Player owner = null;
+		if(row >= columns.get(column).size()) return false;
 		if(isSpaceTaken(column, row)){
 			return columns.get(column).get(row).getOwner() == player;
 		}
