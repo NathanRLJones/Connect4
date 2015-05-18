@@ -13,12 +13,14 @@ public class Gui implements GameListener, BoardListener{
 	
 	private JFrame mainFrame;
 	private BoardPanel boardPanel;
+	private InfoPanel infoPanel;
 	private ConnectFour game;
 	
 	public Gui(ConnectFour game) {
 
 		mainFrame = new JFrame("Connect 4");
 		boardPanel = new BoardPanel(this);
+		infoPanel = new InfoPanel();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.game = game;
 
@@ -39,6 +41,7 @@ public class Gui implements GameListener, BoardListener{
 
     public void newTurn(Player player) {
         //TODO set label for whose turn
+    	infoPanel.setTurnLabel(player.getName() + "'s turn!");
         if (player.isInteractive()){
             boardPanel.setInput(new Token(player));
         } else {
@@ -69,6 +72,7 @@ public class Gui implements GameListener, BoardListener{
 	
 	public void display() {
 		mainFrame.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+		mainFrame.getContentPane().add(infoPanel, BorderLayout.NORTH);
 		mainFrame.getContentPane().add(boardPanel,BorderLayout.CENTER);
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
