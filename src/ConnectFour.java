@@ -97,101 +97,60 @@ public class ConnectFour {
 		int height = board.getHeight();
 		int width = board.getWidth();
 		
-		// Check for a vertical line of TOKENS_TO_WIN same-colour tokens
-		for (int col = 0; col < width; col++) {
-			numOfTokens = 0;
-			for (int row = 0; row < height; row++) {
-				if (height-row+numOfTokens < TOKENS_TO_WIN) break;
-				currToken = board.getToken(col, row);
-				if (currToken == null) break;
-				if (currToken.getOwner() == currentPlayer) {
-					numOfTokens++;
-					if (numOfTokens == TOKENS_TO_WIN) {
-						listener.gameWon(currentPlayer, 
-								    col, row-TOKENS_TO_WIN+1, col, row);
-						return true;
-					}
-				} else {
-					numOfTokens = 0;
-				}
-			}
-		}
-
-		//Check for a horizontal line of TOKENS_TO_WIN same-colour tokens
-		for (int row = 0; row < height; row++) {
-			numOfTokens = 0;
-			for (int col = 0; col < width; col++) {
-				if ( width-col+numOfTokens < TOKENS_TO_WIN) break;
-				currToken = board.getToken(col, row);
-				if (currToken == null) {
-					numOfTokens = 0;
-					continue;
-				}
-				if (currToken.getOwner() == currentPlayer) {
-					numOfTokens++;
-					if (numOfTokens == TOKENS_TO_WIN) {
-						listener.gameWon(currentPlayer, 
-								    col-TOKENS_TO_WIN+1, row, col, row);
-						return true;
-					}
-				} else {
-					numOfTokens = 0;
-				}
+		//find the column and row of the last move made
+		Player lastPlayer = moveHistory.peek().getToken().getOwner();
+		int column = moveHistory.peek().getColumn();
+		int row;
+		for(row = height - 1; row >= 0; row--){
+			if(board.isSpaceTaken(column, row)){
+				break;
 			}
 		}
 		
-		//Check for a diagonal line of TOKENS_TO_WIN same-colour tokens
-		for (int col = 0; col < width - TOKENS_TO_WIN+1; col++) {
-			for (int row = 0; row < height; row++) {
-				// Check diagonally upwards
-				numOfTokens = 0;
-				if (row < height - TOKENS_TO_WIN+1) {
-					for (int offset = 0; offset < TOKENS_TO_WIN; offset++) {
-						currToken = board.getToken(col+offset, row+offset);
-						if (currToken == null) break;
-						if (currToken.getOwner() == currentPlayer) {
-							numOfTokens++;
-							if (numOfTokens == TOKENS_TO_WIN) {
-								listener.gameWon(currentPlayer, 
-									  col, row, col+offset, row+offset);
-								return true;
-							}
-						} else {
-							break;
-						}
-					}
-				}
-				// Check diagonally downwards
-				numOfTokens = 0;
-				if (row > TOKENS_TO_WIN-2) {
-					for (int offset = 0; offset < TOKENS_TO_WIN; offset++) {
-						currToken = board.getToken(col+offset, row-offset);
-						if (currToken == null) break;
-						if (currToken.getOwner() == currentPlayer) {
-							numOfTokens++;
-							if (numOfTokens == TOKENS_TO_WIN) {
-								listener.gameWon(currentPlayer, 
-									  col, row, col+offset, row-offset);
-								return true;
-							}
-						} else {
-							break;
-						}
-					}
-				}
-			}
-		}
+		int dRow = 0;
+		int dCol = 0;
 		
-		// Check for a tie
-		for (int col = 0; col < width; col++) {
-			if (!board.isColumnFull(col))
-				return false;
-		}
-		listener.gameDrawn();
-
-		return true;
+		//create counters that will store the number of valid tokens in a row in the given direction
+		//No need to check directly above the token, since it was the last token placed.
+		int NECount = checkValidTokenSeries(lastPlayer, column, row, 1, 1);
+		int ECount = checkValidTokenSeries(lastPlayer, column, row, 1, 0);
+		int SECount = checkValidTokenSeries(lastPlayer, column, row, 1, -1);
+		int SCount = checkValidTokenSeries(lastPlayer, column, row, 0, -1);
+		int SWCount = checkValidTokenSeries(lastPlayer, column, row, -1, -1);
+		int WCount = checkValidTokenSeries(lastPlayer, column, row, -1, 0);
+		int NWCount = checkValidTokenSeries(lastPlayer, column, row, -1, 1);
+		
+		//> is used instead of >= because the last placed token will be counted twice
+		if(NECount + SECount > TOKENS_TO_WIN) return true;
+		if(ECount + WCount > TOKENS_TO_WIN) return true;
+		
+		if(SCount >= TOKENS_TO_WIN) return true;
+		
+		return false;
 	}
-
+	
+	/**
+	 * Finds the number of adjacent tokens owned by the given player, where the
+	 * next checked token is dCol columns away and dRow rows away.
+	 * 
+	 * @param player The Player whose tokens will be counted as valid.
+	 * @param column The starting column.
+	 * @param row The starting row.
+	 * @param dCol The value to change the current column by to get the next space.
+	 * @param dRow The value to change the current row by to get the next space.
+	 * @return The number of adjacent player's tokens in the given direction.
+	 */
+	private int checkValidTokenSeries(Player player, int column, int row, int dCol, int dRow){
+		int tokensInSeries = 0;
+		while(board.isValidSpace(column, row) && board.isSpaceTaken(column, row) &&
+				board.getToken(column, row).getOwner() == player){
+			tokensInSeries++;
+			column += dCol;
+			row += dRow;
+		}
+		return tokensInSeries;
+	}
+	
 	/**
 	 * Method to get the current player
 	 * @return the player for the current turn
