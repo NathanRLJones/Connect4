@@ -49,7 +49,7 @@ public class AIPlayer implements Player {
 		int score = 0;
 		int height = board.getHeight();
 		int width = board.getWidth();
-		int noOfTokens;
+		int noOfTokens = 0;;
 		Player prevTokenOwner = null;
 		Player currTokenOwner = null;
 		//int emptySpaces = 0;
@@ -153,6 +153,157 @@ public class AIPlayer implements Player {
 		}
 		
 		//TODO: diagonal scores
+		
+		//check for scores NW/SE diagonally
+		int startCol = 0;
+		int col = startCol;
+		int startRow = TOKENS_TO_WIN - 1;
+		int row = startRow;
+		noOfTokens = 0;
+		
+		while(height + width - startCol - startRow - 2 < TOKENS_TO_WIN){
+			
+			//do scoring if we are in a workable positon
+			if ((Math.min(row, (width - 1) - col) + 1) + noOfTokens >= TOKENS_TO_WIN){
+				currTokenOwner = board.whoOwnsToken(col, row);
+				if(currTokenOwner == null){
+					if (prevTokenOwner == this){
+						switch(noOfTokens){
+						case 1: score+=1;
+						break;
+						case 2: score+=4;
+						break;
+						case 3: score+=6;
+						break;
+						default: break;
+						}
+					}
+					else if (prevTokenOwner != null){
+						switch(noOfTokens){
+						case 1: score-=1;
+						break;
+						case 2: score-=4;
+						break;
+						case 3: score-=6;
+						break;
+						default: break;
+						}
+					}
+					break;
+				}
+				if (currTokenOwner == prevTokenOwner) {
+					noOfTokens++;
+					if(noOfTokens == TOKENS_TO_WIN){
+						if(currTokenOwner == this) score+=100;
+						else score-=100;
+						break;
+					}
+				}
+				else{
+					prevTokenOwner = currTokenOwner;
+					noOfTokens = 1;
+				}
+			}
+			
+			//move to next space
+			if(row > 0){
+				//continue down the current diagonal
+				col++;
+				row--;
+			}else{
+				//go to the next diagonal
+				if(startRow + 1 == height){
+					row = startRow;
+					startCol++;
+					col = startCol;
+				}else{
+					startRow++;
+					row = startRow;
+					col = startCol;
+				}
+				
+				//reset counters
+				noOfTokens = 0;
+				prevTokenOwner = null;
+				currTokenOwner = null;
+			}
+		}
+		
+		//check for scores NE/SW diagonally
+		startCol = 0;
+		col = startCol;
+		startRow = (height - 1) - (TOKENS_TO_WIN - 1);
+		row = startRow;
+		noOfTokens = 0;
+		
+		while(!(row == 0 && col + TOKENS_TO_WIN == width)){
+			
+			//do scoring if we are in a workable positon
+			if ((Math.min((height - 1) -row, (width - 1) - col) + 1) + noOfTokens >= TOKENS_TO_WIN){
+				currTokenOwner = board.whoOwnsToken(col, row);
+				if(currTokenOwner == null){
+					if (prevTokenOwner == this){
+						switch(noOfTokens){
+						case 1: score+=1;
+						break;
+						case 2: score+=4;
+						break;
+						case 3: score+=6;
+						break;
+						default: break;
+						}
+					}
+					else if (prevTokenOwner != null){
+						switch(noOfTokens){
+						case 1: score-=1;
+						break;
+						case 2: score-=4;
+						break;
+						case 3: score-=6;
+						break;
+						default: break;
+						}
+					}
+					break;
+				}
+				if (currTokenOwner == prevTokenOwner) {
+					noOfTokens++;
+					if(noOfTokens == TOKENS_TO_WIN){
+						if(currTokenOwner == this) score+=100;
+						else score-=100;
+						break;
+					}
+				}
+				else{
+					prevTokenOwner = currTokenOwner;
+					noOfTokens = 1;
+				}
+			}
+			
+			//move to next space
+			if(row < height - 1){
+				//continue down the current diagonal
+				col++;
+				row++;
+			}else{
+				//go to the next diagonal
+				if(startRow == 0){
+					row = startRow;
+					startCol++;
+					col = startCol;
+				}else{
+					startRow--;
+					row = startRow;
+					col = startCol;
+				}
+				
+				//reset counters
+				noOfTokens = 0;
+				prevTokenOwner = null;
+				currTokenOwner = null;
+			}
+		}
+		
 		return score;
 	}
 	
