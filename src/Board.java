@@ -92,7 +92,7 @@ public class Board implements BoardInterface{
 
 	@Override
 	public boolean isSpaceTaken(int column, int row) {
-		return (columns.get(column).get(row) != null);
+		return (row < columns.get(column).size());
 	}
 
 	@Override
