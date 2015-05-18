@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 public class AIPlayer implements Player {
@@ -9,6 +10,8 @@ public class AIPlayer implements Player {
 	Color color;
 	int difficultyLevel; //Depth of search 
 	Board board;
+	LinkedList<Player> allPlayers;
+	int noOfPlayers;
 	
 	public AIPlayer(String aiName, Color aiColor, int difficultyLevel){
 		name = aiName;
@@ -17,8 +20,8 @@ public class AIPlayer implements Player {
 	}
 	
 	@Override
-	public Move getMove(BoardInterface newBoard) {
-		this.board = (Board)newBoard;
+	public Move getMove(BoardInterface currBoard) {
+		board = getBoardCopy(currBoard);
 		int columns = board.getWidth();
 		Token token = new Token(this);
 		int maxScoreColumn = -1;
@@ -455,5 +458,20 @@ public class AIPlayer implements Player {
 		}		
 		return score;
 	}
-
+	
+	private Board getBoardCopy(BoardInterface currBoard){
+		int width = currBoard.getWidth();
+		int height = currBoard.getHeight();
+		Board newBoard = new Board(width, height);
+		Player tokenOwner;
+		for(int column = 0; column < width; column++){
+			for(int row = 0; row < height; row++){
+				tokenOwner = currBoard.whoOwnsToken(column, row);
+				if(tokenOwner == null) 
+					break;
+				newBoard.placeToken(column, new Token(tokenOwner));
+			}
+		}
+		return newBoard;
+	}
 }
