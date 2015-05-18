@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public class Human implements Player {
+public class HumanPlayer implements Player {
 
 	private Color color;
 	private String name;
@@ -11,7 +11,7 @@ public class Human implements Player {
 	 * @param humanName name for the player
 	 * @param tokenColor colour indicator for the player
 	 */
-	public Human(String humanName, Color tokenColor) {
+	public HumanPlayer(String humanName, Color tokenColor) {
 		// TODO stub
 		name = humanName;
 		color = tokenColor;
