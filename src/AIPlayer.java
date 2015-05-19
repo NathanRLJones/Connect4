@@ -459,6 +459,52 @@ public class AIPlayer implements Player {
 		}		
 		return score;
 	}
+	//For 2-player option
+	private int alphaBetaSearch(int alpha, int beta, int depth, Player currTurn){
+		ArrayList<Integer> availableColumns = new ArrayList<>();
+		Token token = new Token(currTurn);
+		int score;
+		Player nextTurn;
+		if(beta<=alpha){
+			return currTurn==this ? Integer.MAX_VALUE: Integer.MIN_VALUE;
+		}
+		if(depth == this.depth || isGameOver()){
+			//System.out.println(calculateScore());
+			//board.printBoard();
+			return calculateScore();
+		}
+		if(currTurn == this){
+			nextTurn = opponent;
+		}else{
+			nextTurn = this;
+		}
+		for(int i = 0; i < board.getWidth(); i++){
+			if(!board.isColumnFull(i))
+				availableColumns.add(i);
+		}		
+		if(availableColumns.size()==0) 
+			return 0;
+		if(currTurn == this){
+			score = Integer.MIN_VALUE;
+			for(int column:availableColumns){
+				board.placeToken(column, token);
+				score = Math.max(score, alphaBetaSearch(alpha, beta, depth+1, nextTurn));
+				alpha = Math.max(score, alpha);
+				board.removeToken(column);
+				if(score==Integer.MAX_VALUE || score == Integer.MIN_VALUE) break;
+			}
+		}else{
+			score = Integer.MAX_VALUE;
+			for(int column: availableColumns){
+				board.placeToken(column, token);
+				score = Math.min(score, alphaBetaSearch(alpha, beta, depth+1, nextTurn));
+				beta = Math.min(score, beta);
+				board.removeToken(column);
+				if(score==Integer.MAX_VALUE || score == Integer.MIN_VALUE) break;
+			}
+		}		
+		return score;
+	}
 	
 	private Board getBoardCopy(BoardInterface currBoard){
 		int width = currBoard.getWidth();
