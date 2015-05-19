@@ -213,8 +213,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             return;
 
         // interactive state
-        int column = getColumnNumber();    
-        if (!board.isColumnFull(column)){
+        int column = getColumnNumber();
+        if (board.isValidColumn(column) && !board.isColumnFull(column)){
             input = null;
             listener.columnSelected(column);
         }
