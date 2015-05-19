@@ -488,7 +488,7 @@ public class AIPlayer implements Player {
 		ArrayList<Integer> currScoreList;
 		int currScore;
 		
-		if(depth == difficultyLevel || isGameOver())
+		if(depth == this.depth || isGameOver())
 			return calculateScore();
 		for(int i = 0; i < board.getWidth(); i++){
 			if(!board.isColumnFull(i))
