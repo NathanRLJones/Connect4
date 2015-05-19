@@ -49,6 +49,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
 	
     public void setBoardSize(int width, int height) {
         animation.stop();
+        hasHighlight = false;
         actions = new LinkedList<BoardAction>();
         input = null;
         board = new Board(width, height);
@@ -134,6 +135,18 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             animation.start();
     }
 
+    public void highlightConnected(int col1, int row1, 
+                                   int col2, int row2) {
+
+        hlCol1 = col1;
+        hlRow1 = row1;
+        hlCol2 = col2;
+        hlRow2 = row2;
+        actions.add(new BoardAction("highlight", 0, null));
+        hasHighlight = true;
+    }
+
+
     public void setInput(Token token) {
         input = token;
     }
@@ -158,6 +171,27 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         Token token;
         Point temp;
         int level;
+        float alpha;
+        int value;
+        AlphaComposite alcom ;
+
+        if (hasHighlight) {
+
+
+            if (!actions.isEmpty() && 
+                actions.peek().getName().equals("highlight")) {
+                value = animation.easeLinear (1000, 200);
+                alpha = (float)(value / 1000.0);
+            } else {
+                value = animation.easeLinear (1000, 200);
+                alpha = (float)(value / 1000.0);
+            }
+
+            alcom = AlphaComposite.getInstance(
+                                        AlphaComposite.SRC_OVER, alpha);
+            g2.setComposite(alcom);
+        }
+
         temp = new Point();
         for (int i = 0; i < cols; i++) {
             level = board.getColumnLevel(i);
@@ -168,6 +202,28 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
                 paintToken(g2, token, temp.x, temp.y);
             }
         }
+
+        if (hasHighlight) {
+            alpha = 1;
+            alcom = AlphaComposite.getInstance(
+                                        AlphaComposite.SRC_OVER, alpha);
+            g2.setComposite(alcom);
+            int dcol = (hlCol2 - hlCol1 )/(ConnectFour.TOKENS_TO_WIN-1);
+            int drow = (hlRow2 - hlRow1 )/(ConnectFour.TOKENS_TO_WIN-1);
+            int col =  hlCol1;
+            int row = hlRow1;
+            for (int i = 0; i < ConnectFour.TOKENS_TO_WIN; i++) {
+                temp.x = col*tokenSize;
+                temp.y = height - (row+1)*tokenSize;
+                token = board.getToken(col, row);
+                paintToken(g2, token, temp.x, temp.y);
+                col += dcol;
+                row += drow;
+
+            }
+
+        }
+
     }
 
     public void paintInputToken(Graphics2D g2) {
