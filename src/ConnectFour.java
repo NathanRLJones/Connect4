@@ -198,23 +198,23 @@ public class ConnectFour {
 	 * Method to undo a move
 	 */
 	public void undo() {
-		// if (!moveHistory.isEmpty()) {
-		// 	Move lastMove = moveHistory.pop();
-		// 	board.removeToken(lastMove.getColumn());
-		// 	undoneMoves.add(lastMove);
-		// }
+		 if (!moveHistory.isEmpty()) {
+		 	Move lastMove = moveHistory.pop();
+		 	board.removeToken(lastMove.getColumn());
+		 	undoneMoves.add(lastMove);
+		 }
 	}
 
 	/**
 	 * Method to redo a move
 	 */
 	public void redo() {
-		// if (!undoneMoves.isEmpty()) {
-		// 	Move lastUndoneMove = undoneMoves.pop();
-		// 	board.placeToken(lastUndoneMove.getColumn(), 
-		// 					 lastUndoneMove.getToken());
-		// 	moveHistory.add(lastUndoneMove);
-		// }
+		 if (!undoneMoves.isEmpty()) {
+		 	Move lastUndoneMove = undoneMoves.pop();
+		 	board.placeToken(lastUndoneMove.getColumn(), 
+		 					 lastUndoneMove.getToken());
+		 	moveHistory.add(lastUndoneMove);
+		 }
 	}
 	
 }

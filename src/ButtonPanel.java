@@ -5,10 +5,12 @@ import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel implements ActionListener {
 
+	private ConnectFour game;
     private JButton button;
 
-    public ButtonPanel() {
+    public ButtonPanel(ConnectFour game) {
         super();
+        this.game = game;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(true);
         setBackground(Color.WHITE);
@@ -39,9 +41,9 @@ public class ButtonPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
         if (action.equals("Undo")) {
-            System.out.println("Button pressed!");
+            game.undo();
         } else if (action.equals("Redo")) {
-
+        	game.redo();
         }
     }
 

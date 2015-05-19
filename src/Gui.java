@@ -20,7 +20,7 @@ public class Gui implements GameListener, BoardListener{
 		mainFrame = new JFrame("Connect 4");
 		boardPanel = new BoardPanel(this);
 		infoPanel = new InfoPanel();
-        buttonPanel = new ButtonPanel();
+        buttonPanel = new ButtonPanel(game);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.game = game;
 
