@@ -61,22 +61,24 @@ public class ConnectFour {
 		suggestedMove = new Move(column, new Token(currentPlayer));
 	}
 
-	public void advance() {
-		int index;
-		Move move;
 
+
+	public void queryPlayers() {
+		Move move;
 		if (currentPlayer.isInteractive()) {
 			move = suggestedMove;
 		} else {
 			move = currentPlayer.getMove(getBoard(), players);
 		}
-
 		System.out.println("Adding a token: " + currentPlayer.getName());
 		board.placeToken(move.getColumn(), move.getToken());
 		moveHistory.add(move);
 		undoneMoves.clear();
-
 		listener.tokenPlaced(move.getColumn(), move.getToken());
+	}
+
+	public void advance() {
+		int index;
 		if (!isGameOver()) {
 			// Move to a new player
 			index = (players.indexOf(currentPlayer) + 1) % players.size();

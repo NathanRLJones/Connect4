@@ -24,6 +24,12 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     private int height;                         // Board height pixels
     private int x;                              // Board X coordinate
     private int y;                              // Board Y coordinate
+    private int hlCol1;                         // Hightlight col1
+    private int hlRow1;                         // Hightlight row1
+    private int hlCol2;                         // Hightlight col2
+    private int hlRow2;                         // Hightlight row2
+    private boolean hasHighlight;               // Hightlight visible
+
 
 
 	/**
@@ -69,6 +75,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
 
         if (name.equals("place")) {
             board.placeToken(column, token);
+            listener.placedAnimationComplete();
         } else if (name.equals("remove")) {
             board.removeToken(column);
         }
@@ -198,6 +205,12 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         int diff = (int)(tokenSize * 0.15);
         int size = tokenSize - diff*2;
         circle.setFrame(x+diff, y+diff, size, size);
+        g2.setColor(token.getColor().darker());
+        g2.fill(circle);
+        
+        diff = (int)(tokenSize * 0.20);
+        size = tokenSize - diff*2;
+        circle.setFrame(x+diff, y+diff, size, size);
         g2.setColor(token.getColor());
         g2.fill(circle);
     }
@@ -213,8 +226,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             return;
 
         // interactive state
-        int column = getColumnNumber();    
-        if (!board.isColumnFull(column)){
+        int column = getColumnNumber();
+        if (board.isValidColumn(column) && !board.isColumnFull(column)){
             input = null;
             listener.columnSelected(column);
         }

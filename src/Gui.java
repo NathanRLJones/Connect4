@@ -32,7 +32,11 @@ public class Gui implements GameListener, BoardListener{
 	}
 
     public void tokenPlaced(int column, Token token) {
-        boardPanel.placeToken(column, token);
+        boardPanel.placeToken(column, token);        
+    }
+
+    public void placedAnimationComplete() {
+        game.advance();
     }
 
     public void tokenRemoved(int column) {
@@ -41,11 +45,11 @@ public class Gui implements GameListener, BoardListener{
 
     public void newTurn(Player player) {
         //TODO set label for whose turn
-    	infoPanel.setTurnLabel(player.getName() + "'s turn!");
+    	infoPanel.setStatusLabel(player.getName() + "'s turn!");
         if (player.isInteractive()){
             boardPanel.setInput(new Token(player));
         } else {
-            game.advance();
+            game.queryPlayers();
         }
     }
 
@@ -56,18 +60,16 @@ public class Gui implements GameListener, BoardListener{
 
     public void gameWon(Player player, 
                         int col1, int row1, int col2, int row2) {
-        System.out.println(player.getName() + " has won!");
-        //TODO
+        infoPanel.setStatusLabel(player.getName() + " has won!");
     }
 
     public void gameDrawn() {
-        System.out.println("Game is drawn!");
-        //TODO
+        infoPanel.setStatusLabel("Game is drawn!");
     }
 
     public void columnSelected(int column) {
         game.setInputSuggestion(column);
-        game.advance();
+        game.queryPlayers();
     }
 	
 	public void display() {
