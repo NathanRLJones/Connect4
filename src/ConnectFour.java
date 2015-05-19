@@ -120,8 +120,9 @@ public class ConnectFour {
 		int NWCount = checkValidTokenSeries(lastPlayer, column, row, -1, 1);
 		
 		//> is used instead of >= because the last placed token will be counted twice
-		if(NECount + SECount > TOKENS_TO_WIN) return true;
+		if(NECount + SWCount > TOKENS_TO_WIN) return true;
 		if(ECount + WCount > TOKENS_TO_WIN) return true;
+		if(NWCount + SECount > TOKENS_TO_WIN) return true;
 		
 		if(SCount >= TOKENS_TO_WIN) return true;
 		
