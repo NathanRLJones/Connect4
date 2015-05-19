@@ -22,11 +22,10 @@ public class InfoPanel extends JPanel {
         add(Box.createVerticalGlue());
         
         JPanel topPanel = new JPanel();
-        topPanel.setOpaque(true);
-        topPanel.setBackground(Color.WHITE);
+        topPanel.setOpaque(false);
         
         statusLabel = new JLabel();
-        statusLabel.setFont(new Font("Arial", Font.PLAIN, 32));
+        statusLabel.setFont(new Font("Arial", Font.BOLD, 32));
         topPanel.add(statusLabel);
         
         add(topPanel);
@@ -38,6 +37,10 @@ public class InfoPanel extends JPanel {
 	
 	public void setStatusLabel(String text) {
 		statusLabel.setText(text);
+	}
+	
+	public void setStatusLabelColor(Color color) {
+		statusLabel.setForeground(color);
 	}
 	
 }
