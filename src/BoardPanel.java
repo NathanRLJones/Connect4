@@ -75,6 +75,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
 
         if (name.equals("place")) {
             board.placeToken(column, token);
+            listener.placedAnimationComplete();
         } else if (name.equals("remove")) {
             board.removeToken(column);
         }
