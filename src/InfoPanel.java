@@ -32,7 +32,7 @@ public class InfoPanel extends JPanel {
     }
 
 	public Dimension getPreferredSize() {
-        return new Dimension(500,50);
+        return new Dimension(500, 50);
     }
 	
 	public void setStatusLabel(String text) {
