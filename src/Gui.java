@@ -62,6 +62,7 @@ public class Gui implements GameListener, BoardListener{
     public void gameWon(Player player, 
                         int col1, int row1, int col2, int row2) {
         infoPanel.setStatusLabel(player.getName() + " has won!");
+        boardPanel.highlightConnected(col1, row1, col2, row2);
     }
 
     public void gameDrawn() {
