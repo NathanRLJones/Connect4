@@ -54,14 +54,18 @@ public class AIPlayer implements Player {
 		return new Move(maxScoreColumn, token);
 	}
 
-	private int calculateScore(){
+	private ArrayList<Integer> calculateScore(){
+		ArrayList<Integer> scores = new ArrayList<Integer>();
+		for(Player p : allPlayers){
+			scores.add(0);
+		}
+		
 		// 1 points for 1 aiPlayer token line with enough space for 4
 		// 4 points for 2 aiPlayer token lines with enough space for 4
 		// 6 points for 3 aiPlayer token lines with enough space for 4
 		// 100 points for 4 aiPlayer token lines 
 		// negative points for above if tokens belong to another player
 		
-		int score = 0;
 		int height = board.getHeight();
 		int width = board.getWidth();
 		int noOfTokens = 0;;
@@ -79,26 +83,21 @@ public class AIPlayer implements Player {
 					break;
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
-					if (prevTokenOwner == this){
-						switch(noOfTokens){
-						case 1: score+=1;
-						break;
-						case 2: score+=4;
-						break;
-						case 3: score+=6;
-						break;
-						default: break;
-						}
+					int scoreChange = 0;
+					switch(noOfTokens){
+					case 1: scoreChange = 1;
+					break;
+					case 2: scoreChange = 4;
+					break;
+					case 3: scoreChange = 6;
+					break;
+					default: break;
 					}
-					else if (prevTokenOwner != null){
-						switch(noOfTokens){
-						case 1: score-=1;
-						break;
-						case 2: score-=4;
-						break;
-						case 3: score-=6;
-						break;
-						default: break;
+					for(int i = 0; i < allPlayers.size(); i++){	
+						if(prevTokenOwner == allPlayers.get(i)){
+							scores.set(i, scores.get(i) + scoreChange);
+						}else{
+							scores.set(i, scores.get(i) - scoreChange);
 						}
 					}
 					break;
@@ -106,8 +105,13 @@ public class AIPlayer implements Player {
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
 					if(noOfTokens == TOKENS_TO_WIN){
-						if(currTokenOwner == this) score+=100;
-						else score-=100;
+						for(int i = 0; i < allPlayers.size(); i++){	
+							if(prevTokenOwner == allPlayers.get(i)){
+								scores.set(i, scores.get(i) + 100);
+							}else{
+								scores.set(i, scores.get(i) - 100);
+							}
+						}
 						break;
 					}
 				}
@@ -128,26 +132,21 @@ public class AIPlayer implements Player {
 					break;
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
-					if (prevTokenOwner == this){
-						switch(noOfTokens){
-						case 1: score+=1;
-						break;
-						case 2: score+=4;
-						break;
-						case 3: score+=6;
-						break;
-						default: break;
-						}
+					int scoreChange = 0;
+					switch(noOfTokens){
+					case 1: scoreChange = 1;
+					break;
+					case 2: scoreChange = 4;
+					break;
+					case 3: scoreChange = 6;
+					break;
+					default: break;
 					}
-					else if (prevTokenOwner != null){
-						switch(noOfTokens){
-						case 1: score-=1;
-						break;
-						case 2: score-=4;
-						break;
-						case 3: score-=6;
-						break;
-						default: break;
+					for(int i = 0; i < allPlayers.size(); i++){	
+						if(prevTokenOwner == allPlayers.get(i)){
+							scores.set(i, scores.get(i) + scoreChange);
+						}else{
+							scores.set(i, scores.get(i) - scoreChange);
 						}
 					}
 					break;
@@ -155,8 +154,13 @@ public class AIPlayer implements Player {
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
 					if(noOfTokens == TOKENS_TO_WIN){
-						if(currTokenOwner == this) score+=100;
-						else score-=100;
+						for(int i = 0; i < allPlayers.size(); i++){	
+							if(prevTokenOwner == allPlayers.get(i)){
+								scores.set(i, scores.get(i) + 100);
+							}else{
+								scores.set(i, scores.get(i) - 100);
+							}
+						}
 						break;
 					}
 				}
@@ -182,26 +186,21 @@ public class AIPlayer implements Player {
 			if ((Math.min(row, (width - 1) - col) + 1) + noOfTokens >= TOKENS_TO_WIN){
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
-					if (prevTokenOwner == this){
-						switch(noOfTokens){
-						case 1: score+=1;
-						break;
-						case 2: score+=4;
-						break;
-						case 3: score+=6;
-						break;
-						default: break;
-						}
+					int scoreChange = 0;
+					switch(noOfTokens){
+					case 1: scoreChange = 1;
+					break;
+					case 2: scoreChange = 4;
+					break;
+					case 3: scoreChange = 6;
+					break;
+					default: break;
 					}
-					else if (prevTokenOwner != null){
-						switch(noOfTokens){
-						case 1: score-=1;
-						break;
-						case 2: score-=4;
-						break;
-						case 3: score-=6;
-						break;
-						default: break;
+					for(int i = 0; i < allPlayers.size(); i++){	
+						if(prevTokenOwner == allPlayers.get(i)){
+							scores.set(i, scores.get(i) + scoreChange);
+						}else{
+							scores.set(i, scores.get(i) - scoreChange);
 						}
 					}
 					break;
@@ -209,8 +208,13 @@ public class AIPlayer implements Player {
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
 					if(noOfTokens == TOKENS_TO_WIN){
-						if(currTokenOwner == this) score+=100;
-						else score-=100;
+						for(int i = 0; i < allPlayers.size(); i++){	
+							if(prevTokenOwner == allPlayers.get(i)){
+								scores.set(i, scores.get(i) + 100);
+							}else{
+								scores.set(i, scores.get(i) - 100);
+							}
+						}
 						break;
 					}
 				}
@@ -257,26 +261,21 @@ public class AIPlayer implements Player {
 			if ((Math.min((height - 1) -row, (width - 1) - col) + 1) + noOfTokens >= TOKENS_TO_WIN){
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
-					if (prevTokenOwner == this){
-						switch(noOfTokens){
-						case 1: score+=1;
-						break;
-						case 2: score+=4;
-						break;
-						case 3: score+=6;
-						break;
-						default: break;
-						}
+					int scoreChange = 0;
+					switch(noOfTokens){
+					case 1: scoreChange = 1;
+					break;
+					case 2: scoreChange = 4;
+					break;
+					case 3: scoreChange = 6;
+					break;
+					default: break;
 					}
-					else if (prevTokenOwner != null){
-						switch(noOfTokens){
-						case 1: score-=1;
-						break;
-						case 2: score-=4;
-						break;
-						case 3: score-=6;
-						break;
-						default: break;
+					for(int i = 0; i < allPlayers.size(); i++){	
+						if(prevTokenOwner == allPlayers.get(i)){
+							scores.set(i, scores.get(i) + scoreChange);
+						}else{
+							scores.set(i, scores.get(i) - scoreChange);
 						}
 					}
 					break;
@@ -284,8 +283,13 @@ public class AIPlayer implements Player {
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
 					if(noOfTokens == TOKENS_TO_WIN){
-						if(currTokenOwner == this) score+=100;
-						else score-=100;
+						for(int i = 0; i < allPlayers.size(); i++){	
+							if(prevTokenOwner == allPlayers.get(i)){
+								scores.set(i, scores.get(i) + 100);
+							}else{
+								scores.set(i, scores.get(i) - 100);
+							}
+						}
 						break;
 					}
 				}
@@ -319,7 +323,7 @@ public class AIPlayer implements Player {
 			}
 		}
 		
-		return score;
+		return scores;
 	}
 	
 	@Override
