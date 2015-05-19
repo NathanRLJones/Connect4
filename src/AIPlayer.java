@@ -13,6 +13,7 @@ public class AIPlayer implements Player {
 	Board board;
 	List<Player> allPlayers;
 	int noOfPlayers;
+	int aITurnInd;
 	
 	public AIPlayer(String aiName, Color aiColor, int difficultyLevel){
 		name = aiName;
@@ -30,9 +31,9 @@ public class AIPlayer implements Player {
 		Token token = new Token(this);
 		int maxScoreColumn = -1;
 		int maxScore = Integer.MIN_VALUE;
-		int currTurnInd = players.indexOf(this);
-		int nextTurnInd = currTurnInd+1;
-		Player nextPlayer = players.get(nextTurnInd%noOfPlayers);
+		aITurnInd = players.indexOf(this);
+		int nextTurnInd = (aITurnInd+1)%noOfPlayers;
+		Player nextPlayer = players.get(nextTurnInd);
 		int newScore;
 		
 		
@@ -43,7 +44,7 @@ public class AIPlayer implements Player {
 				if(noOfPlayers == 2)
 					newScore = alphaBetaSearch(Integer.MIN_VALUE, Integer.MAX_VALUE, 0, nextPlayer);
 				else
-					newScore = minMaxSearch(0, nextPlayer).get(currTurnInd);
+					newScore = minMaxSearch(0, nextPlayer).get(aITurnInd);
 				if(newScore > maxScore){
 					maxScore = newScore;
 					maxScoreColumn = i;
@@ -475,25 +476,20 @@ public class AIPlayer implements Player {
 		}		
 		return score;
 	}*/
-	
-	private ArrayList<Integer> minMaxCalculateScore(){
-		//TODO
-		return null;
-	}
-	
+
 	private ArrayList<Integer> minMaxSearch(int depth, Player currTurn){
 		ArrayList<Integer> availableColumns = new ArrayList<>();
 		Token token = new Token(currTurn);
 		int currTurnInd = allPlayers.indexOf(currTurn);
-		int nextTurnInd = currTurnInd + 1;
-		Player nextTurn = allPlayers.get(nextTurnInd%allPlayers.size());
+		int nextTurnInd = (currTurnInd + 1)%noOfPlayers;
+		Player nextTurn = allPlayers.get(nextTurnInd);
 		int maxScore = Integer.MIN_VALUE;
 		ArrayList<Integer> bestScoreList = null;
 		ArrayList<Integer> currScoreList;
 		int currScore;
 		
 		if(depth == difficultyLevel || isGameOver())
-			return minMaxCalculateScore();
+			return calculateScore();
 		for(int i = 0; i < board.getWidth(); i++){
 			if(!board.isColumnFull(i))
 				availableColumns.add(i);
@@ -522,15 +518,15 @@ public class AIPlayer implements Player {
 		ArrayList<Integer> availableColumns = new ArrayList<>();
 		Token token = new Token(currTurn);
 		int score;
-		int nextTurnInd = allPlayers.indexOf(currTurn) + 1;
+		int nextTurnInd = (allPlayers.indexOf(currTurn) + 1)%noOfPlayers;
 		Player nextTurn = allPlayers.get(nextTurnInd);
 		if(beta<=alpha){
 			return currTurn==this ? Integer.MAX_VALUE: Integer.MIN_VALUE;
 		}
 		if(depth == this.depth || isGameOver()){
-			//System.out.println(minMaxCalculateScore());
+			//System.out.println(calculateScore());
 			//board.printBoard();
-			return calculateScore();
+			return calculateScore().get(aITurnInd);
 		}
 		for(int i = 0; i < board.getWidth(); i++){
 			if(!board.isColumnFull(i))
