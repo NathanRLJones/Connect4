@@ -34,8 +34,8 @@ public class ConnectFour {
 
 		ArrayList<Player> players;
 		players = new ArrayList<Player>();
-		players.add(new HumanPlayer("p1", Color.RED));
-		players.add(new RandomAI("a1", Color.YELLOW));
+		players.add(new HumanPlayer("p1", new Color(255, 106, 52)));
+		players.add(new RandomAI("a1", new Color(255, 217, 0)));
 		newGame(7, 6, players);
 	}
 
