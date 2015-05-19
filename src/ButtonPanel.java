@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class ButtonPanel extends JPanel {
 
-    private JLabel statusLabel;
+    private JButton button;
 
     public ButtonPanel() {
         super();
@@ -17,15 +17,15 @@ public class ButtonPanel extends JPanel {
         bottomPanel.setOpaque(true);
         bottomPanel.setBackground(Color.WHITE);
 
+        button = new JButton("UNDO");
+        button.setActionCommand("Undo");
+
         add(bottomPanel);
+        add(button);
     }
 
     public Dimension getPreferredSize() {
         return new Dimension(500,50);
-    }
-
-    public void setStatusLabel(String text) {
-        statusLabel.setText(text);
     }
 
 }
