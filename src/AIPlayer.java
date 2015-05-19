@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -10,29 +9,41 @@ public class AIPlayer implements Player {
 	String name;
 	Color color;
 	int difficultyLevel; //Depth of search 
+	int depth;
 	Board board;
-	LinkedList<Player> allPlayers;
+	List<Player> allPlayers;
 	int noOfPlayers;
 	
 	public AIPlayer(String aiName, Color aiColor, int difficultyLevel){
 		name = aiName;
 		color = aiColor;
-		this.difficultyLevel = difficultyLevel; //TODO: difficultyLevel * noOfPlayers
+		this.difficultyLevel = difficultyLevel; 
 	}
 	
 	@Override
 	public Move getMove(BoardInterface currBoard, List<Player> players) {
 		board = getBoardCopy(currBoard);
+		allPlayers = players;
+		noOfPlayers = players.size();
+		depth = difficultyLevel*noOfPlayers;
 		int columns = board.getWidth();
 		Token token = new Token(this);
 		int maxScoreColumn = -1;
 		int maxScore = Integer.MIN_VALUE;
-		Player nextPlayer = null; // TODO: need to get the order of players
+		int currTurnInd = players.indexOf(this);
+		int nextTurnInd = currTurnInd+1;
+		Player nextPlayer = players.get(nextTurnInd%noOfPlayers);
+		int newScore;
+		
+		
 		
 		for(int i = 0; i < columns; i++){
 			if(!board.isColumnFull(i)){
 				board.placeToken(i, token);
-				int newScore = minMaxSearch(0, nextPlayer);
+				if(noOfPlayers == 2)
+					newScore = alphaBetaSearch(Integer.MIN_VALUE, Integer.MAX_VALUE, 0, nextPlayer);
+				else
+					newScore = minMaxSearch(0, nextPlayer).get(currTurnInd);
 				if(newScore > maxScore){
 					maxScore = newScore;
 					maxScoreColumn = i;
@@ -427,12 +438,13 @@ public class AIPlayer implements Player {
 		 }
 		 return false;
 	}
-	
+	/*
 	private int minMaxSearch(int depth, Player currTurn){
 		ArrayList<Integer> availableColumns = new ArrayList<>();
 		Token token = new Token(currTurn);
 		int score;
-		Player nextTurn = null; //TODO: get a list of all players
+		int nextTurnInd = allPlayers.indexOf(currTurn) + 1;
+		Player nextTurn = allPlayers.get(nextTurnInd%allPlayers.size());
 		
 		if(depth == difficultyLevel || isGameOver())
 			return calculateScore();
@@ -458,25 +470,63 @@ public class AIPlayer implements Player {
 			}
 		}		
 		return score;
+	}*/
+	
+	private ArrayList<Integer> minMaxCalculateScore(){
+		//TODO
+		return null;
 	}
+	
+	private ArrayList<Integer> minMaxSearch(int depth, Player currTurn){
+		ArrayList<Integer> availableColumns = new ArrayList<>();
+		Token token = new Token(currTurn);
+		int currTurnInd = allPlayers.indexOf(currTurn);
+		int nextTurnInd = currTurnInd + 1;
+		Player nextTurn = allPlayers.get(nextTurnInd%allPlayers.size());
+		int maxScore = Integer.MIN_VALUE;
+		ArrayList<Integer> bestScoreList = null;
+		ArrayList<Integer> currScoreList;
+		int currScore;
+		
+		if(depth == difficultyLevel || isGameOver())
+			return minMaxCalculateScore();
+		for(int i = 0; i < board.getWidth(); i++){
+			if(!board.isColumnFull(i))
+				availableColumns.add(i);
+		}		
+		if(availableColumns.size()==0){
+			bestScoreList = new ArrayList<>();
+			for(int i = 0; i < allPlayers.size(); i++)
+				bestScoreList.add(0);
+			return bestScoreList;
+		}
+		for(int column:availableColumns){
+			board.placeToken(column, token);
+			currScoreList = minMaxSearch(depth+1, nextTurn);
+			currScore = currScoreList.get(currTurnInd);
+			if(currScore > maxScore){
+				maxScore = currScore;
+				bestScoreList = currScoreList;
+			}
+			board.removeToken(column);
+		}	
+		return bestScoreList;
+	}
+	
 	//For 2-player option
 	private int alphaBetaSearch(int alpha, int beta, int depth, Player currTurn){
 		ArrayList<Integer> availableColumns = new ArrayList<>();
 		Token token = new Token(currTurn);
 		int score;
-		Player nextTurn;
+		int nextTurnInd = allPlayers.indexOf(currTurn) + 1;
+		Player nextTurn = allPlayers.get(nextTurnInd);
 		if(beta<=alpha){
 			return currTurn==this ? Integer.MAX_VALUE: Integer.MIN_VALUE;
 		}
 		if(depth == this.depth || isGameOver()){
-			//System.out.println(calculateScore());
+			//System.out.println(minMaxCalculateScore());
 			//board.printBoard();
 			return calculateScore();
-		}
-		if(currTurn == this){
-			nextTurn = opponent;
-		}else{
-			nextTurn = this;
 		}
 		for(int i = 0; i < board.getWidth(); i++){
 			if(!board.isColumnFull(i))
