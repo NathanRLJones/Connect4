@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.List;
 import java.util.Random;
 
 
@@ -15,7 +16,7 @@ public class RandomAI implements Player {
 	}
 	
 	@Override
-	public Move getMove(BoardInterface board) {
+	public Move getMove(BoardInterface board, List<Player> players) {
 		Move randomMove = null;
 		
 		int col = rand.nextInt(board.getWidth());

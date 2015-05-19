@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.List;
 
 public class HumanPlayer implements Player {
 
@@ -21,7 +22,7 @@ public class HumanPlayer implements Player {
 	 * Method to get player's move
 	 * @return the move of the player
 	 */
-	public Move getMove(BoardInterface board) {
+	public Move getMove(BoardInterface board, List<Player> players) {
 		return null;
 	}
 	
