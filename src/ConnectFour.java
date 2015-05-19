@@ -82,15 +82,14 @@ public class ConnectFour {
 			index = (players.indexOf(currentPlayer) + 1) % players.size();
 			currentPlayer = players.get(index);
 			listener.newTurn(currentPlayer);
-		} else {
-			// TODO check whether it was a draw or win and by who
-		}
+		} 
 	}
 
 
 	/**
 	 * Method to check if the game is over
 	 * @return true if there are TOKENS_TO_WIN connected same-colour tokens
+	 *			 or if the game is drawn
 	 *         false otherwise
 	 */
 	public boolean isGameOver() {
@@ -98,35 +97,68 @@ public class ConnectFour {
 		//find the column and row of the last move made
 		Player lastPlayer = moveHistory.peek().getToken().getOwner();
 		int height = board.getHeight();
-		int column = moveHistory.peek().getColumn();
+		int width = board.getWidth();
+		int col = moveHistory.peek().getColumn();
 		int row;
 		for(row = height - 1; row >= 0; row--){
-			if(board.isSpaceTaken(column, row)){
+			if(board.isSpaceTaken(col, row)){
 				break;
 			}
 		}
-
-		int dRow = 0;
-		int dCol = 0;
 		
 		//create counters that will store the number of valid tokens in a row in the given direction
 		//No need to check directly above the token, since it was the last token placed.
-		int NECount = checkValidTokenSeries(lastPlayer, column, row, 1, 1);
-		int ECount = checkValidTokenSeries(lastPlayer, column, row, 1, 0);
-		int SECount = checkValidTokenSeries(lastPlayer, column, row, 1, -1);
-		int SCount = checkValidTokenSeries(lastPlayer, column, row, 0, -1);
-		int SWCount = checkValidTokenSeries(lastPlayer, column, row, -1, -1);
-		int WCount = checkValidTokenSeries(lastPlayer, column, row, -1, 0);
-		int NWCount = checkValidTokenSeries(lastPlayer, column, row, -1, 1);
-		
+		int NECount = checkValidTokenSeries(lastPlayer, col, row, 1, 1);
+		int ECount  = checkValidTokenSeries(lastPlayer, col, row, 1, 0);
+
+
+		int SECount = checkValidTokenSeries(lastPlayer, col, row, 1, -1);
+		int SCount  = checkValidTokenSeries(lastPlayer, col, row, 0, -1);
+		int SWCount = checkValidTokenSeries(lastPlayer, col, row, -1, -1);
+		int WCount  = checkValidTokenSeries(lastPlayer, col, row, -1, 0);
+		int NWCount = checkValidTokenSeries(lastPlayer, col, row, -1, 1);
+
 		//> is used instead of >= because the last placed token will be counted twice
-		if(NECount + SWCount > TOKENS_TO_WIN) return true;
-		if(ECount + WCount > TOKENS_TO_WIN) return true;
-		if(NWCount + SECount > TOKENS_TO_WIN) return true;
-		
-		if(SCount >= TOKENS_TO_WIN) return true;
-		
-		return false;
+		if (NECount + SWCount > TOKENS_TO_WIN) {
+			listener.gameWon(lastPlayer, 
+							 col + NECount - 1,	 // col1
+							 row + NECount - 1,  // row1
+							 col - SWCount + 1,  // col2
+							 row - SWCount + 1); // row2
+			return true;
+		} else if (ECount + WCount > TOKENS_TO_WIN) {
+			listener.gameWon(lastPlayer, 
+							 col + ECount - 1,   // col1
+							 row, 				 // row1
+							 col - WCount + 1,   // col2
+							 row);				 // row2
+
+			return true;
+		} else if (NWCount + SECount > TOKENS_TO_WIN) {
+			listener.gameWon(lastPlayer, 
+							 col + SECount - 1,	 // col1
+							 row - SECount + 1,  // row1
+							 col - NWCount + 1,  // col2
+							 row + NWCount - 1); // row2
+
+			return true;
+		} else if(SCount >= TOKENS_TO_WIN) {
+			listener.gameWon(lastPlayer, 
+							 col,                // col1
+							 row,				 // row1
+							 col,				 // col2
+							 row - SCount + 1);  // row2
+			return true;
+		}
+
+		// Check for a tie
+		for (col = 0; col < width; col++) {
+			if (!board.isColumnFull(col))
+				return false;
+		}
+		listener.gameDrawn();
+
+		return true;
 	}
 	
 	/**
