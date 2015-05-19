@@ -68,7 +68,7 @@ public class ConnectFour {
 		if (currentPlayer.isInteractive()) {
 			move = suggestedMove;
 		} else {
-			move = currentPlayer.getMove(getBoard());
+			move = currentPlayer.getMove(getBoard(), players);
 		}
 
 		System.out.println("Adding a token: " + currentPlayer.getName());

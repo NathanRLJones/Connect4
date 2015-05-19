@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class AIPlayer implements Player {
@@ -20,7 +21,7 @@ public class AIPlayer implements Player {
 	}
 	
 	@Override
-	public Move getMove(BoardInterface currBoard) {
+	public Move getMove(BoardInterface currBoard, List<Player> players) {
 		board = getBoardCopy(currBoard);
 		int columns = board.getWidth();
 		Token token = new Token(this);
