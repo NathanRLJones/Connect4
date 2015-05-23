@@ -1,51 +1,39 @@
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class AIPlayer implements Player {
-	public static final int TOKENS_TO_WIN = 4;
+public class MoveGenie {
 	
-	String name;
-	Color color;
-	int difficultyLevel; //Depth of search 
-	int depth;
-	Board board;
-	List<Player> allPlayers;
-	int noOfPlayers;
-	int aITurnInd;
+	static Board board;
+	static List<Player> allPlayers;
+	static int noOfPlayers;
+	static int aITurnInd;
 	
-	public AIPlayer(String aiName, Color aiColor, int difficultyLevel){
-		name = aiName;
-		color = aiColor;
-		this.difficultyLevel = difficultyLevel; 
-	}
-	
-	@Override
-	public Move getMove(BoardInterface currBoard, List<Player> players) {
+	public static Move getMove(BoardInterface currBoard, int maxDepth, List<Player> players, Player target) {
+		
+		System.out.println("Getting move, depth of: " + maxDepth);
+		
 		board = getBoardCopy(currBoard);
 		allPlayers = players;
 		noOfPlayers = players.size();
-		depth = difficultyLevel*noOfPlayers;
 		int columns = board.getWidth();
-		Token token = new Token(this);
+		Token token = new Token(target);
 		int maxScoreColumn = -1;
 		int maxScore = Integer.MIN_VALUE;
-		aITurnInd = players.indexOf(this);
+		aITurnInd = players.indexOf(target);
 		int nextTurnInd = (aITurnInd+1)%noOfPlayers;
 		Player nextPlayer = players.get(nextTurnInd);
 		int newScore;
 		
-		return MoveGenie.getMove(currBoard, difficultyLevel, players, this);
 		
-		/*
+		
 		for(int i = 0; i < columns; i++){
 			if(!board.isColumnFull(i)){
 				board.placeToken(i, token);
 				if(noOfPlayers == 2)
-					newScore = alphaBetaSearch(Integer.MIN_VALUE, Integer.MAX_VALUE, 0, nextPlayer);
+					newScore = alphaBetaSearch(Integer.MIN_VALUE, Integer.MAX_VALUE, 0, maxDepth, nextPlayer, target);
 				else
-					newScore = minMaxSearch(0, nextPlayer).get(aITurnInd);
+					newScore = minMaxSearch(0, maxDepth, nextPlayer).get(aITurnInd);
 				if(newScore > maxScore){
 					maxScore = newScore;
 					maxScoreColumn = i;
@@ -54,10 +42,9 @@ public class AIPlayer implements Player {
 			}
 		}
 		return new Move(maxScoreColumn, token);
-		*/
 	}
 
-	private ArrayList<Integer> calculateScore(){
+	private static ArrayList<Integer> calculateScore(){
 		ArrayList<Integer> scores = new ArrayList<Integer>();
 		for(Player p : allPlayers){
 			scores.add(0);
@@ -82,7 +69,7 @@ public class AIPlayer implements Player {
 			prevTokenOwner = null;
 			currTokenOwner = null;
 			for (int row = 0; row < height; row++) {
-				if (height - row + noOfTokens < TOKENS_TO_WIN)
+				if (height - row + noOfTokens < ConnectFour.TOKENS_TO_WIN)
 					break;
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
@@ -107,7 +94,7 @@ public class AIPlayer implements Player {
 				}
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
-					if(noOfTokens == TOKENS_TO_WIN){
+					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
 								scores.set(i, scores.get(i) + 100);
@@ -131,7 +118,7 @@ public class AIPlayer implements Player {
 			prevTokenOwner = null;
 			currTokenOwner = null;
 			for (int col = 0; col < height; col++) {
-				if (width - col + noOfTokens < TOKENS_TO_WIN)
+				if (width - col + noOfTokens < ConnectFour.TOKENS_TO_WIN)
 					break;
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
@@ -156,7 +143,7 @@ public class AIPlayer implements Player {
 				}
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
-					if(noOfTokens == TOKENS_TO_WIN){
+					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
 								scores.set(i, scores.get(i) + 100);
@@ -174,19 +161,17 @@ public class AIPlayer implements Player {
 			}
 		}
 		
-		//TODO: diagonal scores
-		
 		//check for scores NW/SE diagonally
 		int startCol = 0;
 		int col = startCol;
-		int startRow = TOKENS_TO_WIN - 1;
+		int startRow = ConnectFour.TOKENS_TO_WIN - 1;
 		int row = startRow;
 		noOfTokens = 0;
 		
-		while(height + width - startCol - startRow - 2 < TOKENS_TO_WIN){
+		while(height + width - startCol - startRow - 2 < ConnectFour.TOKENS_TO_WIN){
 			
 			//do scoring if we are in a workable positon
-			if ((Math.min(row, (width - 1) - col) + 1) + noOfTokens >= TOKENS_TO_WIN){
+			if ((Math.min(row, (width - 1) - col) + 1) + noOfTokens >= ConnectFour.TOKENS_TO_WIN){
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
 					int scoreChange = 0;
@@ -210,7 +195,7 @@ public class AIPlayer implements Player {
 				}
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
-					if(noOfTokens == TOKENS_TO_WIN){
+					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
 								scores.set(i, scores.get(i) + 100);
@@ -254,14 +239,14 @@ public class AIPlayer implements Player {
 		//check for scores NE/SW diagonally
 		startCol = 0;
 		col = startCol;
-		startRow = (height - 1) - (TOKENS_TO_WIN - 1);
+		startRow = (height - 1) - (ConnectFour.TOKENS_TO_WIN - 1);
 		row = startRow;
 		noOfTokens = 0;
 		
-		while(!(row == 0 && col + TOKENS_TO_WIN == width)){
+		while(!(row == 0 && col + ConnectFour.TOKENS_TO_WIN == width)){
 			
 			//do scoring if we are in a workable positon
-			if ((Math.min((height - 1) -row, (width - 1) - col) + 1) + noOfTokens >= TOKENS_TO_WIN){
+			if ((Math.min((height - 1) -row, (width - 1) - col) + 1) + noOfTokens >= ConnectFour.TOKENS_TO_WIN){
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
 					int scoreChange = 0;
@@ -285,7 +270,7 @@ public class AIPlayer implements Player {
 				}
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
-					if(noOfTokens == TOKENS_TO_WIN){
+					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
 								scores.set(i, scores.get(i) + 100);
@@ -329,22 +314,9 @@ public class AIPlayer implements Player {
 		return scores;
 	}
 	
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public Color getColor() {
-		return color;
-	}
-
-	@Override
-	public boolean isInteractive() {
-		return false;
-	}
 	
-	private boolean isGameOver(){
+	private static boolean isGameOver(){
+		
 		int height = board.getHeight();
 		int width = board.getWidth();
 		Player possibleWinner;
@@ -352,19 +324,19 @@ public class AIPlayer implements Player {
 		Player currPlayer;
 		Token currToken;
 		
-		// Check for a vertical line of TOKENS_TO_WIN same-colour tokens
+		// Check for a vertical line of ConnectFour.TOKENS_TO_WIN same-colour tokens
 		for(int col = 0; col < width; col++){
 		 	noOfTokens = 0;
 		 	possibleWinner = null;
 		 	for(int row = 0; row < height; row++){
-		 		if(height-row+noOfTokens < TOKENS_TO_WIN) break;
+		 		if(height-row+noOfTokens < ConnectFour.TOKENS_TO_WIN) break;
 				
 		 		currToken = board.getToken(col, row);
 		 		if(currToken == null) break;
 		 		currPlayer = currToken.getOwner();
 		 		if(currPlayer == possibleWinner){
 		 			noOfTokens++;
-		 			if(noOfTokens == TOKENS_TO_WIN) {
+		 			if(noOfTokens == ConnectFour.TOKENS_TO_WIN) {
 		 				return true;
 		 			}
 		 		}else{
@@ -374,12 +346,12 @@ public class AIPlayer implements Player {
 		 	}
 		 }
 
-		 //Check for a horizontal line of TOKENS_TO_WIN same-colour tokens
+		 //Check for a horizontal line of ConnectFour.TOKENS_TO_WIN same-colour tokens
 		 for(int row = 0; row < height; row++){
 		 	noOfTokens = 0;
 		 	possibleWinner = null;
 		 	for(int col = 0; col < width; col++){
-		 		if(width-col+noOfTokens < TOKENS_TO_WIN) break;
+		 		if(width-col+noOfTokens < ConnectFour.TOKENS_TO_WIN) break;
 				
 				currToken = board.getToken(col, row);
 		 		if (currToken == null){
@@ -390,7 +362,7 @@ public class AIPlayer implements Player {
 		 		currPlayer = currToken.getOwner();
 		 		if(currPlayer == possibleWinner){
 		 			noOfTokens++;
-		 			if(noOfTokens == TOKENS_TO_WIN) {
+		 			if(noOfTokens == ConnectFour.TOKENS_TO_WIN) {
 		 				return true;
 		 			}
 		 		}else{
@@ -400,21 +372,21 @@ public class AIPlayer implements Player {
 		 	}
 		 }
 		
-		 //Check for a diagonal line of TOKENS_TO_WIN same-colour tokens
-		 for(int col = 0; col < width - TOKENS_TO_WIN+1; col++) {
+		 //Check for a diagonal line of ConnectFour.TOKENS_TO_WIN same-colour tokens
+		 for(int col = 0; col < width - ConnectFour.TOKENS_TO_WIN+1; col++) {
 		 	for(int row = 0; row < height; row++) {
 		 		// Check diagonally upwards
 		 		possibleWinner = null;
 		 		noOfTokens = 0;
-		 		if(row < height - TOKENS_TO_WIN+1) {
-		 			for(int offset = 0; offset < TOKENS_TO_WIN; offset++) {
+		 		if(row < height - ConnectFour.TOKENS_TO_WIN+1) {
+		 			for(int offset = 0; offset < ConnectFour.TOKENS_TO_WIN; offset++) {
 		 				currToken = board.getToken(col+offset, row+offset);
 		 				if(currToken == null) break;
 		 				currPlayer = currToken.getOwner();
 		 				if(offset == 0) possibleWinner = currPlayer;
 		 				if(currPlayer == possibleWinner){
 		 					noOfTokens++;
-		 					if(noOfTokens == TOKENS_TO_WIN) {
+		 					if(noOfTokens == ConnectFour.TOKENS_TO_WIN) {
 		 						return true;
 		 					}
 		 				}else{
@@ -425,15 +397,15 @@ public class AIPlayer implements Player {
 		 		// Check diagonally downwards
 		 		possibleWinner = null;
 		 		noOfTokens = 0;
-		 		if(row > TOKENS_TO_WIN-2) {
-		 			for(int offset = 0; offset < TOKENS_TO_WIN; offset++) {
+		 		if(row > ConnectFour.TOKENS_TO_WIN-2) {
+		 			for(int offset = 0; offset < ConnectFour.TOKENS_TO_WIN; offset++) {
 		 				currToken = board.getToken(col+offset, row-offset);
 		 				if(currToken == null) break;
 		 				currPlayer = currToken.getOwner();
 		 				if(offset == 0) possibleWinner = currPlayer;
 		 				if(currPlayer == possibleWinner){
 		 					noOfTokens++;
-		 					if(noOfTokens == TOKENS_TO_WIN) {
+		 					if(noOfTokens == ConnectFour.TOKENS_TO_WIN) {
 		 						return true;
 		 					}
 		 				}else{
@@ -445,41 +417,9 @@ public class AIPlayer implements Player {
 		 }
 		 return false;
 	}
-	/*
-	private int minMaxSearch(int depth, Player currTurn){
-		ArrayList<Integer> availableColumns = new ArrayList<>();
-		Token token = new Token(currTurn);
-		int score;
-		int nextTurnInd = allPlayers.indexOf(currTurn) + 1;
-		Player nextTurn = allPlayers.get(nextTurnInd%allPlayers.size());
-		
-		if(depth == difficultyLevel || isGameOver())
-			return calculateScore();
-		for(int i = 0; i < board.getWidth(); i++){
-			if(!board.isColumnFull(i))
-				availableColumns.add(i);
-		}		
-		if(availableColumns.size()==0) 
-			return 0;
-		if(currTurn == this){
-			score = Integer.MIN_VALUE;
-			for(int column:availableColumns){
-				board.placeToken(column, token);
-				score = Math.max(score, minMaxSearch(depth+1, nextTurn));
-				board.removeToken(column);
-			}
-		}else{
-			score = Integer.MAX_VALUE;
-			for(int column: availableColumns){
-				board.placeToken(column, token);
-				score = Math.min(score, minMaxSearch(depth+1, nextTurn));
-				board.removeToken(column);
-			}
-		}		
-		return score;
-	}*/
 
-	private ArrayList<Integer> minMaxSearch(int depth, Player currTurn){
+	private static ArrayList<Integer> minMaxSearch(int depth, int maxDepth, Player currTurn){
+		
 		ArrayList<Integer> availableColumns = new ArrayList<>();
 		Token token = new Token(currTurn);
 		int currTurnInd = allPlayers.indexOf(currTurn);
@@ -490,7 +430,7 @@ public class AIPlayer implements Player {
 		ArrayList<Integer> currScoreList;
 		int currScore;
 		
-		if(depth == this.depth || isGameOver())
+		if(depth == maxDepth || isGameOver())
 			return calculateScore();
 		for(int i = 0; i < board.getWidth(); i++){
 			if(!board.isColumnFull(i))
@@ -504,7 +444,7 @@ public class AIPlayer implements Player {
 		}
 		for(int column:availableColumns){
 			board.placeToken(column, token);
-			currScoreList = minMaxSearch(depth+1, nextTurn);
+			currScoreList = minMaxSearch(depth+1, maxDepth, nextTurn);
 			currScore = currScoreList.get(currTurnInd);
 			if(currScore > maxScore){
 				maxScore = currScore;
@@ -516,16 +456,17 @@ public class AIPlayer implements Player {
 	}
 	
 	//For 2-player option
-	private int alphaBetaSearch(int alpha, int beta, int depth, Player currTurn){
+	private static int alphaBetaSearch(int alpha, int beta, int depth, int maxDepth, Player currTurn, Player target){
+		
 		ArrayList<Integer> availableColumns = new ArrayList<>();
 		Token token = new Token(currTurn);
 		int score;
 		int nextTurnInd = (allPlayers.indexOf(currTurn) + 1)%noOfPlayers;
 		Player nextTurn = allPlayers.get(nextTurnInd);
 		if(beta<=alpha){
-			return currTurn==this ? Integer.MAX_VALUE: Integer.MIN_VALUE;
+			return currTurn==target ? Integer.MAX_VALUE: Integer.MIN_VALUE;
 		}
-		if(depth == this.depth || isGameOver()){
+		if(depth == maxDepth || isGameOver()){
 			//System.out.println(calculateScore());
 			//board.printBoard();
 			return calculateScore().get(aITurnInd);
@@ -536,11 +477,11 @@ public class AIPlayer implements Player {
 		}		
 		if(availableColumns.size()==0) 
 			return 0;
-		if(currTurn == this){
+		if(currTurn == target){
 			score = Integer.MIN_VALUE;
 			for(int column:availableColumns){
 				board.placeToken(column, token);
-				score = Math.max(score, alphaBetaSearch(alpha, beta, depth+1, nextTurn));
+				score = Math.max(score, alphaBetaSearch(alpha, beta, depth+1, maxDepth, nextTurn, target));
 				alpha = Math.max(score, alpha);
 				board.removeToken(column);
 				if(score==Integer.MAX_VALUE || score == Integer.MIN_VALUE) break;
@@ -549,7 +490,7 @@ public class AIPlayer implements Player {
 			score = Integer.MAX_VALUE;
 			for(int column: availableColumns){
 				board.placeToken(column, token);
-				score = Math.min(score, alphaBetaSearch(alpha, beta, depth+1, nextTurn));
+				score = Math.min(score, alphaBetaSearch(alpha, beta, depth+1, maxDepth, nextTurn, target));
 				beta = Math.min(score, beta);
 				board.removeToken(column);
 				if(score==Integer.MAX_VALUE || score == Integer.MIN_VALUE) break;
@@ -558,7 +499,7 @@ public class AIPlayer implements Player {
 		return score;
 	}
 	
-	private Board getBoardCopy(BoardInterface currBoard){
+	private static Board getBoardCopy(BoardInterface currBoard){
 		int width = currBoard.getWidth();
 		int height = currBoard.getHeight();
 		Board newBoard = new Board(width, height);
