@@ -16,6 +16,7 @@ public class MoveGenie {
 		board = getBoardCopy(currBoard);
 		allPlayers = players;
 		noOfPlayers = players.size();
+		int depth = noOfPlayers * maxDepth;
 		int columns = board.getWidth();
 		Token token = new Token(target);
 		int maxScoreColumn = -1;
@@ -31,9 +32,9 @@ public class MoveGenie {
 			if(!board.isColumnFull(i)){
 				board.placeToken(i, token);
 				if(noOfPlayers == 2)
-					newScore = alphaBetaSearch(Integer.MIN_VALUE, Integer.MAX_VALUE, 0, maxDepth, nextPlayer, target);
+					newScore = alphaBetaSearch(Integer.MIN_VALUE, Integer.MAX_VALUE, depth, nextPlayer, target);
 				else
-					newScore = minMaxSearch(0, maxDepth, nextPlayer).get(aITurnInd);
+					newScore = minMaxSearch(depth, nextPlayer).get(aITurnInd);
 				if(newScore > maxScore){
 					maxScore = newScore;
 					maxScoreColumn = i;
@@ -418,7 +419,9 @@ public class MoveGenie {
 		 return false;
 	}
 
-	private static ArrayList<Integer> minMaxSearch(int depth, int maxDepth, Player currTurn){
+	private static ArrayList<Integer> minMaxSearch(int depth, Player currTurn){
+		
+
 		
 		ArrayList<Integer> availableColumns = new ArrayList<>();
 		Token token = new Token(currTurn);
@@ -430,7 +433,7 @@ public class MoveGenie {
 		ArrayList<Integer> currScoreList;
 		int currScore;
 		
-		if(depth == maxDepth || isGameOver())
+		if(depth == 0 || isGameOver())
 			return calculateScore();
 		for(int i = 0; i < board.getWidth(); i++){
 			if(!board.isColumnFull(i))
@@ -444,7 +447,7 @@ public class MoveGenie {
 		}
 		for(int column:availableColumns){
 			board.placeToken(column, token);
-			currScoreList = minMaxSearch(depth+1, maxDepth, nextTurn);
+			currScoreList = minMaxSearch(depth-1, nextTurn);
 			currScore = currScoreList.get(currTurnInd);
 			if(currScore > maxScore){
 				maxScore = currScore;
@@ -456,7 +459,7 @@ public class MoveGenie {
 	}
 	
 	//For 2-player option
-	private static int alphaBetaSearch(int alpha, int beta, int depth, int maxDepth, Player currTurn, Player target){
+	private static int alphaBetaSearch(int alpha, int beta, int depth, Player currTurn, Player target){
 		
 		ArrayList<Integer> availableColumns = new ArrayList<>();
 		Token token = new Token(currTurn);
@@ -466,7 +469,7 @@ public class MoveGenie {
 		if(beta<=alpha){
 			return currTurn==target ? Integer.MAX_VALUE: Integer.MIN_VALUE;
 		}
-		if(depth == maxDepth || isGameOver()){
+		if(depth == 0 || isGameOver()){
 			//System.out.println(calculateScore());
 			//board.printBoard();
 			return calculateScore().get(aITurnInd);
@@ -481,7 +484,7 @@ public class MoveGenie {
 			score = Integer.MIN_VALUE;
 			for(int column:availableColumns){
 				board.placeToken(column, token);
-				score = Math.max(score, alphaBetaSearch(alpha, beta, depth+1, maxDepth, nextTurn, target));
+				score = Math.max(score, alphaBetaSearch(alpha, beta, depth-1, nextTurn, target));
 				alpha = Math.max(score, alpha);
 				board.removeToken(column);
 				if(score==Integer.MAX_VALUE || score == Integer.MIN_VALUE) break;
@@ -490,7 +493,7 @@ public class MoveGenie {
 			score = Integer.MAX_VALUE;
 			for(int column: availableColumns){
 				board.placeToken(column, token);
-				score = Math.min(score, alphaBetaSearch(alpha, beta, depth+1, maxDepth, nextTurn, target));
+				score = Math.min(score, alphaBetaSearch(alpha, beta, depth-1, nextTurn, target));
 				beta = Math.min(score, beta);
 				board.removeToken(column);
 				if(score==Integer.MAX_VALUE || score == Integer.MIN_VALUE) break;

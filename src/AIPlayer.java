@@ -23,6 +23,9 @@ public class AIPlayer implements Player {
 	
 	@Override
 	public Move getMove(BoardInterface currBoard, List<Player> players) {
+		return MoveGenie.getMove(currBoard, difficultyLevel, players, this);
+		
+		/*
 		board = getBoardCopy(currBoard);
 		allPlayers = players;
 		noOfPlayers = players.size();
@@ -36,9 +39,6 @@ public class AIPlayer implements Player {
 		Player nextPlayer = players.get(nextTurnInd);
 		int newScore;
 		
-		return MoveGenie.getMove(currBoard, difficultyLevel, players, this);
-		
-		/*
 		for(int i = 0; i < columns; i++){
 			if(!board.isColumnFull(i)){
 				board.placeToken(i, token);
@@ -55,6 +55,7 @@ public class AIPlayer implements Player {
 		}
 		return new Move(maxScoreColumn, token);
 		*/
+		
 	}
 
 	private ArrayList<Integer> calculateScore(){
