@@ -200,6 +200,7 @@ public class ConnectFour {
 	 * Method to undo a move
 	 */
 	public void undo() {
+		 int index;
 		 if (!moveHistory.isEmpty()) {
 		 	Move lastMove = moveHistory.pop();
 		 	board.removeToken(lastMove.getColumn());
