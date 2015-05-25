@@ -243,7 +243,9 @@ public class ConnectFour {
 	 * Method to restart the game
 	 */
 	public void restart() {
-
+		while (!moveHistory.isEmpty()) {
+			undo();
+		}
 	}
 	
 }

@@ -36,8 +36,8 @@ public class ButtonPanel extends JPanel implements ActionListener {
         c.insets = new Insets(10,10,0,10);
 
         JButton restartButton = new JButton("RESTART");
-        redoButton.addActionListener(this);
-        redoButton.setActionCommand("Restart");
+        restartButton.addActionListener(this);
+        restartButton.setActionCommand("Restart");
         c.insets = new Insets(10,10,0,10);
 
         bottomPanel.add(undoButton, c);
