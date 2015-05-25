@@ -200,16 +200,18 @@ public class ConnectFour {
 	 * Method to undo a move
 	 */
 	public void undo() {
-		int index;
-		index = ((players.indexOf(currentPlayer) + 1) % players.size()) - 2;
-
 		 if (!moveHistory.isEmpty()) {
 			 Move lastMove = moveHistory.pop();
+			 Token prevToken = lastMove.getToken();
+			 Player prevPlayer = prevToken.getOwner();
 			 board.removeToken(lastMove.getColumn());
 		 	undoneMoves.add(lastMove);
 			 listener.tokenRemoved(lastMove.getColumn());
-			 currentPlayer = players.get(index);
-			 listener.newTurn(currentPlayer);
+			 if (!prevPlayer.isInteractive()) {
+				 undo();
+			 } else {
+				 listener.newTurn(prevPlayer);
+			 }
 		 }
 	}
 
