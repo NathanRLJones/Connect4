@@ -1,8 +1,7 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.awt.Color;
-import javax.swing.SwingUtilities;
 
 
 public class ConnectFour {
@@ -226,6 +225,18 @@ public class ConnectFour {
 		 	board.placeToken(lastUndoneMove.getColumn(), 
 		 					 lastUndoneMove.getToken());
 		 	moveHistory.add(lastUndoneMove);
+			 Token undoneToken = lastUndoneMove.getToken();
+			 Player undonePlayer = undoneToken.getOwner();
+			 board.placeToken(lastUndoneMove.getColumn(), undoneToken);
+			 undoneMoves.add(lastUndoneMove);
+			 listener.tokenPlaced(lastUndoneMove.getColumn(), undoneToken);
+			 int index = (players.indexOf(currentPlayer) + players.size()) % players.size();
+			 currentPlayer = players.get(index);
+			 if(!undonePlayer.isInteractive()) {
+				 redo();
+			 } else {
+				 listener.newTurn(currentPlayer);
+			 }
 		 }
 	}
 	

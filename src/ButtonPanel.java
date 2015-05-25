@@ -19,7 +19,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setOpaque(true);
-        bottomPanel.setBackground(Color.BLACK);
+        bottomPanel.setBackground(Color.WHITE);
         //bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setLayout(new GridBagLayout());
 
