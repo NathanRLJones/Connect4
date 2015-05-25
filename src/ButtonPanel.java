@@ -35,8 +35,14 @@ public class ButtonPanel extends JPanel implements ActionListener {
         redoButton.setActionCommand("Redo");
         c.insets = new Insets(10,10,0,10);
 
+        JButton restartButton = new JButton("RESTART");
+        redoButton.addActionListener(this);
+        redoButton.setActionCommand("Restart");
+        c.insets = new Insets(10,10,0,10);
+
         bottomPanel.add(undoButton, c);
         bottomPanel.add(redoButton, c);
+        bottomPanel.add(restartButton, c);
         //bottomPanel.add(undoButton);
         //bottomPanel.add(redoButton);
         add(bottomPanel);
@@ -54,6 +60,8 @@ public class ButtonPanel extends JPanel implements ActionListener {
             game.undo();
         } else if (action.equals("Redo")) {
         	game.redo();
+        } else if (action.equals("Restart")) {
+            game.restart();
         }
     }
 
