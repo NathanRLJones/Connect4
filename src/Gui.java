@@ -44,7 +44,6 @@ public class Gui implements GameListener, BoardListener{
     }
 
     public void newTurn(Player player) {
-        //TODO set label for whose turn
     	infoPanel.setStatusLabel(player.getName() + "'s turn!");
     	infoPanel.setStatusLabelColor(player.getColor().darker());
         if (player.isInteractive()){
