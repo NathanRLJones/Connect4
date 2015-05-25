@@ -129,8 +129,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             animation.start();
     }
 
-    public void removeToken(int column) {
-        actions.add(new BoardAction("remove", column, null));
+    public void removeToken(int column, Token token) {
+        actions.add(new BoardAction("remove", column, token));
         if (actions.size() == 1)
             animation.start();
     }

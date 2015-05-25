@@ -205,8 +205,8 @@ public class ConnectFour {
 			 Token prevToken = lastMove.getToken();
 			 Player prevPlayer = prevToken.getOwner();
 			 board.removeToken(lastMove.getColumn());
-		 	undoneMoves.add(lastMove);
-			 listener.tokenRemoved(lastMove.getColumn());
+			 undoneMoves.add(lastMove);
+			 listener.tokenRemoved(lastMove.getColumn(), prevToken);
 			 if (!prevPlayer.isInteractive()) {
 				 undo();
 			 } else {
