@@ -199,7 +199,7 @@ public class ConnectFour {
 	 * Method to undo a move
 	 */
 	public void undo() {
-		if (!moveHistory.isEmpty()) {
+		if (!moveHistory.isEmpty() && !isGameOver()) {
 			Move lastMove = moveHistory.pop();
 			Token prevToken = lastMove.getToken();
 			Player prevPlayer = prevToken.getOwner();
@@ -220,7 +220,7 @@ public class ConnectFour {
 	 * Method to redo a move
 	 */
 	public void redo() {
-		 if (!undoneMoves.isEmpty()) {
+		 if (!undoneMoves.isEmpty() && !isGameOver()) {
 		 	Move lastUndoneMove = undoneMoves.pop();
 		 	board.placeToken(lastUndoneMove.getColumn(), 
 		 					 lastUndoneMove.getToken());
