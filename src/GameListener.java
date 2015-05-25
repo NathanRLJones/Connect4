@@ -3,7 +3,7 @@ public interface GameListener {
 
     public void tokenPlaced(int column, Token token);
 
-    public void tokenRemoved(int column);
+    public void tokenRemoved(int column, Token token);
 
     public void newTurn(Player player);
 
