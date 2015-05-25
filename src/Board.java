@@ -131,5 +131,18 @@ public class Board implements BoardInterface{
 		}
 		return true;
 	}
-
+	
+	public void printBoard(){
+		for(int row = height-1; row >=0; row--){
+			for(int column = 0; column < width; column++){
+				Player player = whoOwnsToken(column, row);
+				if(player == null)
+					System.out.print("_");
+				else
+					System.out.print(player.getName());
+			}
+			System.out.print("\n");
+		}
+		System.out.print("\n");
+	}
 }

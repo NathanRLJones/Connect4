@@ -35,7 +35,7 @@ public class ConnectFour {
 		ArrayList<Player> players;
 		players = new ArrayList<Player>();
 		players.add(new HumanPlayer("p1", Color.RED));
-		players.add(new HumanPlayer("p1", Color.GREEN));
+		players.add(new HumanPlayer("p2", Color.GREEN));
 		players.add(new AIPlayer("a1", Color.YELLOW, 2));
 		//players.add(new AIPlayer("p2", Color.BLUE, 2));
 		//players.add(new AIPlayer("a2", Color.GREEN, 2));
