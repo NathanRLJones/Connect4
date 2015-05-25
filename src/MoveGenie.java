@@ -25,8 +25,6 @@ public class MoveGenie {
 		int nextTurnInd = (aITurnInd+1)%noOfPlayers;
 		Player nextPlayer = players.get(nextTurnInd);
 		int newScore;
-		int mirrorColumn;
-		Player mirrorPlayer;
 		
 		
 		
@@ -66,7 +64,9 @@ public class MoveGenie {
 		int noOfTokens = 0;;
 		Player prevTokenOwner = null;
 		Player currTokenOwner = null;
-		//int emptySpaces = 0;
+		Player prevSpace = null;
+		int prevEmptySpaces = 0;
+		int currEmptySpaces = 0;
 
 		// Check for scores vertically
 		for (int col = 0; col < width; col++) {
@@ -116,17 +116,63 @@ public class MoveGenie {
 				}
 			}
 		}
-		
+
 		//check for scores horizontally
-		for (int row = 0; row < width; row++) {
+		for (int row = 0; row < height; row++) {
 			noOfTokens = 0;
 			prevTokenOwner = null;
 			currTokenOwner = null;
-			for (int col = 0; col < height; col++) {
-				if (width - col + noOfTokens < ConnectFour.TOKENS_TO_WIN)
-					break;
+			prevSpace = null;
+			prevEmptySpaces = 0;
+			currEmptySpaces = 0;
+			for (int col = 0; col < width; col++){
+				if(width-col+noOfTokens+prevEmptySpaces+currEmptySpaces < ConnectFour.TOKENS_TO_WIN) break;
+				
 				currTokenOwner = board.whoOwnsToken(col, row);
+				
 				if(currTokenOwner == null){
+					currEmptySpaces++;
+				}
+				else if(currTokenOwner == prevSpace){
+					noOfTokens++;
+					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
+						for(int i = 0; i < allPlayers.size(); i++){	
+							if(prevTokenOwner == allPlayers.get(i))
+								scores.set(i, scores.get(i) + 100);
+							else
+								scores.set(i, scores.get(i) - 100);
+						}
+					noOfTokens = 0;
+					prevEmptySpaces = 0;
+					prevTokenOwner = null;
+					}
+				}else{
+					if(currEmptySpaces+prevEmptySpaces+noOfTokens >= ConnectFour.TOKENS_TO_WIN){
+						int scoreChange = 0;
+						switch(noOfTokens){
+						case 1: scoreChange = 1;
+						break;
+						case 2: scoreChange = 4;
+						break;
+						case 3: scoreChange = 6;
+						break;
+						default: break;
+						}
+						for(int i = 0; i < allPlayers.size(); i++){	
+							if(prevTokenOwner == allPlayers.get(i)){
+								scores.set(i, scores.get(i) + scoreChange);
+							}else{
+								scores.set(i, scores.get(i) - scoreChange);
+							}
+						}
+					}
+					prevEmptySpaces = prevSpace==null ? currEmptySpaces:0;
+					currEmptySpaces = 0;
+					prevTokenOwner = currTokenOwner;
+					noOfTokens = 1;
+				}
+				prevSpace = currTokenOwner;
+				if(col==width-1 && currEmptySpaces+prevEmptySpaces+noOfTokens >= ConnectFour.TOKENS_TO_WIN){
 					int scoreChange = 0;
 					switch(noOfTokens){
 					case 1: scoreChange = 1;
@@ -144,28 +190,11 @@ public class MoveGenie {
 							scores.set(i, scores.get(i) - scoreChange);
 						}
 					}
-					break;
-				}
-				if (currTokenOwner == prevTokenOwner) {
-					noOfTokens++;
-					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
-						for(int i = 0; i < allPlayers.size(); i++){	
-							if(prevTokenOwner == allPlayers.get(i)){
-								scores.set(i, scores.get(i) + 100);
-							}else{
-								scores.set(i, scores.get(i) - 100);
-							}
-						}
-						break;
-					}
-				}
-				else{
-					prevTokenOwner = currTokenOwner;
-					noOfTokens = 1;
 				}
 			}
+
 		}
-		
+	
 		//check for scores NW/SE diagonally
 		int startCol = 0;
 		int col = startCol;
@@ -315,7 +344,7 @@ public class MoveGenie {
 				currTokenOwner = null;
 			}
 		}
-		
+	
 		return scores;
 	}
 	
@@ -438,8 +467,17 @@ public class MoveGenie {
 		int currScore;
 		int boardWidth = board.getWidth();
 		
-		if(depth == 0 || isGameOver())
-			return calculateScore();
+		if(depth == 0 || isGameOver()){
+			ArrayList<Integer> scores = calculateScore();
+			if(isGameOver()){
+			for(int i = 0 ; i < scores.size(); i++){
+				System.out.println(allPlayers.get(i).getName() + " = " + scores.get(i));
+			}
+			board.printBoard();
+			System.out.println("\n\n");
+			}
+			return scores;
+		}
 		for(int i = 0; i < board.getWidth(); i++){
 			if(!board.isColumnFull(i))
 				availableColumns.add(i);
