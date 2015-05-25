@@ -86,7 +86,7 @@ public class ConnectFour {
 			index = (players.indexOf(currentPlayer) + 1) % players.size();
 			currentPlayer = players.get(index);
 			listener.newTurn(currentPlayer);
-		} 
+		}
 	}
 
 
@@ -98,6 +98,8 @@ public class ConnectFour {
 	 */
 	public boolean isGameOver() {
 	
+		if(moveHistory.isEmpty()) return false;
+		
 		//find the column and row of the last move made
 		Player lastPlayer = moveHistory.peek().getToken().getOwner();
 		int height = board.getHeight();
@@ -220,24 +222,15 @@ public class ConnectFour {
 	 * Method to redo a move
 	 */
 	public void redo() {
-		 if (!undoneMoves.isEmpty() && !isGameOver()) {
-		 	Move lastUndoneMove = undoneMoves.pop();
+		if (!undoneMoves.isEmpty() && !isGameOver()) {
+			Move lastUndoneMove = undoneMoves.pop();
 		 	board.placeToken(lastUndoneMove.getColumn(), 
 		 					 lastUndoneMove.getToken());
 		 	moveHistory.add(lastUndoneMove);
-			 Token undoneToken = lastUndoneMove.getToken();
-			 Player undonePlayer = undoneToken.getOwner();
-			 board.placeToken(lastUndoneMove.getColumn(), undoneToken);
-			 undoneMoves.add(lastUndoneMove);
-			 listener.tokenPlaced(lastUndoneMove.getColumn(), undoneToken);
-			 int index = (players.indexOf(currentPlayer) + players.size()) % players.size();
-			 currentPlayer = players.get(index);
-			 if(!undonePlayer.isInteractive()) {
-				 redo();
-			 } else {
-				 listener.newTurn(currentPlayer);
-			 }
-		 }
+		 	Token undoneToken = lastUndoneMove.getToken();
+			undoneMoves.add(lastUndoneMove);
+			listener.tokenPlaced(lastUndoneMove.getColumn(), undoneToken);
+		}
 	}
 	
 }
