@@ -111,6 +111,25 @@ public class Board implements BoardInterface{
 		if(token == null) return null;
 		return token.getOwner();
 	}
-
+	
+	public boolean isSymmetric(){
+		int mirrorCol;
+		for(int col = 0; col < Math.ceil(width/2); col++){
+			mirrorCol = width-1-col;
+			if(!areColumnsEqual(col, mirrorCol)) return false;
+		}
+		return true;
+	}
+	
+	public boolean areColumnsEqual(int col1, int col2){
+		ArrayList<Token> column1 = columns.get(col1);
+		ArrayList<Token> column2 = columns.get(col2);
+		
+		if(column1.size()!=column2.size()) return false;
+		for(int row = 0; row<column1.size(); row++){
+			if(whoOwnsToken(col1, row) != whoOwnsToken(col2, row)) return false;
+		}
+		return true;
+	}
 
 }

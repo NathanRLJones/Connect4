@@ -25,6 +25,8 @@ public class MoveGenie {
 		int nextTurnInd = (aITurnInd+1)%noOfPlayers;
 		Player nextPlayer = players.get(nextTurnInd);
 		int newScore;
+		int mirrorColumn;
+		Player mirrorPlayer;
 		
 		
 		
@@ -41,6 +43,8 @@ public class MoveGenie {
 				}
 				board.removeToken(i);
 			}
+			if (i == Math.ceil(columns / 2) - 1 && board.isSymmetric())
+				break;
 		}
 		return new Move(maxScoreColumn, token);
 	}
@@ -432,6 +436,9 @@ public class MoveGenie {
 		ArrayList<Integer> bestScoreList = null;
 		ArrayList<Integer> currScoreList;
 		int currScore;
+		int boardWidth = board.getWidth();
+		int mirrorColumn;
+		Player mirrorPlayer;
 		
 		if(depth == 0 || isGameOver())
 			return calculateScore();
@@ -453,8 +460,24 @@ public class MoveGenie {
 				maxScore = currScore;
 				bestScoreList = currScoreList;
 			}
-			board.removeToken(column);
-		}	
+			if (column == Math.ceil(boardWidth / 2) - 1 && board.isSymmetric())
+				break;
+		}
+		 if (!board.isSymmetric()) return bestScoreList;
+		 // skip possible boards if their mirror image has already been considered
+		 for (int column = (int) Math.ceil(boardWidth / 2); column < boardWidth; column++) { 
+			 mirrorColumn = boardWidth - 1 - column;
+			 mirrorPlayer = board.whoOwnsToken(mirrorColumn, board.getColumnLevel(mirrorColumn)); 
+			 if(mirrorPlayer==null) 
+				 continue;
+			 board.placeToken(column, token); 
+			 currScoreList = minMaxSearch(depth - 1, nextTurn); 
+			 currScore = currScoreList.get(currTurnInd); 
+			 if(currScore > maxScore) { 
+				 maxScore = currScore; bestScoreList = currScoreList; 
+				 } 
+			 board.removeToken(column); 
+		}
 		return bestScoreList;
 	}
 	
