@@ -121,8 +121,9 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         newGamePanel.add(coolNewPanel, BorderLayout.SOUTH);
         
         dialogPanel.setPanels(basePanel, newGamePanel);
-        mainFrame.getContentPane().add(dialogPanel, BorderLayout.CENTER);
-
+        
+        //mainFrame.getContentPane().add(dialogPanel, BorderLayout.CENTER);
+        mainFrame.add(dialogPanel);        
 		mainFrame.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);

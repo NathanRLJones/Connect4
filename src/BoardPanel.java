@@ -330,6 +330,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
 
     public void componentResized(ComponentEvent e) {
         calculateMetrics();
+        repaint();
     };
 
     public void mouseDragged(MouseEvent e) {};
