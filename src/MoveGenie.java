@@ -209,7 +209,7 @@ public class MoveGenie {
 		// diagonal upward
 		
 	
-		for (int col = 0; col <= width - tokensToWin + 1; col++) {
+		for (int col = 0; col <= width - tokensToWin; col++) {
 			int maxRow = 0;
 			if(col == 0) { 
 				maxRow = height-tokensToWin-1;
@@ -296,19 +296,19 @@ public class MoveGenie {
 
 			}
 		}
-		
+	
 		//diagonal downwards
 		for (int col = 0; col <= width - tokensToWin ; col++) {
-			int minRow = height;
+			int minRow = height-1;
 			if(col == 0) { 
 				minRow = tokensToWin-1;
 			}
-			for(int row = height; row >= minRow; row--){
+			for(int row = height-1; row >= minRow; row--){
 				currEmptySpaces = 0;
 				prevEmptySpaces = 0;
 				prevSpace = null;
 				noOfTokens = 0;
-				int maxOffset = Math.min(row, width - col);
+				int maxOffset = Math.min(row+1, width - col);
 				for (int offset = 0; offset < maxOffset; offset++) {
 					currTokenOwner = board.whoOwnsToken(col + offset, row - offset);
 					if (currTokenOwner == null) {
@@ -697,6 +697,7 @@ public class MoveGenie {
 
 		if (depth == 0 || isGameOver()) {
 			ArrayList<Integer> scores = calculateScore();
+			/*
 			if (isGameOver()) {
 				for (int i = 0; i < scores.size(); i++) {
 					System.out.println(allPlayers.get(i).getName() + " = "
@@ -704,7 +705,7 @@ public class MoveGenie {
 				}
 				board.printBoard();
 				System.out.println("\n\n");
-			}
+			}*/
 			return scores;
 		}
 		for (int i = 0; i < board.getWidth(); i++) {
