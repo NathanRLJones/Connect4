@@ -53,8 +53,8 @@ public class Board implements BoardInterface{
 	 * @param column the column position on the board
 	 */
 	public void removeToken(int column) {
-		ArrayList<Token> levels = columns.get(column);
-		if(!levels.isEmpty()) levels.remove(levels.size()-1);
+		ArrayList<Token> level = columns.get(column);
+		if(!level.isEmpty()) level.remove(level.size()-1);
 	}
 
 	/**

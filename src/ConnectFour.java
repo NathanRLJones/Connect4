@@ -1,8 +1,7 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.awt.Color;
-import javax.swing.SwingUtilities;
 
 
 public class ConnectFour {
@@ -87,7 +86,7 @@ public class ConnectFour {
 			index = (players.indexOf(currentPlayer) + 1) % players.size();
 			currentPlayer = players.get(index);
 			listener.newTurn(currentPlayer);
-		} 
+		}
 	}
 
 
@@ -99,6 +98,8 @@ public class ConnectFour {
 	 */
 	public boolean isGameOver() {
 	
+		if(moveHistory.isEmpty()) return false;
+		
 		//find the column and row of the last move made
 		Player lastPlayer = moveHistory.peek().getToken().getOwner();
 		int height = board.getHeight();
@@ -200,23 +201,45 @@ public class ConnectFour {
 	 * Method to undo a move
 	 */
 	public void undo() {
-		 if (!moveHistory.isEmpty()) {
-		 	Move lastMove = moveHistory.pop();
-		 	board.removeToken(lastMove.getColumn());
-		 	undoneMoves.add(lastMove);
-		 }
+		if (!moveHistory.isEmpty() && !isGameOver()) {
+			Move lastMove = moveHistory.pop();
+			Token prevToken = lastMove.getToken();
+			Player prevPlayer = prevToken.getOwner();
+			board.removeToken(lastMove.getColumn());
+			undoneMoves.add(lastMove);
+			listener.tokenRemoved(lastMove.getColumn(), prevToken);
+			int index = (players.indexOf(currentPlayer) + players.size() - 1) % players.size();
+			currentPlayer = players.get(index);
+			if(!prevPlayer.isInteractive()) {
+				undo();
+			} else {
+				listener.newTurn(currentPlayer);
+			}
+		}
 	}
 
 	/**
 	 * Method to redo a move
 	 */
 	public void redo() {
-		 if (!undoneMoves.isEmpty()) {
-		 	Move lastUndoneMove = undoneMoves.pop();
+		if (!undoneMoves.isEmpty() && !isGameOver()) {
+			Move lastUndoneMove = undoneMoves.pop();
 		 	board.placeToken(lastUndoneMove.getColumn(), 
 		 					 lastUndoneMove.getToken());
 		 	moveHistory.add(lastUndoneMove);
-		 }
+		 	Token undoneToken = lastUndoneMove.getToken();
+			undoneMoves.add(lastUndoneMove);
+			listener.tokenPlaced(lastUndoneMove.getColumn(), undoneToken);
+		}
+	}
+	
+	/**
+	 * Method to restart the game
+	 */
+	public void restart() {
+		while (!moveHistory.isEmpty()) {
+			undo();
+		}
 	}
 	
 }
