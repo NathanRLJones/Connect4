@@ -68,11 +68,11 @@ class PlayerListPanel extends JLayeredPane
 
     private void resizePanels() {
         PlayerOptionsPanel pp;
-
         for (int i = 0; i < panels.size(); i++) {
             pp = panels.get(i);
             pp.setSize(new Dimension(getWidth(), panelHeight));
         }
+        validate();
     }
 
     public void newFrame() {

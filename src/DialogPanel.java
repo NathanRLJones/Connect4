@@ -46,6 +46,7 @@ class DialogPanel extends JLayeredPane
         int x = (getWidth() - size.width)/2;
         dialogPane.setLocation(x, 0);
         dialogPane.setSize(size);
+        validate();
     }
     
     public void showDialog(){
