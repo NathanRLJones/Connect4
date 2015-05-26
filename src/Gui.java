@@ -1,7 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.SwingUtilities;
 
 public class Gui implements GameListener, BoardListener{
@@ -13,7 +13,8 @@ public class Gui implements GameListener, BoardListener{
 	private BoardPanel boardPanel;
 	private InfoPanel infoPanel;
     private ButtonPanel buttonPanel;
-	private ConnectFour game;
+	private DialogPanel dialogPanel;
+    private ConnectFour game;
 	
 	public Gui(ConnectFour game) {
 
@@ -21,8 +22,13 @@ public class Gui implements GameListener, BoardListener{
 		boardPanel = new BoardPanel(this);
 		infoPanel = new InfoPanel();
         buttonPanel = new ButtonPanel(game);
+        dialogPanel = new DialogPanel();
+
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.game = game;
+
+
+
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -74,10 +80,16 @@ public class Gui implements GameListener, BoardListener{
     }
 	
 	public void display() {
+        JPanel basePanel = new JPanel(new BorderLayout());
+
+        
+        basePanel.add(infoPanel, BorderLayout.NORTH);
+        basePanel.add(buttonPanel, BorderLayout.SOUTH);
+        basePanel.add(boardPanel,BorderLayout.CENTER);
+        dialogPanel.setPanels(basePanel, new PlayerListPanel());
+        mainFrame.getContentPane().add(dialogPanel, BorderLayout.CENTER);
+
 		mainFrame.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-		mainFrame.getContentPane().add(infoPanel, BorderLayout.NORTH);
-        mainFrame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-		mainFrame.getContentPane().add(boardPanel,BorderLayout.CENTER);
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);

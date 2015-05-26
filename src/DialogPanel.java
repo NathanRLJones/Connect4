@@ -36,9 +36,8 @@ class DialogPanel extends JLayeredPane
         basePanel.setLocation(0, 0);
         add(basePanel, JLayeredPane.DEFAULT_LAYER);
         add(dialogPane, JLayeredPane.MODAL_LAYER);    
-        // dialogPane.setVisible(false);
+        dialogPane.setVisible(false);
         setPreferredSize(size);
-
     }
 
     private void resizePanels() {

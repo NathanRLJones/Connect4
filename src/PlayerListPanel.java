@@ -21,7 +21,7 @@ class PlayerListPanel extends JLayeredPane
         super();
         setBackground( Color.WHITE );
         setOpaque(true);
-        panels = new LinkedList<PlayerPanel>();
+        panels = new LinkedList<PlayerOptionsPanel>();
 
         addComponentListener(new ComponentAdapter(){
             public void componentResized(ComponentEvent e) {
@@ -43,8 +43,8 @@ class PlayerListPanel extends JLayeredPane
         //     addPlayerPanel(new PlayerPanel(c));
         // }
 
-        addPlayerPanel(new PlayerPanel("Player 1"));
-        addPlayerPanel(new PlayerPanel("Player 2"));
+        addPlayerPanel(new PlayerOptionsPanel("Player 1"));
+        addPlayerPanel(new PlayerOptionsPanel("Player 2"));
 
         animation = new Animation(this);
         animation.setDuration(150);
