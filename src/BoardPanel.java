@@ -214,7 +214,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             }
         }
         
-        if (hasHint) {
+        if (hasHint && !hasHighlight) {
         	alpha = 0.5f;
         	alcom = AlphaComposite.getInstance(
                     AlphaComposite.SRC_OVER, alpha);
