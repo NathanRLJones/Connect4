@@ -29,9 +29,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     private int hlCol2;                         // Hightlight col2
     private int hlRow2;                         // Hightlight row2
     private boolean hasHighlight;               // Hightlight visible
-
-
-
+    
+    private boolean hasHint;					// Hinted Token visible
+    private int hintCol, hintRow;				// Coordinates of hint token
+    private Token hintToken;
+    
 	/**
 	 * Constructor for a panel
 	 */
@@ -124,9 +126,18 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     public void placeToken(int column, Token token) {
+    	hasHint = false;
         actions.add(new BoardAction("place", column, token));
         if (actions.size() == 1)
             animation.start();
+    }
+    
+    public void placeHint(int column, Token token) {
+    	//actions.add(new BoardAction("hint"))
+    	hasHint = true;
+    	hintCol = column;
+    	hintRow = board.getColumnLevel(column);
+    	hintToken = token;
     }
 
     public void removeToken(int column, Token token) {
@@ -201,6 +212,23 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
                 temp.y = height - (j+1)*tokenSize;
                 paintToken(g2, token, temp.x, temp.y);
             }
+        }
+        
+        if (hasHint) {
+        	alpha = 0.5f;
+        	alcom = AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, alpha);
+        	
+        	g2.setComposite(alcom);
+        	
+        	temp.x = hintCol * tokenSize;
+        	temp.y = height - (hintRow+1)*tokenSize;
+        	paintToken(g2, hintToken, temp.x, temp.y);
+        	
+        	alcom = AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, 1f);
+        	
+        	g2.setComposite(alcom);
         }
 
         if (hasHighlight) {

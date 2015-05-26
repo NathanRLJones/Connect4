@@ -34,6 +34,10 @@ public class Gui implements GameListener, BoardListener{
     public void tokenPlaced(int column, Token token) {
         boardPanel.placeToken(column, token);        
     }
+    
+    public void tokenHinted(int column, Token token) {
+    	boardPanel.placeHint(column, token);
+    }
 
     public void placedAnimationComplete() {
         game.advance();

@@ -52,7 +52,7 @@ public class ConnectFour {
 		currentPlayer = players.get(0);
 		listener.gameStarted();
 		listener.newTurn(currentPlayer);
-
+		listener.tokenHinted(0, new Token(currentPlayer));
 	}
 
 	public BoardInterface getBoard() {
