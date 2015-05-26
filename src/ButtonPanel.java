@@ -9,6 +9,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
     private JButton redoButton;
     private JButton undoButton;
     private JButton restartButton;
+    private JButton newGameButton;
 
     public ButtonPanel(ConnectFour game) {
         super();
@@ -42,15 +43,16 @@ public class ButtonPanel extends JPanel implements ActionListener {
         restartButton.setActionCommand("Restart");
         c.insets = new Insets(10,10,0,10);
 
-        JButton restartButton = new JButton("NEW GAME");
-        restartButton.addActionListener(this);
-        restartButton.setActionCommand("NewGame");
+        newGameButton = new JButton("NEW GAME");
+        newGameButton.addActionListener(this);
+        newGameButton.setActionCommand("NewGame");
         c.insets = new Insets(10,10,0,10);
 
 
         bottomPanel.add(undoButton, c);
         bottomPanel.add(redoButton, c);
         bottomPanel.add(restartButton, c);
+        bottomPanel.add(newGameButton, c);
         //bottomPanel.add(undoButton);
         //bottomPanel.add(redoButton);
         add(bottomPanel);
