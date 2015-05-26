@@ -1,9 +1,11 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class Gui implements GameListener, BoardListener{
+public class Gui implements GameListener, BoardListener, ActionListener{
 
 	public static final int DEFAULT_WIDTH = 1024;
 	public static final int DEFAULT_HEIGHT = 800;
@@ -14,15 +16,18 @@ public class Gui implements GameListener, BoardListener{
     private ButtonPanel buttonPanel;
 	private DialogPanel dialogPanel;
     private ConnectFour game;
+    private PlayerListPanel plPanel;
 	
 	public Gui(ConnectFour game) {
 
 		mainFrame = new JFrame("Connect 4");
 		boardPanel = new BoardPanel(this);
 		infoPanel = new InfoPanel();
-        buttonPanel = new ButtonPanel(game);
+        buttonPanel = new ButtonPanel(game, this);
         dialogPanel = new DialogPanel();
-
+        plPanel = new PlayerListPanel();
+        
+        
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.game = game;
 
@@ -86,18 +91,51 @@ public class Gui implements GameListener, BoardListener{
     
 	public void display() {
         JPanel basePanel = new JPanel(new BorderLayout());
-
+        JPanel newGamePanel = new JPanel(new BorderLayout());
         
         basePanel.add(infoPanel, BorderLayout.NORTH);
         basePanel.add(buttonPanel, BorderLayout.SOUTH);
         basePanel.add(boardPanel,BorderLayout.CENTER);
-        dialogPanel.setPanels(basePanel, new PlayerListPanel());
+        
+        JButton startGameButton = new JButton("START GAME");           //Adding hint button
+        startGameButton.addActionListener(this);
+        startGameButton.setActionCommand("StartGame");
+        
+        newGamePanel.add(plPanel, BorderLayout.CENTER);
+        newGamePanel.add(startGameButton, BorderLayout.SOUTH);
+        
+        dialogPanel.setPanels(basePanel, newGamePanel);
         mainFrame.getContentPane().add(dialogPanel, BorderLayout.CENTER);
 
 		mainFrame.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+        String action = e.getActionCommand();
+        if (action.equals("Undo")) {
+            game.undo();
+        } else if (action.equals("Redo")) {
+        	game.redo();
+        } else if (action.equals("Restart")) {
+            game.restart();
+        } else if (action.equals("Hint")) {
+        	game.getHint();
+        } else if (action.equals("NewGame")) {
+        	//~~hide the board/game screen
+        	
+        	//System.out.println("NEW GAME");
+        	
+        	//show the game menu
+        	dialogPanel.showDialog();
+        } else if(action.equals("StartGame")) {
+        	dialogPanel.hideDialog();
+        	
+        	game.newGame(7, 6, plPanel.getPlayers());
+        }
 	}
 	
 }

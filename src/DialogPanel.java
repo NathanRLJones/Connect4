@@ -47,6 +47,14 @@ class DialogPanel extends JLayeredPane
         dialogPane.setLocation(x, 0);
         dialogPane.setSize(size);
     }
+    
+    public void showDialog(){
+    	dialogPane.setVisible(true);
+    }
+    
+    public void hideDialog(){
+    	dialogPane.setVisible(false);
+    }
 
     public void newFrame() {}
     public void lastFrame() {};

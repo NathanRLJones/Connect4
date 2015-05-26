@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonPanel extends JPanel implements ActionListener {
+public class ButtonPanel extends JPanel{
 
 	private ConnectFour game;
 	private JButton hintButton;
@@ -12,7 +12,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
     private JButton restartButton;
     private JButton newGameButton;
 
-    public ButtonPanel(ConnectFour game) {
+    public ButtonPanel(ConnectFour game, ActionListener actionListener) {
         super();
         this.game = game;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -30,27 +30,27 @@ public class ButtonPanel extends JPanel implements ActionListener {
         GridBagConstraints c = new GridBagConstraints();
 
         hintButton = new JButton("HINT");           //Adding hint button
-        hintButton.addActionListener(this);
+        hintButton.addActionListener(actionListener);
         hintButton.setActionCommand("Hint");
         c.insets = new Insets(10,10,0,10); 
         
         undoButton = new JButton("UNDO");           //Adding undo button
-        undoButton.addActionListener(this);
+        undoButton.addActionListener(actionListener);
         undoButton.setActionCommand("Undo");
         c.insets = new Insets(10,10,0,10);                  //Button extra space(top, left, bottom, right)
 
         redoButton = new JButton("REDO");
-        redoButton.addActionListener(this);
+        redoButton.addActionListener(actionListener);
         redoButton.setActionCommand("Redo");
         c.insets = new Insets(10,10,0,10);
 
         restartButton = new JButton("RESTART");
-        restartButton.addActionListener(this);
+        restartButton.addActionListener(actionListener);
         restartButton.setActionCommand("Restart");
         c.insets = new Insets(10,10,0,10);
 
         newGameButton = new JButton("NEW GAME");
-        newGameButton.addActionListener(this);
+        newGameButton.addActionListener(actionListener);
         newGameButton.setActionCommand("NewGame");
         c.insets = new Insets(10,10,0,10);
 
@@ -70,19 +70,6 @@ public class ButtonPanel extends JPanel implements ActionListener {
 
     public Dimension getPreferredSize() {
         return new Dimension(100,60);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        String action = e.getActionCommand();
-        if (action.equals("Undo")) {
-            game.undo();
-        } else if (action.equals("Redo")) {
-        	game.redo();
-        } else if (action.equals("Restart")) {
-            game.restart();
-        } else if (action.equals("Hint")) {
-        	game.getHint();
-        }
     }
     
     public void updateButtonStatus() {

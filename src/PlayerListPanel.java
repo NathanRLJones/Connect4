@@ -43,8 +43,8 @@ class PlayerListPanel extends JLayeredPane
         //     addPlayerPanel(new PlayerPanel(c));
         // }
 
-        addPlayerPanel(new PlayerOptionsPanel("Player 1"));
-        addPlayerPanel(new PlayerOptionsPanel("Player 2"));
+        addPlayerPanel(new PlayerOptionsPanel("Player 1", Color.RED));
+        addPlayerPanel(new PlayerOptionsPanel("Player 2", Color.YELLOW));
 
         animation = new Animation(this);
         animation.setDuration(150);
@@ -150,6 +150,16 @@ class PlayerListPanel extends JLayeredPane
         dragPanel = null;
         setupAnimation();
         resizePanels();
+    }
+    
+    public ArrayList<Player> getPlayers(){
+    	ArrayList<Player> players = new ArrayList<Player>();
+    	
+    	for(PlayerOptionsPanel po : panels){
+    		players.add(po.getPlayer());
+    	}
+    	
+    	return players;
     }
 
     public void mouseClicked(MouseEvent e) {}
