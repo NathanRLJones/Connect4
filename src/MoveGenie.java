@@ -164,6 +164,9 @@ public class MoveGenie {
 						default:
 							break;
 						}
+						if(currEmptySpaces + noOfTokens >= tokensToWin 
+								&& prevEmptySpaces + noOfTokens >= tokensToWin )
+							scoreChange*=2;
 						for (int i = 0; i < allPlayers.size(); i++) {
 							if (prevTokenOwner == allPlayers.get(i)) {
 								scores.set(i, scores.get(i) + scoreChange);
@@ -193,6 +196,9 @@ public class MoveGenie {
 					default:
 						break;
 					}
+					if(currEmptySpaces + noOfTokens >= tokensToWin 
+							&& prevEmptySpaces + noOfTokens >= tokensToWin )
+						scoreChange*=2;
 					for (int i = 0; i < allPlayers.size(); i++) {
 						if (prevTokenOwner == allPlayers.get(i)) {
 							scores.set(i, scores.get(i) + scoreChange);
@@ -204,8 +210,8 @@ public class MoveGenie {
 			}
 
 		}
-		
-		
+
+	
 		// diagonal upward
 		
 	
@@ -253,6 +259,9 @@ public class MoveGenie {
 							default:
 								break;
 							}
+							if(currEmptySpaces + noOfTokens >= tokensToWin 
+									&& prevEmptySpaces + noOfTokens >= tokensToWin )
+								scoreChange*=2;
 							for (int i = 0; i < allPlayers.size(); i++) {
 								if (prevTokenOwner == allPlayers.get(i)) {
 									scores.set(i, scores.get(i) + scoreChange);
@@ -284,6 +293,9 @@ public class MoveGenie {
 						default:
 							break;
 						}
+						if(currEmptySpaces + noOfTokens >= tokensToWin 
+								&& prevEmptySpaces + noOfTokens >= tokensToWin )
+							scoreChange*=2;
 						for (int i = 0; i < allPlayers.size(); i++) {
 							if (prevTokenOwner == allPlayers.get(i)) {
 								scores.set(i, scores.get(i) + scoreChange);
@@ -342,6 +354,9 @@ public class MoveGenie {
 							default:
 								break;
 							}
+							if(currEmptySpaces + noOfTokens >= tokensToWin 
+									&& prevEmptySpaces + noOfTokens >= tokensToWin )
+								scoreChange*=2;
 							for (int i = 0; i < allPlayers.size(); i++) {
 								if (prevTokenOwner == allPlayers.get(i)) {
 									scores.set(i, scores.get(i) + scoreChange);
@@ -373,6 +388,9 @@ public class MoveGenie {
 						default:
 							break;
 						}
+						if(currEmptySpaces + noOfTokens >= tokensToWin 
+								&& prevEmptySpaces + noOfTokens >= tokensToWin )
+							scoreChange*=2;
 						for (int i = 0; i < allPlayers.size(); i++) {
 							if (prevTokenOwner == allPlayers.get(i)) {
 								scores.set(i, scores.get(i) + scoreChange);
@@ -746,8 +764,17 @@ public class MoveGenie {
 			return currTurn == target ? Integer.MAX_VALUE : Integer.MIN_VALUE;
 		}
 		if (depth == 0 || isGameOver()) {
-			//System.out.println(calculateScore());
-			//board.printBoard();
+			/*
+			ArrayList<Integer> scores = calculateScore();
+			
+			if (isGameOver()) {
+				for (int i = 0; i < scores.size(); i++) {
+					System.out.println(allPlayers.get(i).getName() + " = "
+							+ scores.get(i));
+				}
+				board.printBoard();
+				System.out.println("\n\n");
+			}*/
 			return calculateScore().get(aITurnInd);
 		}
 		for (int i = 0; i < board.getWidth(); i++) {
