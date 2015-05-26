@@ -32,7 +32,7 @@ public class ConnectFour {
 		players = new ArrayList<Player>();
 		players.add(new HumanPlayer("h", Color.RED));
 		//players.add(new HumanPlayer("i", Color.GREEN));
-		players.add(new AIPlayer("a", Color.YELLOW, 3));
+		players.add(new AIPlayer("a", Color.YELLOW, 2));
 		//players.add(new AIPlayer("p2", Color.BLUE, 2));
 		//players.add(new AIPlayer("a2", Color.GREEN, 2));
 		newGame(4, 7, 6, players);
@@ -41,8 +41,12 @@ public class ConnectFour {
 	/**
 	 * Create new game with board size and players defined
 	 */
+<<<<<<< HEAD
 	public void newGame(int toWin, int rows, int cols, List<Player> players) {
 		tokensToWin = toWin;
+=======
+	public void newGame(int rows, int cols, List<Player> players) {
+>>>>>>> ab14ca16ebc7b7c4f5acbb96c614f3eefaef58fd
 		board = new Board(rows, cols);
 		this.players = players;
 		moveHistory = new Stack<Move>();
@@ -109,7 +113,7 @@ public class ConnectFour {
 	 */
 	public boolean isGameOver() {
 	
-		if(moveHistory.isEmpty()) return false;
+		if(moveHistory == null || moveHistory.isEmpty()) return false;
 		
 		//find the column and row of the last move made
 		Player lastPlayer = moveHistory.peek().getToken().getOwner();
@@ -252,7 +256,11 @@ public class ConnectFour {
 	 * Method to restart the game
 	 */
 	public void restart() {
+<<<<<<< HEAD
 		newGame(4, 7, 6, players);
+=======
+		newGame(7, 6, players);
+>>>>>>> ab14ca16ebc7b7c4f5acbb96c614f3eefaef58fd
 	}
 	
 }
