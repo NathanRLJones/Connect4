@@ -77,7 +77,8 @@ public class Board implements BoardInterface{
 	}
 	
 	public boolean isValidSpace(int column, int row){
-		return (isValidColumn(column) && row >= 0 && row < columns.get(column).size());
+		return (isValidColumn(column) && 
+				row >= 0 && row < columns.get(column).size());
 	}
 	
 	@Override
