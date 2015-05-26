@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 public class ButtonPanel extends JPanel implements ActionListener {
 
 	private ConnectFour game;
-    private JButton button;
+    private JButton redoButton;
+    private JButton undoButton;
+    private JButton restartButton;
 
     public ButtonPanel(ConnectFour game) {
         super();
@@ -25,17 +27,17 @@ public class ButtonPanel extends JPanel implements ActionListener {
 
         GridBagConstraints c = new GridBagConstraints();
 
-        JButton undoButton = new JButton("UNDO");           //Adding undo button
+        undoButton = new JButton("UNDO");           //Adding undo button
         undoButton.addActionListener(this);
         undoButton.setActionCommand("Undo");
         c.insets = new Insets(10,10,0,10);                  //Button extra space(top, left, bottom, right)
 
-        JButton redoButton = new JButton("REDO");
+        redoButton = new JButton("REDO");
         redoButton.addActionListener(this);
         redoButton.setActionCommand("Redo");
         c.insets = new Insets(10,10,0,10);
 
-        JButton restartButton = new JButton("RESTART");
+        restartButton = new JButton("RESTART");
         restartButton.addActionListener(this);
         restartButton.setActionCommand("Restart");
         c.insets = new Insets(10,10,0,10);
@@ -48,6 +50,8 @@ public class ButtonPanel extends JPanel implements ActionListener {
         add(bottomPanel);
         //add(undoButton);
         //add(redoButton);
+        
+        updateButtonStatus();
     }
 
     public Dimension getPreferredSize() {
@@ -62,6 +66,19 @@ public class ButtonPanel extends JPanel implements ActionListener {
         	game.redo();
         } else if (action.equals("Restart")) {
             game.restart();
+        }
+    }
+    
+    public void updateButtonStatus() {
+    	if(game.getMoveHistory() == null || game.getMoveHistory().isEmpty()) {
+    		undoButton.setEnabled(false);
+        } else {
+        	undoButton.setEnabled(true);
+        }
+        if(game.getUndoneMoves() == null || game.getUndoneMoves().isEmpty()) {
+        	redoButton.setEnabled(false);
+        } else {
+        	redoButton.setEnabled(true);
         }
     }
 
