@@ -55,6 +55,14 @@ public class ConnectFour {
 
 	}
 
+	public Stack<Move> getMoveHistory() {
+		return moveHistory;
+	}
+	
+	public Stack<Move> getUndoneMoves() {
+		return undoneMoves;
+	}
+	
 	public BoardInterface getBoard() {
 		return board;
 	}
@@ -237,9 +245,12 @@ public class ConnectFour {
 	 * Method to restart the game
 	 */
 	public void restart() {
-		while (!moveHistory.isEmpty()) {
-			undo();
-		}
+		// TODO temp restart
+		ArrayList<Player> players;
+		players = new ArrayList<Player>();
+		players.add(new HumanPlayer("h", Color.RED));
+		players.add(new AIPlayer("a", Color.YELLOW, 3));
+		newGame(7, 6, players);
 	}
 	
 }

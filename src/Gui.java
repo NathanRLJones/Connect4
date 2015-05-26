@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.*;
-import javax.swing.SwingUtilities;
 
 public class Gui implements GameListener, BoardListener{
 
@@ -38,7 +37,8 @@ public class Gui implements GameListener, BoardListener{
 	}
 
     public void tokenPlaced(int column, Token token) {
-        boardPanel.placeToken(column, token);        
+        boardPanel.placeToken(column, token);
+        buttonPanel.updateButtonStatus();
     }
 
     public void placedAnimationComplete() {
@@ -47,6 +47,7 @@ public class Gui implements GameListener, BoardListener{
 
     public void tokenRemoved(int column, Token token) {
         boardPanel.removeToken(column, token);
+        buttonPanel.updateButtonStatus();
     }
 
     public void newTurn(Player player) {
@@ -78,7 +79,7 @@ public class Gui implements GameListener, BoardListener{
         game.setInputSuggestion(column);
         game.queryPlayers();
     }
-	
+    
 	public void display() {
         JPanel basePanel = new JPanel(new BorderLayout());
 
