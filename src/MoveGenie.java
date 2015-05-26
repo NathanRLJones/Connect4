@@ -359,6 +359,7 @@ public class MoveGenie {
 		Token currToken;
 		
 		// Check for a vertical line of ConnectFour.TOKENS_TO_WIN same-colour tokens
+
 		for(int col = 0; col < width; col++){
 		 	noOfTokens = 0;
 		 	possibleWinner = null;
@@ -405,7 +406,7 @@ public class MoveGenie {
 		 		}
 		 	}
 		 }
-		
+	
 		 //Check for a diagonal line of ConnectFour.TOKENS_TO_WIN same-colour tokens
 		 for(int col = 0; col < width - ConnectFour.TOKENS_TO_WIN+1; col++) {
 		 	for(int row = 0; row < height; row++) {
