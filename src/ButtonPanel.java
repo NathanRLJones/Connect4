@@ -67,7 +67,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
         //add(undoButton);
         //add(redoButton);
         
-        updateButtonStatus();
+        updateMoveButtons();
     }
 
     public Dimension getPreferredSize() {
@@ -87,17 +87,30 @@ public class ButtonPanel extends JPanel implements ActionListener {
         }
     }
     
-    public void updateButtonStatus() {
-    	if(game.getMoveHistory() == null || game.getMoveHistory().isEmpty()) {
+    public void updateMoveButtons() {
+    	if(game.isGameOver()) {
     		undoButton.setEnabled(false);
-        } else {
-        	undoButton.setEnabled(true);
-        }
-        if(game.getUndoneMoves() == null || game.getUndoneMoves().isEmpty()) {
-        	redoButton.setEnabled(false);
-        } else {
-        	redoButton.setEnabled(true);
-        }
+    		redoButton.setEnabled(false);
+    		hintButton.setEnabled(false);
+    	} else {
+    		if(game.getMoveHistory() == null || game.getMoveHistory().isEmpty()) {
+    			undoButton.setEnabled(false);
+    		} else {
+    			undoButton.setEnabled(true);
+    		}
+    		if(game.getUndoneMoves() == null || game.getUndoneMoves().isEmpty()) {
+    			redoButton.setEnabled(false);
+    		} else {
+    			redoButton.setEnabled(true);
+    		}
+    		hintButton.setEnabled(true);
+    	}
     }
-
+    
+    public void disableMoveButtons() {
+    	undoButton.setEnabled(false);
+    	redoButton.setEnabled(false);
+    	hintButton.setEnabled(false);
+    }
+    
 }

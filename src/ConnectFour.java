@@ -106,7 +106,7 @@ public class ConnectFour {
 	 */
 	public boolean isGameOver() {
 	
-		if(moveHistory.isEmpty()) return false;
+		if(moveHistory == null || moveHistory.isEmpty()) return false;
 		
 		//find the column and row of the last move made
 		Player lastPlayer = moveHistory.peek().getToken().getOwner();

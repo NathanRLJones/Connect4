@@ -39,7 +39,7 @@ public class Gui implements GameListener, BoardListener{
 
     public void tokenPlaced(int column, Token token) {
         boardPanel.placeToken(column, token);
-        buttonPanel.updateButtonStatus();
+        buttonPanel.disableMoveButtons();
     }
     
     public void tokenHinted(int column, Token token) {
@@ -52,7 +52,11 @@ public class Gui implements GameListener, BoardListener{
 
     public void tokenRemoved(int column, Token token) {
         boardPanel.removeToken(column, token);
-        buttonPanel.updateButtonStatus();
+        buttonPanel.disableMoveButtons();
+    }
+    
+    public void animationQueueEmptied() {
+    	buttonPanel.updateMoveButtons();
     }
 
     public void newTurn(Player player) {
