@@ -109,9 +109,16 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         startGameButton.addActionListener(this);
         startGameButton.setActionCommand("StartGame");
         
+        JButton cancelNewGameButton = new JButton("CANCEL");
+        cancelNewGameButton.addActionListener(this);
+        cancelNewGameButton.setActionCommand("CancelNewGame");
+        
         newGamePanel.add(plPanel, BorderLayout.CENTER);
         newGamePanel.add(goPanel, BorderLayout.EAST);
-        newGamePanel.add(startGameButton, BorderLayout.SOUTH);
+        JPanel coolNewPanel = new JPanel(new BorderLayout());
+        coolNewPanel.add(startGameButton, BorderLayout.NORTH);
+        coolNewPanel.add(cancelNewGameButton, BorderLayout.SOUTH);
+        newGamePanel.add(coolNewPanel, BorderLayout.SOUTH);
         
         dialogPanel.setPanels(basePanel, newGamePanel);
         mainFrame.getContentPane().add(dialogPanel, BorderLayout.CENTER);
@@ -144,6 +151,9 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         	int[] size = goPanel.getBoardSize();
         	int toWin = goPanel.getTokensToWin();
         	game.newGame(toWin, size[0], size[1], plPanel.getPlayers());
+        	break;
+        case "CancelNewGame":
+        	dialogPanel.hideDialog();
         	break;
         }
 	}
