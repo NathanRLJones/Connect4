@@ -2,6 +2,8 @@
 public interface GameListener {
 
     public void tokenPlaced(int column, Token token);
+    
+    public void tokenHinted(int column, Token token);
 
     public void tokenRemoved(int column, Token token);
 

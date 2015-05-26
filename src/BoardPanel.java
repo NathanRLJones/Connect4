@@ -29,9 +29,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     private int hlCol2;                         // Hightlight col2
     private int hlRow2;                         // Hightlight row2
     private boolean hasHighlight;               // Hightlight visible
-
-
-
+    
+    private boolean hasHint;					// Hinted Token visible
+    private int hintCol, hintRow;				// Coordinates of hint token
+    private Token hintToken;
+    
 	/**
 	 * Constructor for a panel
 	 */
@@ -50,6 +52,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     public void setBoardSize(int width, int height) {
         animation.stop();
         hasHighlight = false;
+        hasHint = false;
         actions = new LinkedList<BoardAction>();
         input = null;
         board = new Board(width, height);
@@ -78,11 +81,15 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             board.placeToken(column, token);
             listener.placedAnimationComplete();
         } else if (name.equals("remove")) {
-            board.removeToken(column);
+           
         }
 
-        if (!actions.isEmpty())
-            animation.start();
+        if (!actions.isEmpty()) {
+        	action = actions.peek();
+            if(action.getName().equals("remove"))
+            	board.removeToken(action.getColumn());
+        	animation.start();
+        }
 
         repaint();
     }
@@ -124,15 +131,26 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     public void placeToken(int column, Token token) {
+    	hasHint = false;
         actions.add(new BoardAction("place", column, token));
         if (actions.size() == 1)
             animation.start();
     }
+    
+    public void placeHint(int column, Token token) {
+    	//actions.add(new BoardAction("hint"))
+    	hasHint = true;
+    	hintCol = column;
+    	hintRow = board.getColumnLevel(column);
+    	hintToken = token;
+    }
 
     public void removeToken(int column, Token token) {
-        actions.add(new BoardAction("remove", column, token));
-        if (actions.size() == 1)
+    	actions.add(new BoardAction("remove", column, token));
+        if (actions.size() == 1) {
+        	board.removeToken(column);
             animation.start();
+        }
     }
 
     public void highlightConnected(int col1, int row1, 
@@ -201,6 +219,23 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
                 temp.y = height - (j+1)*tokenSize;
                 paintToken(g2, token, temp.x, temp.y);
             }
+        }
+        
+        if (hasHint && !hasHighlight) {
+        	alpha = 0.5f;
+        	alcom = AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, alpha);
+        	
+        	g2.setComposite(alcom);
+        	
+        	temp.x = hintCol * tokenSize;
+        	temp.y = height - (hintRow+1)*tokenSize;
+        	paintToken(g2, hintToken, temp.x, temp.y);
+        	
+        	alcom = AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, 1f);
+        	
+        	g2.setComposite(alcom);
         }
 
         if (hasHighlight) {

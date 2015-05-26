@@ -12,6 +12,7 @@ public class AIPlayer implements Player {
 	int depth;
 	Board board;
 	List<Player> allPlayers;
+	
 	int noOfPlayers;
 	int aITurnInd;
 	

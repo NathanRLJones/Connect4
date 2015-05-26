@@ -30,8 +30,7 @@ public class ConnectFour {
 	 */
 	public ConnectFour() {
 		listener = new Gui(this);
-
-		ArrayList<Player> players;
+		
 		players = new ArrayList<Player>();
 		players.add(new HumanPlayer("h", Color.RED));
 		//players.add(new HumanPlayer("i", Color.GREEN));
@@ -44,7 +43,7 @@ public class ConnectFour {
 	/**
 	 * Create new game with board size and players defined
 	 */
-	public void newGame(int rows, int cols, ArrayList<Player> players) {
+	public void newGame(int rows, int cols, List<Player> players) {
 		board = new Board(rows, cols);
 		this.players = players;
 		moveHistory = new Stack<Move>();
@@ -52,9 +51,16 @@ public class ConnectFour {
 		currentPlayer = players.get(0);
 		listener.gameStarted();
 		listener.newTurn(currentPlayer);
-
 	}
 
+	public Stack<Move> getMoveHistory() {
+		return moveHistory;
+	}
+	
+	public Stack<Move> getUndoneMoves() {
+		return undoneMoves;
+	}
+	
 	public BoardInterface getBoard() {
 		return board;
 	}
@@ -62,8 +68,10 @@ public class ConnectFour {
 	public void setInputSuggestion(int column) {
 		suggestedMove = new Move(column, new Token(currentPlayer));
 	}
-
-
+	
+	public void getHint() {		
+		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, currentPlayer).getColumn(), new Token(currentPlayer));
+	}
 
 	public void queryPlayers() {
 		Move move;
@@ -237,9 +245,7 @@ public class ConnectFour {
 	 * Method to restart the game
 	 */
 	public void restart() {
-		while (!moveHistory.isEmpty()) {
-			undo();
-		}
+		newGame(7, 6, players);
 	}
 	
 }
