@@ -32,7 +32,9 @@ public class ButtonPanel extends JPanel implements ActionListener {
         hintButton = new JButton("HINT");           //Adding hint button
         hintButton.addActionListener(this);
         hintButton.setActionCommand("Hint");
-        c.insets = new Insets(10,10,0,10); 
+        c.insets = new Insets(10,10,0,10);
+        //c.weightx = 0.1;
+        c.weighty = 0.5;
         
         undoButton = new JButton("UNDO");           //Adding undo button
         undoButton.addActionListener(this);
