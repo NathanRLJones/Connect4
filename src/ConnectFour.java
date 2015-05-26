@@ -52,7 +52,6 @@ public class ConnectFour {
 		currentPlayer = players.get(0);
 		listener.gameStarted();
 		listener.newTurn(currentPlayer);
-		listener.tokenHinted(0, new Token(currentPlayer));
 	}
 
 	public Stack<Move> getMoveHistory() {
@@ -70,8 +69,10 @@ public class ConnectFour {
 	public void setInputSuggestion(int column) {
 		suggestedMove = new Move(column, new Token(currentPlayer));
 	}
-
-
+	
+	public void getHint() {		
+		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, currentPlayer).getColumn(), new Token(currentPlayer));
+	}
 
 	public void queryPlayers() {
 		Move move;
