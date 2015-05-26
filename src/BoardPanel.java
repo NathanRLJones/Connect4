@@ -80,11 +80,15 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             board.placeToken(column, token);
             listener.placedAnimationComplete();
         } else if (name.equals("remove")) {
-            board.removeToken(column);
+           
         }
 
-        if (!actions.isEmpty())
-            animation.start();
+        if (!actions.isEmpty()) {
+        	action = actions.peek();
+            if(action.getName().equals("remove"))
+            	board.removeToken(action.getColumn());
+        	animation.start();
+        }
 
         repaint();
     }
@@ -141,9 +145,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     public void removeToken(int column, Token token) {
-        actions.add(new BoardAction("remove", column, token));
-        if (actions.size() == 1)
+    	actions.add(new BoardAction("remove", column, token));
+        if (actions.size() == 1) {
+        	board.removeToken(column);
             animation.start();
+        }
     }
 
     public void highlightConnected(int col1, int row1, 
@@ -214,7 +220,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             }
         }
         
-        if (hasHint) {
+        if (hasHint && !hasHighlight) {
         	alpha = 0.5f;
         	alcom = AlphaComposite.getInstance(
                     AlphaComposite.SRC_OVER, alpha);

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class ButtonPanel extends JPanel implements ActionListener {
 
 	private ConnectFour game;
+	private JButton hintButton;
     private JButton redoButton;
     private JButton undoButton;
     private JButton restartButton;
@@ -28,6 +29,11 @@ public class ButtonPanel extends JPanel implements ActionListener {
 
         GridBagConstraints c = new GridBagConstraints();
 
+        hintButton = new JButton("HINT");           //Adding hint button
+        hintButton.addActionListener(this);
+        hintButton.setActionCommand("Hint");
+        c.insets = new Insets(10,10,0,10); 
+        
         undoButton = new JButton("UNDO");           //Adding undo button
         undoButton.addActionListener(this);
         undoButton.setActionCommand("Undo");
@@ -48,7 +54,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
         newGameButton.setActionCommand("NewGame");
         c.insets = new Insets(10,10,0,10);
 
-
+        bottomPanel.add(hintButton, c);
         bottomPanel.add(undoButton, c);
         bottomPanel.add(redoButton, c);
         bottomPanel.add(restartButton, c);
@@ -74,6 +80,8 @@ public class ButtonPanel extends JPanel implements ActionListener {
         	game.redo();
         } else if (action.equals("Restart")) {
             game.restart();
+        } else if (action.equals("Hint")) {
+        	game.getHint();
         }
     }
     
