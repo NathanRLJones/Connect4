@@ -1,8 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class Gui implements GameListener, BoardListener{
 
@@ -13,7 +12,8 @@ public class Gui implements GameListener, BoardListener{
 	private BoardPanel boardPanel;
 	private InfoPanel infoPanel;
     private ButtonPanel buttonPanel;
-	private ConnectFour game;
+	private DialogPanel dialogPanel;
+    private ConnectFour game;
 	
 	public Gui(ConnectFour game) {
 
@@ -21,8 +21,13 @@ public class Gui implements GameListener, BoardListener{
 		boardPanel = new BoardPanel(this);
 		infoPanel = new InfoPanel();
         buttonPanel = new ButtonPanel(game);
+        dialogPanel = new DialogPanel();
+
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.game = game;
+
+
+
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -32,7 +37,8 @@ public class Gui implements GameListener, BoardListener{
 	}
 
     public void tokenPlaced(int column, Token token) {
-        boardPanel.placeToken(column, token);        
+        boardPanel.placeToken(column, token);
+        buttonPanel.updateButtonStatus();
     }
     
     public void tokenHinted(int column, Token token) {
@@ -45,6 +51,7 @@ public class Gui implements GameListener, BoardListener{
 
     public void tokenRemoved(int column, Token token) {
         boardPanel.removeToken(column, token);
+        buttonPanel.updateButtonStatus();
     }
 
     public void newTurn(Player player) {
@@ -76,12 +83,18 @@ public class Gui implements GameListener, BoardListener{
         game.setInputSuggestion(column);
         game.queryPlayers();
     }
-	
+    
 	public void display() {
+        JPanel basePanel = new JPanel(new BorderLayout());
+
+        
+        basePanel.add(infoPanel, BorderLayout.NORTH);
+        basePanel.add(buttonPanel, BorderLayout.SOUTH);
+        basePanel.add(boardPanel,BorderLayout.CENTER);
+        dialogPanel.setPanels(basePanel, new PlayerListPanel());
+        mainFrame.getContentPane().add(dialogPanel, BorderLayout.CENTER);
+
 		mainFrame.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-		mainFrame.getContentPane().add(infoPanel, BorderLayout.NORTH);
-        mainFrame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-		mainFrame.getContentPane().add(boardPanel,BorderLayout.CENTER);
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
