@@ -41,12 +41,8 @@ public class ConnectFour {
 	/**
 	 * Create new game with board size and players defined
 	 */
-<<<<<<< HEAD
 	public void newGame(int toWin, int rows, int cols, List<Player> players) {
 		tokensToWin = toWin;
-=======
-	public void newGame(int rows, int cols, List<Player> players) {
->>>>>>> ab14ca16ebc7b7c4f5acbb96c614f3eefaef58fd
 		board = new Board(rows, cols);
 		this.players = players;
 		moveHistory = new Stack<Move>();
@@ -256,11 +252,7 @@ public class ConnectFour {
 	 * Method to restart the game
 	 */
 	public void restart() {
-<<<<<<< HEAD
 		newGame(4, 7, 6, players);
-=======
-		newGame(7, 6, players);
->>>>>>> ab14ca16ebc7b7c4f5acbb96c614f3eefaef58fd
 	}
 	
 }
