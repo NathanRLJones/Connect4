@@ -121,27 +121,26 @@ public class Gui implements GameListener, BoardListener, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
-        if (action.equals("Undo")) {
-            game.undo();
-        } else if (action.equals("Redo")) {
+        switch(action){
+        case "Undo":
+        	game.undo();
+        	break;
+        case "Redo":
         	game.redo();
-        } else if (action.equals("Restart")) {
-            game.restart();
-        } else if (action.equals("Hint")) {
+        	break;
+        case "Hint":
         	game.getHint();
-        } else if (action.equals("NewGame")) {
-        	//~~hide the board/game screen
-        	
-        	//System.out.println("NEW GAME");
-        	
-        	//show the game menu
+        	break;
+        case "NewGame":
         	dialogPanel.showDialog();
-        } else if(action.equals("StartGame")) {
+        	break;
+        case "StartGame":
         	dialogPanel.hideDialog();
-        	
+        case "Restart":        	
         	int[] size = goPanel.getBoardSize();
         	int toWin = goPanel.getTokensToWin();
         	game.newGame(toWin, size[0], size[1], plPanel.getPlayers());
+        	break;
         }
 	}
 	
