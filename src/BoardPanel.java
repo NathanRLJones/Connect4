@@ -52,6 +52,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     public void setBoardSize(int width, int height) {
         animation.stop();
         hasHighlight = false;
+        hasHint = false;
         actions = new LinkedList<BoardAction>();
         input = null;
         board = new Board(width, height);
