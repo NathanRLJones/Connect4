@@ -3,7 +3,7 @@ import java.util.List;
 
 public interface Player {
 
-	public Move getMove(BoardInterface board, List<Player> players);
+	public Move getMove(BoardInterface board, List<Player> players, int tokensToWin);
 	public String getName();
 	public Color getColor();
 	public boolean isInteractive();

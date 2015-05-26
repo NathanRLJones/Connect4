@@ -8,14 +8,16 @@ public class MoveGenie {
 	static List<Player> allPlayers;
 	static int noOfPlayers;
 	static int aITurnInd;
+	static int tokensToWin;
 	
-	public static Move getMove(BoardInterface currBoard, int maxDepth, List<Player> players, Player target) {
+	public static Move getMove(BoardInterface currBoard, int maxDepth, List<Player> players, Player target, int toWin) {
 		
 		System.out.println("Getting move, depth of: " + maxDepth);
 		
 		board = getBoardCopy(currBoard);
 		allPlayers = players;
 		noOfPlayers = players.size();
+		tokensToWin = toWin;
 		int depth = noOfPlayers * maxDepth;
 		int columns = board.getWidth();
 		Token token = new Token(target);
@@ -74,7 +76,7 @@ public class MoveGenie {
 			prevTokenOwner = null;
 			currTokenOwner = null;
 			for (int row = 0; row < height; row++) {
-				if (height - row + noOfTokens < ConnectFour.TOKENS_TO_WIN)
+				if (height - row + noOfTokens < tokensToWin)
 					break;
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
@@ -99,7 +101,7 @@ public class MoveGenie {
 				}
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
-					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
+					if(noOfTokens == tokensToWin){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
 								scores.set(i, scores.get(i) + 100);
@@ -126,7 +128,7 @@ public class MoveGenie {
 			prevEmptySpaces = 0;
 			currEmptySpaces = 0;
 			for (int col = 0; col < width; col++){
-				if(width-col+noOfTokens+prevEmptySpaces+currEmptySpaces < ConnectFour.TOKENS_TO_WIN) break;
+				if(width-col+noOfTokens+prevEmptySpaces+currEmptySpaces < tokensToWin) break;
 				
 				currTokenOwner = board.whoOwnsToken(col, row);
 				
@@ -135,7 +137,7 @@ public class MoveGenie {
 				}
 				else if(currTokenOwner == prevSpace){
 					noOfTokens++;
-					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
+					if(noOfTokens == tokensToWin){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i))
 								scores.set(i, scores.get(i) + 100);
@@ -147,7 +149,7 @@ public class MoveGenie {
 					prevTokenOwner = null;
 					}
 				}else{
-					if(currEmptySpaces+prevEmptySpaces+noOfTokens >= ConnectFour.TOKENS_TO_WIN){
+					if(currEmptySpaces+prevEmptySpaces+noOfTokens >= tokensToWin){
 						int scoreChange = 0;
 						switch(noOfTokens){
 						case 1: scoreChange = 1;
@@ -172,7 +174,7 @@ public class MoveGenie {
 					noOfTokens = 1;
 				}
 				prevSpace = currTokenOwner;
-				if(col==width-1 && currEmptySpaces+prevEmptySpaces+noOfTokens >= ConnectFour.TOKENS_TO_WIN){
+				if(col==width-1 && currEmptySpaces+prevEmptySpaces+noOfTokens >= tokensToWin){
 					int scoreChange = 0;
 					switch(noOfTokens){
 					case 1: scoreChange = 1;
@@ -198,14 +200,14 @@ public class MoveGenie {
 		//check for scores NW/SE diagonally
 		int startCol = 0;
 		int col = startCol;
-		int startRow = ConnectFour.TOKENS_TO_WIN - 1;
+		int startRow = tokensToWin - 1;
 		int row = startRow;
 		noOfTokens = 0;
 		
-		while(height + width - startCol - startRow - 2 < ConnectFour.TOKENS_TO_WIN){
+		while(height + width - startCol - startRow - 2 < tokensToWin){
 			
 			//do scoring if we are in a workable positon
-			if ((Math.min(row, (width - 1) - col) + 1) + noOfTokens >= ConnectFour.TOKENS_TO_WIN){
+			if ((Math.min(row, (width - 1) - col) + 1) + noOfTokens >= tokensToWin){
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
 					int scoreChange = 0;
@@ -229,7 +231,7 @@ public class MoveGenie {
 				}
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
-					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
+					if(noOfTokens == tokensToWin){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
 								scores.set(i, scores.get(i) + 100);
@@ -273,14 +275,14 @@ public class MoveGenie {
 		//check for scores NE/SW diagonally
 		startCol = 0;
 		col = startCol;
-		startRow = (height - 1) - (ConnectFour.TOKENS_TO_WIN - 1);
+		startRow = (height - 1) - (tokensToWin - 1);
 		row = startRow;
 		noOfTokens = 0;
 		
-		while(!(row == 0 && col + ConnectFour.TOKENS_TO_WIN == width)){
+		while(!(row == 0 && col + tokensToWin == width)){
 			
 			//do scoring if we are in a workable positon
-			if ((Math.min((height - 1) -row, (width - 1) - col) + 1) + noOfTokens >= ConnectFour.TOKENS_TO_WIN){
+			if ((Math.min((height - 1) -row, (width - 1) - col) + 1) + noOfTokens >= tokensToWin){
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if(currTokenOwner == null){
 					int scoreChange = 0;
@@ -304,7 +306,7 @@ public class MoveGenie {
 				}
 				if (currTokenOwner == prevTokenOwner) {
 					noOfTokens++;
-					if(noOfTokens == ConnectFour.TOKENS_TO_WIN){
+					if(noOfTokens == tokensToWin){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
 								scores.set(i, scores.get(i) + 100);
@@ -358,20 +360,20 @@ public class MoveGenie {
 		Player currPlayer;
 		Token currToken;
 		
-		// Check for a vertical line of ConnectFour.TOKENS_TO_WIN same-colour tokens
+		// Check for a vertical line of tokensToWin same-colour tokens
 
 		for(int col = 0; col < width; col++){
 		 	noOfTokens = 0;
 		 	possibleWinner = null;
 		 	for(int row = 0; row < height; row++){
-		 		if(height-row+noOfTokens < ConnectFour.TOKENS_TO_WIN) break;
+		 		if(height-row+noOfTokens < tokensToWin) break;
 				
 		 		currToken = board.getToken(col, row);
 		 		if(currToken == null) break;
 		 		currPlayer = currToken.getOwner();
 		 		if(currPlayer == possibleWinner){
 		 			noOfTokens++;
-		 			if(noOfTokens == ConnectFour.TOKENS_TO_WIN) {
+		 			if(noOfTokens == tokensToWin) {
 		 				return true;
 		 			}
 		 		}else{
@@ -381,12 +383,12 @@ public class MoveGenie {
 		 	}
 		 }
 
-		 //Check for a horizontal line of ConnectFour.TOKENS_TO_WIN same-colour tokens
+		 //Check for a horizontal line of tokensToWin same-colour tokens
 		 for(int row = 0; row < height; row++){
 		 	noOfTokens = 0;
 		 	possibleWinner = null;
 		 	for(int col = 0; col < width; col++){
-		 		if(width-col+noOfTokens < ConnectFour.TOKENS_TO_WIN) break;
+		 		if(width-col+noOfTokens < tokensToWin) break;
 				
 				currToken = board.getToken(col, row);
 		 		if (currToken == null){
@@ -397,7 +399,7 @@ public class MoveGenie {
 		 		currPlayer = currToken.getOwner();
 		 		if(currPlayer == possibleWinner){
 		 			noOfTokens++;
-		 			if(noOfTokens == ConnectFour.TOKENS_TO_WIN) {
+		 			if(noOfTokens == tokensToWin) {
 		 				return true;
 		 			}
 		 		}else{
@@ -407,21 +409,21 @@ public class MoveGenie {
 		 	}
 		 }
 	
-		 //Check for a diagonal line of ConnectFour.TOKENS_TO_WIN same-colour tokens
-		 for(int col = 0; col < width - ConnectFour.TOKENS_TO_WIN+1; col++) {
+		 //Check for a diagonal line of tokensToWin same-colour tokens
+		 for(int col = 0; col < width - tokensToWin+1; col++) {
 		 	for(int row = 0; row < height; row++) {
 		 		// Check diagonally upwards
 		 		possibleWinner = null;
 		 		noOfTokens = 0;
-		 		if(row < height - ConnectFour.TOKENS_TO_WIN+1) {
-		 			for(int offset = 0; offset < ConnectFour.TOKENS_TO_WIN; offset++) {
+		 		if(row < height - tokensToWin+1) {
+		 			for(int offset = 0; offset < tokensToWin; offset++) {
 		 				currToken = board.getToken(col+offset, row+offset);
 		 				if(currToken == null) break;
 		 				currPlayer = currToken.getOwner();
 		 				if(offset == 0) possibleWinner = currPlayer;
 		 				if(currPlayer == possibleWinner){
 		 					noOfTokens++;
-		 					if(noOfTokens == ConnectFour.TOKENS_TO_WIN) {
+		 					if(noOfTokens == tokensToWin) {
 		 						return true;
 		 					}
 		 				}else{
@@ -432,15 +434,15 @@ public class MoveGenie {
 		 		// Check diagonally downwards
 		 		possibleWinner = null;
 		 		noOfTokens = 0;
-		 		if(row > ConnectFour.TOKENS_TO_WIN-2) {
-		 			for(int offset = 0; offset < ConnectFour.TOKENS_TO_WIN; offset++) {
+		 		if(row > tokensToWin-2) {
+		 			for(int offset = 0; offset < tokensToWin; offset++) {
 		 				currToken = board.getToken(col+offset, row-offset);
 		 				if(currToken == null) break;
 		 				currPlayer = currToken.getOwner();
 		 				if(offset == 0) possibleWinner = currPlayer;
 		 				if(currPlayer == possibleWinner){
 		 					noOfTokens++;
-		 					if(noOfTokens == ConnectFour.TOKENS_TO_WIN) {
+		 					if(noOfTokens == tokensToWin) {
 		 						return true;
 		 					}
 		 				}else{

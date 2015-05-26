@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +19,7 @@ public class Gui implements GameListener, BoardListener, ActionListener{
 	private DialogPanel dialogPanel;
     private ConnectFour game;
     private PlayerListPanel plPanel;
+    private GameOptionsPanel goPanel;
 	
 	public Gui(ConnectFour game) {
 
@@ -27,7 +29,7 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         buttonPanel = new ButtonPanel(game, this);
         dialogPanel = new DialogPanel();
         plPanel = new PlayerListPanel();
-        
+        goPanel = new GameOptionsPanel();
         
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.game = game;
@@ -76,9 +78,9 @@ public class Gui implements GameListener, BoardListener, ActionListener{
     }
 
     public void gameWon(Player player, 
-                        int col1, int row1, int col2, int row2) {
+                        int col1, int row1, int col2, int row2, int numTokens) {
         infoPanel.setStatusLabel(player.getName() + " has won!");
-        boardPanel.highlightConnected(col1, row1, col2, row2);
+        boardPanel.highlightConnected(col1, row1, col2, row2, numTokens);
     }
 
     public void gameDrawn() {
@@ -99,11 +101,12 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         basePanel.add(buttonPanel, BorderLayout.SOUTH);
         basePanel.add(boardPanel,BorderLayout.CENTER);
         
-        JButton startGameButton = new JButton("START GAME");           //Adding hint button
+        JButton startGameButton = new JButton("START GAME");
         startGameButton.addActionListener(this);
         startGameButton.setActionCommand("StartGame");
         
         newGamePanel.add(plPanel, BorderLayout.CENTER);
+        newGamePanel.add(goPanel, BorderLayout.EAST);
         newGamePanel.add(startGameButton, BorderLayout.SOUTH);
         
         dialogPanel.setPanels(basePanel, newGamePanel);
@@ -136,7 +139,9 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         } else if(action.equals("StartGame")) {
         	dialogPanel.hideDialog();
         	
-        	game.newGame(7, 6, plPanel.getPlayers());
+        	int[] size = goPanel.getBoardSize();
+        	int toWin = goPanel.getTokensToWin();
+        	game.newGame(toWin, size[0], size[1], plPanel.getPlayers());
         }
 	}
 	

@@ -22,7 +22,7 @@ public class HumanPlayer implements Player {
 	 * Method to get player's move
 	 * @return the move of the player
 	 */
-	public Move getMove(BoardInterface board, List<Player> players) {
+	public Move getMove(BoardInterface board, List<Player> players, int tokensToWin) {
 		return null;
 	}
 	

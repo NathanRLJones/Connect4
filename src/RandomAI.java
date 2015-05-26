@@ -16,7 +16,7 @@ public class RandomAI implements Player {
 	}
 	
 	@Override
-	public Move getMove(BoardInterface board, List<Player> players) {
+	public Move getMove(BoardInterface board, List<Player> players, int tokensToWin) {
 		Move randomMove = null;
 		
 		int col = rand.nextInt(board.getWidth());

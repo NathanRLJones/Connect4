@@ -5,9 +5,7 @@ import java.util.Stack;
 
 
 public class ConnectFour {
-	
-	public static final int TOKENS_TO_WIN = 4;
-	
+		
 	private GameListener listener;
 	private Board board;
 	private Player currentPlayer;
@@ -15,7 +13,7 @@ public class ConnectFour {
 	private Stack<Move> moveHistory;
 	private Stack<Move> undoneMoves;
 	private Move suggestedMove;
-
+	private int tokensToWin;
 
 	/**
 	 * Main method for the ConnectFour
@@ -37,13 +35,14 @@ public class ConnectFour {
 		players.add(new AIPlayer("a", Color.YELLOW, 3));
 		//players.add(new AIPlayer("p2", Color.BLUE, 2));
 		//players.add(new AIPlayer("a2", Color.GREEN, 2));
-		newGame(7, 6, players);
+		newGame(4, 7, 6, players);
 	}
 
 	/**
 	 * Create new game with board size and players defined
 	 */
-	public void newGame(int rows, int cols, List<Player> players) {
+	public void newGame(int toWin, int rows, int cols, List<Player> players) {
+		tokensToWin = toWin;
 		board = new Board(rows, cols);
 		this.players = players;
 		moveHistory = new Stack<Move>();
@@ -51,6 +50,10 @@ public class ConnectFour {
 		currentPlayer = players.get(0);
 		listener.gameStarted();
 		listener.newTurn(currentPlayer);
+	}
+	
+	public int getTokensToWin(){
+		return tokensToWin;
 	}
 
 	public Stack<Move> getMoveHistory() {
@@ -70,7 +73,7 @@ public class ConnectFour {
 	}
 	
 	public void getHint() {		
-		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, currentPlayer).getColumn(), new Token(currentPlayer));
+		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, currentPlayer, tokensToWin).getColumn(), new Token(currentPlayer));
 	}
 
 	public void queryPlayers() {
@@ -78,7 +81,7 @@ public class ConnectFour {
 		if (currentPlayer.isInteractive()) {
 			move = suggestedMove;
 		} else {
-			move = currentPlayer.getMove(getBoard(), players);
+			move = currentPlayer.getMove(getBoard(), players, tokensToWin);
 		}
 		System.out.println("Adding a token: " + currentPlayer.getName());
 		board.placeToken(move.getColumn(), move.getToken());
@@ -100,7 +103,7 @@ public class ConnectFour {
 
 	/**
 	 * Method to check if the game is over
-	 * @return true if there are TOKENS_TO_WIN connected same-colour tokens
+	 * @return true if there are tokensToWin connected same-colour tokens
 	 *			 or if the game is drawn
 	 *         false otherwise
 	 */
@@ -133,35 +136,39 @@ public class ConnectFour {
 		int NWCount = checkValidTokenSeries(lastPlayer, col, row, -1, 1);
 
 		//> is used instead of >= because the last placed token will be counted twice
-		if (NECount + SWCount > TOKENS_TO_WIN) {
+		if (NECount + SWCount > tokensToWin) {
 			listener.gameWon(lastPlayer, 
 							 col + NECount - 1,	 // col1
 							 row + NECount - 1,  // row1
 							 col - SWCount + 1,  // col2
-							 row - SWCount + 1); // row2
+							 row - SWCount + 1,  // row2
+							 tokensToWin);
 			return true;
-		} else if (ECount + WCount > TOKENS_TO_WIN) {
+		} else if (ECount + WCount > tokensToWin) {
 			listener.gameWon(lastPlayer, 
 							 col + ECount - 1,   // col1
 							 row, 				 // row1
 							 col - WCount + 1,   // col2
-							 row);				 // row2
+							 row,				 // row2
+							 tokensToWin);
 
 			return true;
-		} else if (NWCount + SECount > TOKENS_TO_WIN) {
+		} else if (NWCount + SECount > tokensToWin) {
 			listener.gameWon(lastPlayer, 
 							 col + SECount - 1,	 // col1
 							 row - SECount + 1,  // row1
 							 col - NWCount + 1,  // col2
-							 row + NWCount - 1); // row2
+							 row + NWCount - 1,  // row2
+							 tokensToWin);
 
 			return true;
-		} else if(SCount >= TOKENS_TO_WIN) {
+		} else if(SCount >= tokensToWin) {
 			listener.gameWon(lastPlayer, 
 							 col,                // col1
 							 row,				 // row1
 							 col,				 // col2
-							 row - SCount + 1);  // row2
+							 row - SCount + 1,    // row2
+							 tokensToWin);
 			return true;
 		}
 
@@ -245,7 +252,7 @@ public class ConnectFour {
 	 * Method to restart the game
 	 */
 	public void restart() {
-		newGame(7, 6, players);
+		newGame(4, 7, 6, players);
 	}
 	
 }

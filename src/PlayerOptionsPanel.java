@@ -11,7 +11,6 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
     private Color color;
     private String name;
 
-
     public PlayerOptionsPanel (String n, Color c) {
         super(new GridBagLayout());
         // setBackground(color);

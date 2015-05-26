@@ -28,6 +28,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     private int hlRow1;                         // Hightlight row1
     private int hlCol2;                         // Hightlight col2
     private int hlRow2;                         // Hightlight row2
+    private int tokensToWin;					// Number of winning tokens
     private boolean hasHighlight;               // Hightlight visible
     
     private boolean hasHint;					// Hinted Token visible
@@ -154,13 +155,14 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     public void highlightConnected(int col1, int row1, 
-                                   int col2, int row2) {
+                                   int col2, int row2, int numTokens) {
 
         hlCol1 = col1;
         hlRow1 = row1;
         hlCol2 = col2;
         hlRow2 = row2;
         actions.add(new BoardAction("highlight", 0, null));
+        tokensToWin = numTokens;
         hasHighlight = true;
     }
 
@@ -243,11 +245,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             alcom = AlphaComposite.getInstance(
                                         AlphaComposite.SRC_OVER, alpha);
             g2.setComposite(alcom);
-            int dcol = (hlCol2 - hlCol1 )/(ConnectFour.TOKENS_TO_WIN-1);
-            int drow = (hlRow2 - hlRow1 )/(ConnectFour.TOKENS_TO_WIN-1);
+            int dcol = (hlCol2 - hlCol1 )/(tokensToWin-1);
+            int drow = (hlRow2 - hlRow1 )/(tokensToWin-1);
             int col =  hlCol1;
             int row = hlRow1;
-            for (int i = 0; i < ConnectFour.TOKENS_TO_WIN; i++) {
+            for (int i = 0; i < tokensToWin; i++) {
                 temp.x = col*tokenSize;
                 temp.y = height - (row+1)*tokenSize;
                 token = board.getToken(col, row);

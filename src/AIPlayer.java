@@ -23,8 +23,8 @@ public class AIPlayer implements Player {
 	}
 	
 	@Override
-	public Move getMove(BoardInterface currBoard, List<Player> players) {
-		return MoveGenie.getMove(currBoard, difficultyLevel, players, this);
+	public Move getMove(BoardInterface currBoard, List<Player> players, int tokensToWin) {
+		return MoveGenie.getMove(currBoard, difficultyLevel, players, this, tokensToWin);
 		
 		/*
 		board = getBoardCopy(currBoard);
