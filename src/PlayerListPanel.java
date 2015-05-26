@@ -10,7 +10,7 @@ class PlayerListPanel extends JLayeredPane
                                  AnimationListener {
 
     private LinkedList<PlayerOptionsPanel> panels; // list of player panels
-    private PlayerPanel dragPanel;          // currently dragged panel
+    private PlayerOptionsPanel dragPanel;          // currently dragged panel
     private int yAdjustment;                // cursor offset
     private int panelWidth;                 // player panel width
     private int panelHeight;                // player panel height
@@ -51,7 +51,7 @@ class PlayerListPanel extends JLayeredPane
     }
 
 
-    public void addPlayerPanel(PlayerPanel pp) {
+    public void addPlayerPanel(PlayerOptionsPanel pp) {
         Dimension size;
         if (panels.isEmpty()) {
             size = pp.getPreferredSize();
@@ -67,7 +67,7 @@ class PlayerListPanel extends JLayeredPane
     }
 
     private void resizePanels() {
-        PlayerPanel pp;
+        PlayerOptionsPanel pp;
 
         for (int i = 0; i < panels.size(); i++) {
             pp = panels.get(i);
@@ -76,7 +76,7 @@ class PlayerListPanel extends JLayeredPane
     }
 
     public void newFrame() {
-        PlayerPanel pp;
+        PlayerOptionsPanel pp;
         int start;
         int end;
         int current;
@@ -94,7 +94,7 @@ class PlayerListPanel extends JLayeredPane
     public void lastFrame() {};
 
     private void setupAnimation() {
-        PlayerPanel pp;
+        PlayerOptionsPanel pp;
         for (int i = 0; i < panels.size(); i++) {
             pp = panels.get(i);
             pp.setStartY(pp.getLocation().y);
