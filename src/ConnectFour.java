@@ -30,8 +30,7 @@ public class ConnectFour {
 	 */
 	public ConnectFour() {
 		listener = new Gui(this);
-
-		ArrayList<Player> players;
+		
 		players = new ArrayList<Player>();
 		players.add(new HumanPlayer("h", Color.RED));
 		//players.add(new HumanPlayer("i", Color.GREEN));
@@ -44,7 +43,7 @@ public class ConnectFour {
 	/**
 	 * Create new game with board size and players defined
 	 */
-	public void newGame(int rows, int cols, ArrayList<Player> players) {
+	public void newGame(int rows, int cols, List<Player> players) {
 		board = new Board(rows, cols);
 		this.players = players;
 		moveHistory = new Stack<Move>();
@@ -246,11 +245,6 @@ public class ConnectFour {
 	 * Method to restart the game
 	 */
 	public void restart() {
-		// TODO temp restart
-		ArrayList<Player> players;
-		players = new ArrayList<Player>();
-		players.add(new HumanPlayer("h", Color.RED));
-		players.add(new AIPlayer("a", Color.YELLOW, 3));
 		newGame(7, 6, players);
 	}
 	
