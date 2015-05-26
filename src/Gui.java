@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -81,6 +82,7 @@ public class Gui implements GameListener, BoardListener, ActionListener{
     }
 
     public void gameDrawn() {
+    	infoPanel.setStatusLabelColor(Color.BLACK);
         infoPanel.setStatusLabel("Game is drawn!");
     }
 
