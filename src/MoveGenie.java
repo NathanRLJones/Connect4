@@ -96,12 +96,12 @@ public class MoveGenie {
 					if(noOfTokens == tokensToWin){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
-								scores.set(i, scores.get(i) + gameEndScore);
+								scores.set(i, gameEndScore);
 							} else {
-								scores.set(i, scores.get(i) - gameEndScore);
+								scores.set(i, -gameEndScore);
 							}
 						}
-						break;
+						return scores;
 					}
 				} else {
 					prevTokenOwner = currTokenOwner;
@@ -129,13 +129,11 @@ public class MoveGenie {
 					if(noOfTokens == tokensToWin){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i))
-								scores.set(i, scores.get(i) + gameEndScore);
+								scores.set(i, gameEndScore);
 							else
-								scores.set(i, scores.get(i) - gameEndScore);
+								scores.set(i, - gameEndScore);
 						}
-						noOfTokens = 0;
-						prevEmptySpaces = 0;
-						prevTokenOwner = null;
+						return scores;
 					}
 				}else{
 					if(currEmptySpaces+prevEmptySpaces+noOfTokens >= tokensToWin){
@@ -198,13 +196,11 @@ public class MoveGenie {
 						if (noOfTokens == tokensToWin) {
 							for (int i = 0; i < allPlayers.size(); i++) {
 								if (prevTokenOwner == allPlayers.get(i))
-									scores.set(i, scores.get(i) + gameEndScore);
+									scores.set(i, gameEndScore);
 								else
-									scores.set(i, scores.get(i) - gameEndScore);
+									scores.set(i,- gameEndScore);
 							}
-							noOfTokens = 0;
-							prevEmptySpaces = 0;
-							prevTokenOwner = null;
+							return scores;
 						}
 					} else {
 						if (currEmptySpaces + prevEmptySpaces + noOfTokens >= tokensToWin) {
@@ -271,9 +267,7 @@ public class MoveGenie {
 								else
 									scores.set(i, scores.get(i) - gameEndScore);
 							}
-							noOfTokens = 0;
-							prevEmptySpaces = 0;
-							prevTokenOwner = null;
+							return scores;
 						}
 					} else {
 						if (currEmptySpaces + prevEmptySpaces + noOfTokens >= tokensToWin) {
@@ -315,300 +309,7 @@ public class MoveGenie {
 			}
 		}
 		
-	
-/*
-		// check for scores NW/SE diagonally
-		int startCol = 0;
-		int col = startCol;
-		int startRow = tokensToWin - 1;
-		int row = startRow;
-		noOfTokens = 0;
-<<<<<<< HEAD
-		
-		while(height + width - startCol - startRow - 2 < tokensToWin){
-			
-			//do scoring if we are in a workable positon
-			if ((Math.min(row, (width - 1) - col) + 1) + noOfTokens >= tokensToWin){
-=======
-		prevEmptySpaces = 0;
-		currEmptySpaces = 0;
-
-		while (height + width - startCol - startRow - 2 < tokensToWin) {
-
-			// do scoring if we are in a workable positon
-			if ((Math.min(row, (width - 1) - col) + 1) + noOfTokens >= tokensToWin) {
->>>>>>> ab14ca16ebc7b7c4f5acbb96c614f3eefaef58fd
-				currTokenOwner = board.whoOwnsToken(col, row);
-				if (currTokenOwner == null) {
-					int scoreChange = 0;
-					switch (noOfTokens) {
-					case 1:
-						scoreChange = 1;
-						break;
-					case 2:
-						scoreChange = 4;
-						break;
-					case 3:
-						scoreChange = 6;
-						break;
-					default:
-						break;
-					}
-					for (int i = 0; i < allPlayers.size(); i++) {
-						if (prevTokenOwner == allPlayers.get(i)) {
-							scores.set(i, scores.get(i) + scoreChange);
-						} else {
-							scores.set(i, scores.get(i) - scoreChange);
-						}
-					}
-					break;
-				}
-				if (currTokenOwner == prevTokenOwner) {
-					noOfTokens++;
-<<<<<<< HEAD
-					if(noOfTokens == tokensToWin){
-						for(int i = 0; i < allPlayers.size(); i++){	
-							if(prevTokenOwner == allPlayers.get(i)){
-=======
-					if (noOfTokens == tokensToWin) {
-						for (int i = 0; i < allPlayers.size(); i++) {
-							if (prevTokenOwner == allPlayers.get(i)) {
->>>>>>> ab14ca16ebc7b7c4f5acbb96c614f3eefaef58fd
-								scores.set(i, scores.get(i) + 100);
-							} else {
-								scores.set(i, scores.get(i) - 100);
-							}
-						}
-						break;
-					}
-				} else {
-					prevTokenOwner = currTokenOwner;
-					noOfTokens = 1;
-				}
-			}
-
-			// move to next space
-			if (row > 0) {
-				// continue down the current diagonal
-				col++;
-				row--;
-			} else {
-				// go to the next diagonal
-				if (startRow + 1 == height) {
-					row = startRow;
-					startCol++;
-					col = startCol;
-				} else {
-					startRow++;
-					row = startRow;
-					col = startCol;
-				}
-
-				// reset counters
-				noOfTokens = 0;
-				prevTokenOwner = null;
-				currTokenOwner = null;
-			}
-		}
-
-		// check for scores NE/SW diagonally
-		startCol = 0;
-		col = startCol;
-		startRow = (height - 1) - (tokensToWin - 1);
-		row = startRow;
-		noOfTokens = 0;
-<<<<<<< HEAD
-		
-		while(!(row == 0 && col + tokensToWin == width)){
-			
-			//do scoring if we are in a workable positon
-			if ((Math.min((height - 1) -row, (width - 1) - col) + 1) + noOfTokens >= tokensToWin){
-=======
-
-		while (!(row == 0 && col + tokensToWin == width)) {
-
-			// do scoring if we are in a workable positon
-			if ((Math.min((height - 1) - row, (width - 1) - col) + 1)
-					+ noOfTokens >= tokensToWin) {
->>>>>>> ab14ca16ebc7b7c4f5acbb96c614f3eefaef58fd
-				currTokenOwner = board.whoOwnsToken(col, row);
-				if (currTokenOwner == null) {
-					int scoreChange = 0;
-					switch (noOfTokens) {
-					case 1:
-						scoreChange = 1;
-						break;
-					case 2:
-						scoreChange = 4;
-						break;
-					case 3:
-						scoreChange = 6;
-						break;
-					default:
-						break;
-					}
-					for (int i = 0; i < allPlayers.size(); i++) {
-						if (prevTokenOwner == allPlayers.get(i)) {
-							scores.set(i, scores.get(i) + scoreChange);
-						} else {
-							scores.set(i, scores.get(i) - scoreChange);
-						}
-					}
-					break;
-				}
-				if (currTokenOwner == prevTokenOwner) {
-					noOfTokens++;
-<<<<<<< HEAD
-					if(noOfTokens == tokensToWin){
-						for(int i = 0; i < allPlayers.size(); i++){	
-							if(prevTokenOwner == allPlayers.get(i)){
-=======
-					if (noOfTokens == tokensToWin) {
-						for (int i = 0; i < allPlayers.size(); i++) {
-							if (prevTokenOwner == allPlayers.get(i)) {
->>>>>>> ab14ca16ebc7b7c4f5acbb96c614f3eefaef58fd
-								scores.set(i, scores.get(i) + 100);
-							} else {
-								scores.set(i, scores.get(i) - 100);
-							}
-						}
-						break;
-					}
-				} else {
-					prevTokenOwner = currTokenOwner;
-					noOfTokens = 1;
-				}
-			}
-
-			// move to next space
-			if (row < height - 1) {
-				// continue down the current diagonal
-				col++;
-				row++;
-			} else {
-				// go to the next diagonal
-				if (startRow == 0) {
-					row = startRow;
-					startCol++;
-					col = startCol;
-				} else {
-					startRow--;
-					row = startRow;
-					col = startCol;
-				}
-
-				// reset counters
-				noOfTokens = 0;
-				prevTokenOwner = null;
-				currTokenOwner = null;
-			}
-		}
-*/
 		return scores;
-	}
-
-	private static boolean isGameOver() {
-
-		int height = board.getHeight();
-		int width = board.getWidth();
-		Player possibleWinner;
-		int noOfTokens;
-		Player currPlayer;
-		Token currToken;
-		
-		// Check for a vertical line of tokensToWin same-colour tokens
-
-		for(int col = 0; col < width; col++){
-		 	noOfTokens = 0;
-		 	possibleWinner = null;
-		 	for(int row = 0; row < height; row++){
-		 		if(height-row+noOfTokens < tokensToWin) break;
-				
-		 		currToken = board.getToken(col, row);
-		 		if(currToken == null) break;
-		 		currPlayer = currToken.getOwner();
-		 		if(currPlayer == possibleWinner){
-		 			noOfTokens++;
-		 			if(noOfTokens == tokensToWin) {
-		 				return true;
-		 			}
-		 		}else{
-		 			possibleWinner = currPlayer;
-		 			noOfTokens = 1;
-		 		}
-		 	}
-		 }
-
-		 //Check for a horizontal line of tokensToWin same-colour tokens
-		 for(int row = 0; row < height; row++){
-		 	noOfTokens = 0;
-		 	possibleWinner = null;
-		 	for(int col = 0; col < width; col++){
-		 		if(width-col+noOfTokens < tokensToWin) break;
-				
-				currToken = board.getToken(col, row);
-		 		if (currToken == null){
-		 			possibleWinner = null;
-		 			noOfTokens = 0;
-		 			continue;
-		 		}
-		 		currPlayer = currToken.getOwner();
-		 		if(currPlayer == possibleWinner){
-		 			noOfTokens++;
-		 			if(noOfTokens == tokensToWin) {
-		 				return true;
-		 			}
-		 		}else{
-		 			possibleWinner = currPlayer;
-		 			noOfTokens = 1;
-		 		}
-		 	}
-		 }
-	
-		 //Check for a diagonal line of tokensToWin same-colour tokens
-		 for(int col = 0; col < width - tokensToWin+1; col++) {
-		 	for(int row = 0; row < height; row++) {
-		 		// Check diagonally upwards
-		 		possibleWinner = null;
-		 		noOfTokens = 0;
-		 		if(row < height - tokensToWin+1) {
-		 			for(int offset = 0; offset < tokensToWin; offset++) {
-		 				currToken = board.getToken(col+offset, row+offset);
-		 				if(currToken == null) break;
-		 				currPlayer = currToken.getOwner();
-		 				if(offset == 0) possibleWinner = currPlayer;
-		 				if(currPlayer == possibleWinner){
-		 					noOfTokens++;
-		 					if(noOfTokens == tokensToWin) {
-		 						return true;
-		 					}
-		 				}else{
-		 					break;
-		 				}
-		 			}
-		 		}
-		 		// Check diagonally downwards
-		 		possibleWinner = null;
-		 		noOfTokens = 0;
-		 		if(row > tokensToWin-2) {
-		 			for(int offset = 0; offset < tokensToWin; offset++) {
-		 				currToken = board.getToken(col+offset, row-offset);
-		 				if(currToken == null) break;
-		 				currPlayer = currToken.getOwner();
-		 				if(offset == 0) possibleWinner = currPlayer;
-		 				if(currPlayer == possibleWinner){
-		 					noOfTokens++;
-		 					if(noOfTokens == tokensToWin) {
-		 						return true;
-		 					}
-		 				}else{
-		 					break;
-		 				}
-		 			}
-		 		}
-		 	}
-		 }
-		 return false;
 	}
 
 	private static ArrayList<Integer> minMaxSearch(int depth, Player currTurn) {
@@ -624,19 +325,31 @@ public class MoveGenie {
 		int currScore;
 		int boardWidth = board.getWidth();
 
-		if (depth == 0 || isGameOver()) {
-			ArrayList<Integer> scores = calculateScore();
-			/*
-			if (isGameOver()) {
-				for (int i = 0; i < scores.size(); i++) {
-					System.out.println(allPlayers.get(i).getName() + " = "
-							+ scores.get(i));
-				}
-				board.printBoard();
-				System.out.println("\n\n");
-			}*/
+		ArrayList<Integer> scores = calculateScore();
+		if(depth == 0) 
 			return scores;
+		if(scores.get(currTurnInd) == gameEndScore){
+			int newEndScore = gameEndScore+depth;
+			for(int i = 0; i < scores.size(); i++) {
+				if(i!=currTurnInd) 
+					scores.set(i, -newEndScore);
+				else 
+					scores.set(i, newEndScore);
+			}
+			return scores;		
 		}
+		if(scores.get(currTurnInd) == -gameEndScore){
+			int newEndScore = gameEndScore+depth;
+			for(int i = 0; i < scores.size(); i++) {
+				if(i!=currTurnInd) 
+					scores.set(i, newEndScore);
+				else 
+					scores.set(i, -newEndScore);
+			}
+			return scores;		
+		
+		}
+		
 		for (int i = 0; i < board.getWidth(); i++) {
 			if (!board.isColumnFull(i))
 				availableColumns.add(i);
@@ -674,19 +387,29 @@ public class MoveGenie {
 		if (beta <= alpha) {
 			return currTurn == target ? Integer.MAX_VALUE : Integer.MIN_VALUE;
 		}
-		if (depth == 0 || isGameOver()) {
-			/*
-			ArrayList<Integer> scores = calculateScore();
-			
-			if (isGameOver()) {
-				for (int i = 0; i < scores.size(); i++) {
-					System.out.println(allPlayers.get(i).getName() + " = "
-							+ scores.get(i));
-				}
-				board.printBoard();
-				System.out.println("\n\n");
-			}*/
-			return calculateScore().get(aITurnInd);
+		ArrayList<Integer> scores = calculateScore();
+		if(depth == 0) 
+			return scores.get(aITurnInd);
+		if(scores.get(aITurnInd) == gameEndScore){
+			int newEndScore = gameEndScore+depth;
+			for(int i = 0; i < scores.size(); i++) {
+				if(i!=aITurnInd) 
+					scores.set(i, -newEndScore);
+				else 
+					scores.set(i, newEndScore);
+			}
+			return scores.get(aITurnInd);		
+		}
+		if(scores.get(aITurnInd) == -gameEndScore){
+			int newEndScore = gameEndScore+depth;
+			for(int i = 0; i < scores.size(); i++) {
+				if(i!=aITurnInd) 
+					scores.set(i, newEndScore);
+				else 
+					scores.set(i, -newEndScore);
+			}
+			return scores.get(aITurnInd);		
+		
 		}
 		for (int i = 0; i < board.getWidth(); i++) {
 			if (!board.isColumnFull(i))
@@ -726,7 +449,6 @@ public class MoveGenie {
 
 	private static int getTokensScore(int noOfTokens){
 		return (int)Math.pow(noOfTokens, 2);
-
 	}
 	
 	private static Board getBoardCopy(BoardInterface currBoard) {

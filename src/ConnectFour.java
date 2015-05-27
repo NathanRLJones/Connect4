@@ -30,10 +30,10 @@ public class ConnectFour {
 		listener = new Gui(this);
 		
 		players = new ArrayList<Player>();
-		players.add(new HumanPlayer("h", Color.RED));
+		//players.add(new HumanPlayer("h", Color.RED));
 		//players.add(new HumanPlayer("i", Color.GREEN));
-		players.add(new AIPlayer("a", Color.YELLOW, 2));
-		//players.add(new AIPlayer("p2", Color.BLUE, 2));
+		players.add(new AIPlayer("a", Color.YELLOW, 3));
+		players.add(new AIPlayer("p2", Color.BLUE, 3));
 		//players.add(new AIPlayer("a2", Color.GREEN, 2));
 		newGame(4, 7, 6, players);
 	}
