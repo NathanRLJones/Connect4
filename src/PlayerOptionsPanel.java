@@ -19,7 +19,7 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
         GridBagConstraints gbc = new GridBagConstraints();
 
         playerType =  new JComboBox<String>(typeLabels);
-        playerType.setSelectedIndex(0);
+        playerType.setSelectedItem("Easy");
         playerType.addActionListener(this);
 
         nameBox = new JTextField(n);

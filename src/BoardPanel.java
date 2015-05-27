@@ -1,10 +1,9 @@
+import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Ellipse2D.Double;
+import java.awt.geom.*;
 import java.util.*;
 import javax.swing.*;
-
 
 public class BoardPanel extends JPanel implements MouseMotionListener,
                                                   MouseListener,
@@ -101,17 +100,16 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
 	 * Method to paint the board on the screen
 	 */
     public void paintComponent(Graphics g) {
-        Graphics2D g2;          // 2D graphics context
         super.paintComponent(g);
+        Graphics2D g2;          // 2D graphics 
         g2 = (Graphics2D) g;
+        g2.translate(x,y);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-                            RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.translate(x, y);
-        paintBoardLines(g2);
+                             RenderingHints.VALUE_ANTIALIAS_ON);
         paintPlacedTokens(g2);
         paintInputToken(g2);
         paintActionToken(g2);
-        g2.translate(-x, -y);
+        paintBoard(g2);
 
     }
 
@@ -146,9 +144,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     	hintCol = column;
     	hintRow = board.getColumnLevel(column);
     	hintToken = token;
+        repaint();
     }
 
     public void removeToken(int column, Token token) {
+        hasHint = false;
     	actions.add(new BoardAction("remove", column, token));
         if (actions.size() == 1) {
         	board.removeToken(column);
@@ -173,23 +173,32 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         input = token;
     }
 
-    public void paintBoardLines(Graphics2D g2) {
+    private void paintBoard(Graphics2D g2) {
+        BufferedImage bufferedImage;
+        AlphaComposite ac;
+        Graphics2D bg2;         // buffered 2D graphics
         Point temp;
+        bufferedImage = new BufferedImage(width, height, 
+                                          BufferedImage.TYPE_INT_ARGB);
+        bg2 = bufferedImage.createGraphics();
+        bg2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
+                             RenderingHints.VALUE_ANTIALIAS_ON);
+        bg2.setColor(Color.BLUE);
+        bg2.fillRect(0, 0, width, height);
+        ac = AlphaComposite.getInstance(AlphaComposite.CLEAR, 1.0f);
+        bg2.setComposite(ac);
         temp = new Point();
-        g2.setColor(Color.LIGHT_GRAY);
-        g2.setStroke(new BasicStroke(1));
-               
-        for (int i = 0; i < rows + 1; i++){
-            temp.y = i*tokenSize;
-            g2.drawLine(0, temp.y, width,  temp.y);
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {                
+                temp.x = i*tokenSize;
+                temp.y = j*tokenSize;
+                bg2.fill(getTokenShape(temp.x, temp.y, 0.15));
+            }
         }
-        for (int i = 0; i < cols + 1; i++) {
-            temp.x = i*tokenSize;
-            g2.drawLine(temp.x, 0,  temp.x, height);
-        }
+        g2.drawImage(bufferedImage, null, 0, 0);
     }
 
-    public void paintPlacedTokens(Graphics2D g2) {
+    private void paintPlacedTokens(Graphics2D g2) {
         Token token;
         Point temp;
         int level;
@@ -265,12 +274,14 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
 
     }
 
-    public void paintInputToken(Graphics2D g2) {
+
+
+    private void paintInputToken(Graphics2D g2) {
         if (input != null && actions.isEmpty())
             paintToken(g2, input, inputX-x-(tokenSize/2), -tokenSize);
     }
 
-    public void paintActionToken(Graphics2D g2) {
+    private void paintActionToken(Graphics2D g2) {
         BoardAction action;     // A polled action to draw
         Token token;            // Token
         Point temp;             // Coordinate
@@ -295,20 +306,20 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         }
     }
 
-    public void paintToken(Graphics2D g2, Token token, int x, int y) {
+    private void paintToken(Graphics2D g2, Token token, int x, int y) {
+        g2.setColor(token.getColor().darker());
+        g2.fill(getTokenShape(x, y, 0.15));
+        g2.setColor(token.getColor());
+        g2.fill(getTokenShape(x, y, 0.20));
+    }
+
+    private Ellipse2D getTokenShape(int x, int y, double pad) {
         Ellipse2D circle = new Ellipse2D.Double();
-        int diff = (int)(tokenSize * 0.15);
+        int diff = (int)(tokenSize * pad);
         int size = tokenSize - diff*2;
         circle.setFrame(x+diff, y+diff, size, size);
-        g2.setColor(token.getColor().darker());
-        g2.fill(circle);
-        
-        diff = (int)(tokenSize * 0.20);
-        size = tokenSize - diff*2;
-        circle.setFrame(x+diff, y+diff, size, size);
-        g2.setColor(token.getColor());
-        g2.fill(circle);
-    }
+        return circle;
+    } 
 
     public void mouseMoved(MouseEvent e) {
         inputX = e.getX();

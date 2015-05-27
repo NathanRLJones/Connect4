@@ -12,7 +12,7 @@ public class Animation {
 
     public Animation (AnimationListener al) {
         listener = al;
-        duration = 500;
+        duration = 800;
         delay = 40;
         time = 0;
         timer = new Timer(delay, new ActionListener() {

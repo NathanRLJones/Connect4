@@ -39,9 +39,7 @@ class PlayerListPanel extends JLayeredPane
         // colors.add(new Color(0, 233, 181)); // teal
         // colors.add(new Color(148, 214, 53)); // green -
 
-        // for (Color c : colors) {
-        //     addPlayerPanel(new PlayerPanel(c));
-        // }
+
 
         addPlayerPanel(new PlayerOptionsPanel("Player 1", Color.RED));
         addPlayerPanel(new PlayerOptionsPanel("Player 2", Color.YELLOW));

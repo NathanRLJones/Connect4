@@ -128,6 +128,7 @@ public class Gui implements GameListener, BoardListener, ActionListener{
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
+        startGame();
 	}
 
 	@Override
@@ -149,14 +150,18 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         case "StartGame":
         	dialogPanel.hideDialog();
         case "Restart":        	
-        	int[] size = goPanel.getBoardSize();
-        	int toWin = goPanel.getTokensToWin();
-        	game.newGame(toWin, size[0], size[1], plPanel.getPlayers());
+        	startGame();
         	break;
         case "CancelNewGame":
         	dialogPanel.hideDialog();
         	break;
         }
 	}
+
+    private void startGame() {
+        int[] size = goPanel.getBoardSize();
+        int toWin = goPanel.getTokensToWin();
+        game.newGame(toWin, size[0], size[1], plPanel.getPlayers());
+    }
 	
 }
