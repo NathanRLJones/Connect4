@@ -8,6 +8,7 @@ public class MoveGenie {
 	static int noOfPlayers;
 	static int aITurnInd;
 	static int tokensToWin;
+	static int gameEndScore;
 
 	public static Move getMove(BoardInterface currBoard, int maxDepth,
 			List<Player> players, Player target, int toWin) {
@@ -17,6 +18,7 @@ public class MoveGenie {
 		allPlayers = players;
 		noOfPlayers = players.size();
 		tokensToWin = toWin;
+		gameEndScore = (int)Math.pow(toWin, 2)*100;
 		int depth = noOfPlayers * maxDepth;
 		int columns = board.getWidth();
 		Token token = new Token(target);
@@ -79,20 +81,7 @@ public class MoveGenie {
 					break;
 				currTokenOwner = board.whoOwnsToken(col, row);
 				if (currTokenOwner == null) {
-					int scoreChange = 0;
-					switch (noOfTokens) {
-					case 1:
-						scoreChange = 1;
-						break;
-					case 2:
-						scoreChange = 4;
-						break;
-					case 3:
-						scoreChange = 6;
-						break;
-					default:
-						break;
-					}
+					int scoreChange = getTokensScore(noOfTokens);
 					for (int i = 0; i < allPlayers.size(); i++) {
 						if (prevTokenOwner == allPlayers.get(i)) {
 							scores.set(i, scores.get(i) + scoreChange);
@@ -107,9 +96,9 @@ public class MoveGenie {
 					if(noOfTokens == tokensToWin){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i)){
-								scores.set(i, scores.get(i) + 100);
+								scores.set(i, scores.get(i) + gameEndScore);
 							} else {
-								scores.set(i, scores.get(i) - 100);
+								scores.set(i, scores.get(i) - gameEndScore);
 							}
 						}
 						break;
@@ -140,9 +129,9 @@ public class MoveGenie {
 					if(noOfTokens == tokensToWin){
 						for(int i = 0; i < allPlayers.size(); i++){	
 							if(prevTokenOwner == allPlayers.get(i))
-								scores.set(i, scores.get(i) + 100);
+								scores.set(i, scores.get(i) + gameEndScore);
 							else
-								scores.set(i, scores.get(i) - 100);
+								scores.set(i, scores.get(i) - gameEndScore);
 						}
 						noOfTokens = 0;
 						prevEmptySpaces = 0;
@@ -150,20 +139,7 @@ public class MoveGenie {
 					}
 				}else{
 					if(currEmptySpaces+prevEmptySpaces+noOfTokens >= tokensToWin){
-						int scoreChange = 0;
-						switch (noOfTokens) {
-						case 1:
-							scoreChange = 1;
-							break;
-						case 2:
-							scoreChange = 4;
-							break;
-						case 3:
-							scoreChange = 6;
-							break;
-						default:
-							break;
-						}
+						int scoreChange = getTokensScore(noOfTokens);
 						if(currEmptySpaces + noOfTokens >= tokensToWin 
 								&& prevEmptySpaces + noOfTokens >= tokensToWin )
 							scoreChange*=2;
@@ -182,20 +158,7 @@ public class MoveGenie {
 				}
 				prevSpace = currTokenOwner;
 				if(col==width-1 && currEmptySpaces+prevEmptySpaces+noOfTokens >= tokensToWin){
-					int scoreChange = 0;
-					switch (noOfTokens) {
-					case 1:
-						scoreChange = 1;
-						break;
-					case 2:
-						scoreChange = 4;
-						break;
-					case 3:
-						scoreChange = 6;
-						break;
-					default:
-						break;
-					}
+					int scoreChange = getTokensScore(noOfTokens);
 					if(currEmptySpaces + noOfTokens >= tokensToWin 
 							&& prevEmptySpaces + noOfTokens >= tokensToWin )
 						scoreChange*=2;
@@ -235,9 +198,9 @@ public class MoveGenie {
 						if (noOfTokens == tokensToWin) {
 							for (int i = 0; i < allPlayers.size(); i++) {
 								if (prevTokenOwner == allPlayers.get(i))
-									scores.set(i, scores.get(i) + 100);
+									scores.set(i, scores.get(i) + gameEndScore);
 								else
-									scores.set(i, scores.get(i) - 100);
+									scores.set(i, scores.get(i) - gameEndScore);
 							}
 							noOfTokens = 0;
 							prevEmptySpaces = 0;
@@ -245,20 +208,7 @@ public class MoveGenie {
 						}
 					} else {
 						if (currEmptySpaces + prevEmptySpaces + noOfTokens >= tokensToWin) {
-							int scoreChange = 0;
-							switch (noOfTokens) {
-							case 1:
-								scoreChange = 1;
-								break;
-							case 2:
-								scoreChange = 4;
-								break;
-							case 3:
-								scoreChange = 6;
-								break;
-							default:
-								break;
-							}
+							int scoreChange = getTokensScore(noOfTokens);
 							if(currEmptySpaces + noOfTokens >= tokensToWin 
 									&& prevEmptySpaces + noOfTokens >= tokensToWin )
 								scoreChange*=2;
@@ -279,20 +229,7 @@ public class MoveGenie {
 					prevSpace = currTokenOwner;
 					if (offset == maxOffset-1
 							&& currEmptySpaces + prevEmptySpaces + noOfTokens >= tokensToWin) {
-						int scoreChange = 0;
-						switch (noOfTokens) {
-						case 1:
-							scoreChange = 1;
-							break;
-						case 2:
-							scoreChange = 4;
-							break;
-						case 3:
-							scoreChange = 6;
-							break;
-						default:
-							break;
-						}
+						int scoreChange = getTokensScore(noOfTokens);
 						if(currEmptySpaces + noOfTokens >= tokensToWin 
 								&& prevEmptySpaces + noOfTokens >= tokensToWin )
 							scoreChange*=2;
@@ -330,9 +267,9 @@ public class MoveGenie {
 						if (noOfTokens == tokensToWin) {
 							for (int i = 0; i < allPlayers.size(); i++) {
 								if (prevTokenOwner == allPlayers.get(i))
-									scores.set(i, scores.get(i) + 100);
+									scores.set(i, scores.get(i) + gameEndScore);
 								else
-									scores.set(i, scores.get(i) - 100);
+									scores.set(i, scores.get(i) - gameEndScore);
 							}
 							noOfTokens = 0;
 							prevEmptySpaces = 0;
@@ -340,20 +277,7 @@ public class MoveGenie {
 						}
 					} else {
 						if (currEmptySpaces + prevEmptySpaces + noOfTokens >= tokensToWin) {
-							int scoreChange = 0;
-							switch (noOfTokens) {
-							case 1:
-								scoreChange = 1;
-								break;
-							case 2:
-								scoreChange = 4;
-								break;
-							case 3:
-								scoreChange = 6;
-								break;
-							default:
-								break;
-							}
+							int scoreChange = getTokensScore(noOfTokens);
 							if(currEmptySpaces + noOfTokens >= tokensToWin 
 									&& prevEmptySpaces + noOfTokens >= tokensToWin )
 								scoreChange*=2;
@@ -374,20 +298,7 @@ public class MoveGenie {
 					prevSpace = currTokenOwner;
 					if (offset == maxOffset-1
 							&& currEmptySpaces + prevEmptySpaces + noOfTokens >= tokensToWin) {
-						int scoreChange = 0;
-						switch (noOfTokens) {
-						case 1:
-							scoreChange = 1;
-							break;
-						case 2:
-							scoreChange = 4;
-							break;
-						case 3:
-							scoreChange = 6;
-							break;
-						default:
-							break;
-						}
+						int scoreChange = getTokensScore(noOfTokens);
 						if(currEmptySpaces + noOfTokens >= tokensToWin 
 								&& prevEmptySpaces + noOfTokens >= tokensToWin )
 							scoreChange*=2;
@@ -813,6 +724,11 @@ public class MoveGenie {
 		return score;
 	}
 
+	private static int getTokensScore(int noOfTokens){
+		return (int)Math.pow(noOfTokens, 2);
+
+	}
+	
 	private static Board getBoardCopy(BoardInterface currBoard) {
 		int width = currBoard.getWidth();
 		int height = currBoard.getHeight();
