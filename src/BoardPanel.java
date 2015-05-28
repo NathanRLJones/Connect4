@@ -338,15 +338,15 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         return circle;
     } 
 
+    public void componentResized(ComponentEvent e) {
+    	calculateMetrics();
+    	repaint();
+    };
+    
     public void mouseMoved(MouseEvent e) {
         inputX = e.getX();
         repaint();
     }
-
-    public void componentResized(ComponentEvent e) {
-        calculateMetrics();
-        repaint();
-    };
     
     public void mouseClicked(MouseEvent e) {
         // non interactive state
