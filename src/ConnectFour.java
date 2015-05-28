@@ -272,11 +272,4 @@ public class ConnectFour {
 		}
 	}
 	
-	/**
-	 * Method to restart the game.
-	 */
-	public void restart() {
-		newGame(4, 7, 6, players);
-	}
-	
 }
