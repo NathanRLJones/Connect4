@@ -343,6 +343,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         repaint();
     }
 
+    public void componentResized(ComponentEvent e) {
+        calculateMetrics();
+        repaint();
+    };
+    
     public void mouseClicked(MouseEvent e) {
         // non interactive state
         if (!actions.isEmpty() || input == null) 
@@ -354,11 +359,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             input = null;
             listener.columnSelected(column);
         }
-    };
-
-    public void componentResized(ComponentEvent e) {
-        calculateMetrics();
-        repaint();
     };
 
     public void mouseDragged(MouseEvent e) {};
