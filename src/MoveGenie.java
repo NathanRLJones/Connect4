@@ -10,6 +10,15 @@ public class MoveGenie {
 	static int tokensToWin;
 	static int gameEndScore;
 
+	/**
+	 * Function to calculate the best Move for the Player target
+	 * @param currBoard BoardInterface showing the current state of the board
+	 * @param maxDepth integer value limiting the depth of the search 
+	 * @param players List of Players in the order of the play
+	 * @param target Player for which the best Move will be calculated
+	 * @param toWin integer number of tokens in a line required for a Player to win
+	 * @return best Move for the Player
+	 */
 	public static Move getMove(BoardInterface currBoard, int maxDepth,
 			List<Player> players, Player target, int toWin) {
 		System.out.println("Getting move, depth of: " + maxDepth);
@@ -48,18 +57,16 @@ public class MoveGenie {
 		}
 		return new Move(maxScoreColumn, token);
 	}
-
+	
+	/**
+	 * Function to calculate individual scores for each of the Players
+	 * @return ArrayList<Integer> containing integer value scores for each of the Players
+	 */
 	private static ArrayList<Integer> calculateScore() {
 		ArrayList<Integer> scores = new ArrayList<Integer>();
 		for (Player p : allPlayers) {
 			scores.add(0);
 		}
-
-		// 1 points for 1 aiPlayer token line with enough space for 4
-		// 4 points for 2 aiPlayer token lines with enough space for 4
-		// 6 points for 3 aiPlayer token lines with enough space for 4
-		// 100 points for 4 aiPlayer token lines
-		// negative points for above if tokens belong to another player
 
 		int height = board.getHeight();
 		int width = board.getWidth();
@@ -71,7 +78,7 @@ public class MoveGenie {
 		int prevEmptySpaces = 0;
 		int currEmptySpaces = 0;
 
-		// Check for scores vertically
+		// Calculate vertical line scores
 		for (int col = 0; col < width; col++) {
 			noOfTokens = 0;
 			prevTokenOwner = null;
@@ -110,7 +117,7 @@ public class MoveGenie {
 			}
 		}
 
-		// check for scores horizontally
+		// Calculate horizontal line scores
 		for (int row = 0; row < height; row++) {
 			noOfTokens = 0;
 			prevTokenOwner = null;
@@ -119,7 +126,8 @@ public class MoveGenie {
 			prevEmptySpaces = 0;
 			currEmptySpaces = 0;
 			for (int col = 0; col < width; col++){
-				if(width-col+noOfTokens+prevEmptySpaces+currEmptySpaces < tokensToWin) break;
+				if(width-col+noOfTokens+prevEmptySpaces+currEmptySpaces < tokensToWin) 
+					break;
 				currTokenOwner = board.whoOwnsToken(col, row);
 
 				if (currTokenOwner == null) {
@@ -171,11 +179,7 @@ public class MoveGenie {
 			}
 
 		}
-
-	
-		// diagonal upward
-		
-	
+		//Calculate upward diagonal line scores
 		for (int col = 0; col <= width - tokensToWin; col++) {
 			int maxRow = 0;
 			if(col == 0) { 
@@ -242,7 +246,7 @@ public class MoveGenie {
 			}
 		}
 	
-		//diagonal downwards
+		//Calculate downward diagonal line scores
 		for (int col = 0; col <= width - tokensToWin ; col++) {
 			int minRow = height-1;
 			if(col == 0) { 
@@ -311,7 +315,12 @@ public class MoveGenie {
 		
 		return scores;
 	}
-
+	/**
+	 * Function to return a list of scores for each Players based on minmax search algorithm
+	 * @param depth integer value limiting the depth of search
+	 * @param currTurn Player for which score is chosen at the current tree level
+	 * @return ArrayList<Integer> of scores for each Players at the given depth
+	 */
 	private static ArrayList<Integer> minMaxSearch(int depth, Player currTurn) {
 
 		ArrayList<Integer> availableColumns = new ArrayList<>();
@@ -375,7 +384,15 @@ public class MoveGenie {
 		return bestScoreList;
 	}
 
-	// For 2-player option
+	/**
+	 * Function to return a list of scores for each Players based on alpha-beta search algorithm
+	 * @param alpha probable minimum integer score
+	 * @param beta probable maximum integer score
+	 * @param depth integer value limiting the depth of search
+	 * @param currTurn Player for which score is chosen at the current tree level
+	 * @param target Player using getMove() function
+	 * @return ArrayList<Integer> of scores for each Players at the given depth
+	 */
 	private static int alphaBetaSearch(int alpha, int beta, int depth,
 			Player currTurn, Player target) {
 
@@ -446,11 +463,19 @@ public class MoveGenie {
 		}
 		return score;
 	}
-
+	/**
+	 * Returns the score for the line of tokens given the number of the tokens
+	 * @param noOfTokens integer number of tokens in a line
+	 * @return integer score
+	 */
 	private static int getTokensScore(int noOfTokens){
 		return (int)Math.pow(noOfTokens, 2);
 	}
-	
+	/**
+	 * Returns a copy of the BoardInterface
+	 * @param currBoard BoardInterface
+	 * @return Board copy of the currBoard
+	 */
 	private static Board getBoardCopy(BoardInterface currBoard) {
 		int width = currBoard.getWidth();
 		int height = currBoard.getHeight();
