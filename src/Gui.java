@@ -9,8 +9,8 @@ import javax.swing.*;
 
 public class Gui implements GameListener, BoardListener, ActionListener{
 
-	public static final int DEFAULT_WIDTH = 1024;
-	public static final int DEFAULT_HEIGHT = 800;
+	public static final int DEFAULT_WIDTH = 600;
+	public static final int DEFAULT_HEIGHT = 700;
 	
 	private JFrame mainFrame;
 	private BoardPanel boardPanel;
