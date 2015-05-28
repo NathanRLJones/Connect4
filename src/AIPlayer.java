@@ -26,7 +26,7 @@ public class AIPlayer implements Player {
 		this.difficultyLevel = difficultyLevel; 
 	}
 	/**
-	 * Returns AIPlayer's best Move 
+	 * Method to get player's move
 	 * @param currBoard BoardInterface of the current board
 	 * @param players List<Player> of Players in the order of the play
 	 * @param tokensToWin integer number of tokens in a line required to win
@@ -37,23 +37,24 @@ public class AIPlayer implements Player {
 		return MoveGenie.getMove(currBoard, difficultyLevel, players, this, tokensToWin);
 	}
 	/**
-	 * Returns name of the AIPlayer
-	 * @return String name of the AIPlayer
+	 * Method to get the name of the player
+	 * @return String name of the player
 	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 	/**
-	 * Returns the color of the AIPlayer
-	 * @return Color of the AIPlayer
+	 * Method to get the token colour of the player 
+	 * @return Color of the player
 	 */
 	@Override
 	public Color getColor() {
 		return color;
 	}
 	/**
-	 * Returns true if the Player is interactive and false otherwise
+	 * Method to check if the player is interactive
+	 * @return true if the player is human and false otherwise
 	 */
 	@Override
 	public boolean isInteractive() {

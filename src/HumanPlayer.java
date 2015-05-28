@@ -5,7 +5,6 @@ public class HumanPlayer implements Player {
 
 	private Color color;
 	private String name;
-	private Gui gui;
 	
 	/**
 	 * Default constructor for players
@@ -13,7 +12,6 @@ public class HumanPlayer implements Player {
 	 * @param tokenColor colour indicator for the player
 	 */
 	public HumanPlayer(String humanName, Color tokenColor) {
-		// TODO stub
 		name = humanName;
 		color = tokenColor;
 	}
@@ -25,15 +23,24 @@ public class HumanPlayer implements Player {
 	public Move getMove(BoardInterface board, List<Player> players, int tokensToWin) {
 		return null;
 	}
-	
+	/**
+	 * Method to get the name of the player
+	 * @return String name of the Player
+	 */
 	public String getName() {
 		return name;
 	}
-	
+	/**
+	 * Method to get the color of the player
+	 * @return Color of the player
+	 */
 	public Color getColor() {
 		return color;
 	}
-	
+	/**
+	 * Method to check if the player is interactive
+	 * @return true if the player is human and false otherwise
+	 */
 	@Override
 	public boolean isInteractive(){
 		return true;
