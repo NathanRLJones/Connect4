@@ -10,7 +10,7 @@ public class RandomAI implements Player {
 	Random rand;
 	/**
 	 * Default constructor for players
-	 * @param aiNamee name for the player
+	 * @param aiName name for the player
 	 * @param aiColor colour indicator for the player
 	 */
 	public RandomAI(String aiName, Color aiColor){
