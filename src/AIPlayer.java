@@ -12,7 +12,7 @@ public class AIPlayer implements Player {
 	Board board;
 	List<Player> allPlayers;
 	int noOfPlayers;
-	int aITurnInd;
+	int aiTurnInd;
 	
 	/**
 	 * Constructor for AIPlayer
