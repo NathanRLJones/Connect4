@@ -5,7 +5,6 @@ mkdir -p bin
 
 echo "compiling files"
 
-javac src/*.java
-mv src/*.class bin
+javac -d bin src/*.java
 
 echo "done"
