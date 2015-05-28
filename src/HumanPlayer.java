@@ -17,12 +17,13 @@ public class HumanPlayer implements Player {
 	}
 
 	/**
-	 * Method to get player's move
+	 * Method to get the player's move
 	 * @return the move of the player
 	 */
 	public Move getMove(BoardInterface board, List<Player> players, int tokensToWin) {
 		return null;
 	}
+	
 	/**
 	 * Method to get the name of the player
 	 * @return String name of the Player
@@ -30,6 +31,7 @@ public class HumanPlayer implements Player {
 	public String getName() {
 		return name;
 	}
+	
 	/**
 	 * Method to get the color of the player
 	 * @return Color of the player
@@ -37,6 +39,7 @@ public class HumanPlayer implements Player {
 	public Color getColor() {
 		return color;
 	}
+	
 	/**
 	 * Method to check if the player is interactive
 	 * @return true if the player is human and false otherwise
