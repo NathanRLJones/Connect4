@@ -13,10 +13,18 @@ public class Move {
 		this.token = token;
 	}
 	
+	/**
+	 * Method to return the column for the Move
+	 * @return integer column position in the board for the Move
+	 */
 	public int getColumn() {
 		return column;
 	}
 	
+	/**
+	 * Method to return the Token used in the Move
+	 * @return Token used in the Move
+	 */
 	public Token getToken() {
 		return token;
 	}
