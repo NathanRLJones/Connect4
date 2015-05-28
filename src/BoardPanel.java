@@ -78,15 +78,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         int column = action.getColumn();
         Token token = action.getToken();
 
-        repaint();
         if (name.equals("place")) {
             board.placeToken(column, token);
             repaint();
-            repaint();
-            repaint();
-            repaint();
             listener.placedAnimationComplete();
-        
         } else if (name.equals("remove")) {
            
         }
@@ -112,8 +107,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         g2.translate(x,y);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
                              RenderingHints.VALUE_ANTIALIAS_ON);
-        paintPlacedTokens(g2);
         paintInputToken(g2);
+        paintColumnHighlight(g2);
+        paintPlacedTokens(g2);
         paintActionToken(g2);
         paintBoard(g2);
 
@@ -291,6 +287,15 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     private void paintInputToken(Graphics2D g2) {
         if (input != null && actions.isEmpty())
             paintToken(g2, input, inputX-x-(tokenSize/2), -tokenSize);
+    }
+
+    private void paintColumnHighlight(Graphics2D g2) {
+        int col = getColumnNumber();
+        if (input != null && actions.isEmpty() && col >= 0) {
+            g2.setPaint(new Color(209, 240, 255));
+            g2.fillRoundRect(col*tokenSize, 0, tokenSize, 
+                             rows*tokenSize, 20, 20);
+        }
     }
 
     private void paintActionToken(Graphics2D g2) {
