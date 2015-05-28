@@ -18,13 +18,13 @@ public class Animation {
         timer = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                time += delay;
-                time = Math.min(time, duration);
                 listener.newFrame();
-                if (time == duration) {
+                time += delay;
+                if (time > duration) {
                     timer.stop();
                     listener.lastFrame();
                 }
+
             }
         });
         timer.setRepeats(true);

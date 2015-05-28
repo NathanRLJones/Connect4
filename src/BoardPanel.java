@@ -78,23 +78,28 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         int column = action.getColumn();
         Token token = action.getToken();
 
+        repaint();
         if (name.equals("place")) {
             board.placeToken(column, token);
+            repaint();
+            repaint();
+            repaint();
+            repaint();
             listener.placedAnimationComplete();
+        
         } else if (name.equals("remove")) {
            
         }
-
+        
         if (!actions.isEmpty()) {
-        	action = actions.peek();
+            action = actions.peek();
             if(action.getName().equals("remove"))
-            	board.removeToken(action.getColumn());
-        	animation.start();
+                board.removeToken(action.getColumn());
+            animation.start();
         } else {
-        	listener.animationQueueEmptied();
+            listener.animationQueueEmptied();
         }
 
-        repaint();
     }
 
 	/**
