@@ -3,12 +3,12 @@ import java.util.List;
 
 public class MoveGenie {
 
-	static Board board;
-	static List<Player> allPlayers;
-	static int noOfPlayers;
-	static int aITurnInd;
-	static int tokensToWin;
-	static int gameEndScore;
+	private static Board board;
+	private static List<Player> allPlayers;
+	private static int noOfPlayers;
+	private static int aITurnInd;
+	private static int tokensToWin;
+	private static int gameEndScore;
 
 	/**
 	 * Function to calculate the best Move for the Player target
