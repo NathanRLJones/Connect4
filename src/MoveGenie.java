@@ -6,7 +6,7 @@ public class MoveGenie {
 	private static Board board;
 	private static List<Player> allPlayers;
 	private static int noOfPlayers;
-	private static int aITurnInd;
+	private static int aiTurnInd;
 	private static int tokensToWin;
 	private static int gameEndScore;
 
@@ -28,13 +28,13 @@ public class MoveGenie {
 		noOfPlayers = players.size();
 		tokensToWin = toWin;
 		gameEndScore = (int)Math.pow(toWin, 2)*100;
-		aITurnInd = players.indexOf(target);
+		aiTurnInd = players.indexOf(target);
 		int depth = noOfPlayers * maxDepth;
 		int columns = board.getWidth();
 		Token token = new Token(target);
 		int maxScoreColumn = -1;
 		int maxScore = Integer.MIN_VALUE;
-		int nextTurnInd = (aITurnInd + 1) % noOfPlayers;
+		int nextTurnInd = (aiTurnInd + 1) % noOfPlayers;
 		Player nextPlayer = players.get(nextTurnInd);
 		int newScore;
 
@@ -45,7 +45,7 @@ public class MoveGenie {
 					newScore = alphaBetaSearch(Integer.MIN_VALUE,
 							Integer.MAX_VALUE, depth, nextPlayer, target);
 				else
-					newScore = minMaxSearch(depth, nextPlayer).get(aITurnInd);
+					newScore = minMaxSearch(depth, nextPlayer).get(aiTurnInd);
 				if (newScore > maxScore) {
 					maxScore = newScore;
 					maxScoreColumn = i;
@@ -408,26 +408,26 @@ public class MoveGenie {
 		}
 		ArrayList<Integer> scores = calculateScore();
 		if(depth == 0) 
-			return scores.get(aITurnInd);
-		if(scores.get(aITurnInd) == gameEndScore){
+			return scores.get(aiTurnInd);
+		if(scores.get(aiTurnInd) == gameEndScore){
 			int newEndScore = gameEndScore+depth;
 			for(int i = 0; i < scores.size(); i++) {
-				if(i!=aITurnInd) 
+				if(i!=aiTurnInd) 
 					scores.set(i, -newEndScore);
 				else 
 					scores.set(i, newEndScore);
 			}
-			return scores.get(aITurnInd);		
+			return scores.get(aiTurnInd);		
 		}
-		if(scores.get(aITurnInd) == -gameEndScore){
+		if(scores.get(aiTurnInd) == -gameEndScore){
 			int newEndScore = gameEndScore+depth;
 			for(int i = 0; i < scores.size(); i++) {
-				if(i!=aITurnInd) 
+				if(i!=aiTurnInd) 
 					scores.set(i, newEndScore);
 				else 
 					scores.set(i, -newEndScore);
 			}
-			return scores.get(aITurnInd);		
+			return scores.get(aiTurnInd);		
 		
 		}
 		for (int i = 0; i < board.getWidth(); i++) {
