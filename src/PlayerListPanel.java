@@ -97,6 +97,16 @@ class PlayerListPanel extends JLayeredPane
         }
         animation.start();
     }
+    
+    public ArrayList<Player> getPlayers(){
+    	ArrayList<Player> players = new ArrayList<Player>();
+    	
+    	for(PlayerOptionsPanel po : panels){
+    		players.add(po.getPlayer());
+    	}
+    	
+    	return players;
+    }
 
     public void mousePressed(MouseEvent e) {
         Point location;
@@ -146,16 +156,6 @@ class PlayerListPanel extends JLayeredPane
         dragPanel = null;
         setupAnimation();
         resizePanels();
-    }
-    
-    public ArrayList<Player> getPlayers(){
-    	ArrayList<Player> players = new ArrayList<Player>();
-    	
-    	for(PlayerOptionsPanel po : panels){
-    		players.add(po.getPlayer());
-    	}
-    	
-    	return players;
     }
 
     public void mouseClicked(MouseEvent e) {}
