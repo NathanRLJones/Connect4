@@ -1,4 +1,5 @@
 import java.awt.image.BufferedImage;
+import java.awt.GradientPaint;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -183,8 +184,14 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         bg2 = bufferedImage.createGraphics();
         bg2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
                              RenderingHints.VALUE_ANTIALIAS_ON);
-        bg2.setColor(Color.BLUE);
-        bg2.fillRect(0, 0, width, height);
+        
+
+        Color c1 = new Color(30,75,143);
+        Color c2 = new Color(15,29,74);
+
+        GradientPaint gp1 = new GradientPaint(0, 0, c1, 0, height, c2 , false);
+        bg2.setPaint(gp1);
+        bg2.fillRoundRect(0, 0, width, height, 20, 20);
         ac = AlphaComposite.getInstance(AlphaComposite.CLEAR, 1.0f);
         bg2.setComposite(ac);
         temp = new Point();
