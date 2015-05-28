@@ -11,7 +11,7 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
     private Color color;
     private String name;
 
-    public PlayerOptionsPanel (String n, Color c) {
+    public PlayerOptionsPanel (String n, String t, Color c) {
         super(new GridBagLayout());
         // setBackground(color);
 
@@ -19,7 +19,7 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
         GridBagConstraints gbc = new GridBagConstraints();
 
         playerType =  new JComboBox<String>(typeLabels);
-        playerType.setSelectedItem("Easy");
+        playerType.setSelectedItem(t);
         playerType.addActionListener(this);
 
         nameBox = new JTextField(n);
