@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 
 public class GameOptionsPanel extends JPanel{
 
-	JComboBox<String> boardSizes;
-	JComboBox<Integer> winInARows;
+	private JComboBox<String> boardSizes;
+	private JComboBox<Integer> winInARows;
 	
 	public GameOptionsPanel(){
 		super();
@@ -19,13 +19,12 @@ public class GameOptionsPanel extends JPanel{
         setBackground(Color.WHITE);
         
         String[] sizeLabels = {"4 x 3", "7 x 6", "10 x 9", "14 x 12"};
-        boardSizes =  new JComboBox<String>(sizeLabels);
+        boardSizes = new JComboBox<String>(sizeLabels);
         boardSizes.setSelectedIndex(1);
 
         Integer[] winInARowLabels = {3, 4, 5, 6};
         winInARows = new JComboBox<Integer>(winInARowLabels);
         winInARows.setSelectedIndex(1);
-
         
         this.add(new JLabel("Board Size:"));
         this.add(boardSizes);
