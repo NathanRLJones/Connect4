@@ -31,7 +31,11 @@ public class ConnectFour {
 	}
 
 	/**
-	 * Create new game with board size and players defined
+	 * Start a new game with the given parameters.
+	 * @param toWin Number of tokens in a row required to win.
+	 * @param rows Number of rows on the board.
+	 * @param cols Number of columns on the board.
+	 * @param players List of players in the game.
 	 */
 	public void newGame(int toWin, int rows, int cols, List<Player> players) {
 		tokensToWin = toWin;
@@ -44,30 +48,56 @@ public class ConnectFour {
 		listener.newTurn(currentPlayer);
 	}
 	
+	/**
+	 * Get the number of tokens in a row required to win in the current game.
+	 * @return Number of tokens in a row required to win in the current game.
+	 */
 	public int getTokensToWin(){
 		return tokensToWin;
 	}
 
+	/**
+	 * Get the move history of the current game.
+	 * @return Move history of the current game.
+	 */
 	public Stack<Move> getMoveHistory() {
 		return moveHistory;
 	}
 	
+	/**
+	 * Get the undone moves of the current game.
+	 * @return Undone moves of the current game.
+	 */
 	public Stack<Move> getUndoneMoves() {
 		return undoneMoves;
 	}
 	
+	/**
+	 * Get the board of the current game.
+	 * @return Board of the current game.
+	 */
 	public BoardInterface getBoard() {
 		return board;
 	}
 
+	/**
+	 * Suggest a move from user input.
+	 * @param column Column of suggested move.
+	 */
 	public void setInputSuggestion(int column) {
 		suggestedMove = new Move(column, new Token(currentPlayer));
 	}
 	
+	/**
+	 * Get a hint and get the gui to display it.
+	 */
 	public void getHint() {		
 		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, currentPlayer, tokensToWin).getColumn(), new Token(currentPlayer));
 	}
 
+	/**
+	 * Get a move from the current player and execute it.
+	 */
 	public void queryPlayers() {
 		Move move;
 		if (currentPlayer.isInteractive()) {
@@ -82,6 +112,9 @@ public class ConnectFour {
 		listener.tokenPlaced(move.getColumn(), move.getToken());
 	}
 
+	/**
+	 * Move the game forward to the next turn.
+	 */
 	public void advance() {
 		int index;
 		if (!isGameOver()) {
@@ -119,8 +152,6 @@ public class ConnectFour {
 		//No need to check directly above the token, since it was the last token placed.
 		int NECount = checkValidTokenSeries(lastPlayer, col, row, 1, 1);
 		int ECount  = checkValidTokenSeries(lastPlayer, col, row, 1, 0);
-
-
 		int SECount = checkValidTokenSeries(lastPlayer, col, row, 1, -1);
 		int SCount  = checkValidTokenSeries(lastPlayer, col, row, 0, -1);
 		int SWCount = checkValidTokenSeries(lastPlayer, col, row, -1, -1);
@@ -128,6 +159,7 @@ public class ConnectFour {
 		int NWCount = checkValidTokenSeries(lastPlayer, col, row, -1, 1);
 
 		//> is used instead of >= because the last placed token will be counted twice
+		//if the game was won, tell the gui where the winning tokens are.
 		if (NECount + SWCount > tokensToWin) {
 			listener.gameWon(lastPlayer, 
 							 col + NECount - 1,	 // col1
@@ -197,15 +229,15 @@ public class ConnectFour {
 	}
 	
 	/**
-	 * Method to get the current player
-	 * @return the player for the current turn
+	 * Method to get the current player.
+	 * @return the player for the current turn.
 	 */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 
 	/**
-	 * Method to undo a move
+	 * Method to undo a move.
 	 */
 	public void undo() {
 		if (!moveHistory.isEmpty() && !isGameOver()) {
@@ -226,7 +258,7 @@ public class ConnectFour {
 	}
 
 	/**
-	 * Method to redo a move
+	 * Method to redo a move.
 	 */
 	public void redo() {
 		if (!undoneMoves.isEmpty() && !isGameOver()) {
@@ -241,7 +273,7 @@ public class ConnectFour {
 	}
 	
 	/**
-	 * Method to restart the game
+	 * Method to restart the game.
 	 */
 	public void restart() {
 		newGame(4, 7, 6, players);
