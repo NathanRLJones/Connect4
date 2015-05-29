@@ -8,9 +8,8 @@
  */
 
 /**
- * The Class BoardAction.
- * Represents an action to be performed on a board
- * example actions are place, and remove.
+ * The Class BoardAction represents an action to be performed on a board.
+ * Example actions are place, and remove.
  */
 public class BoardAction {
 

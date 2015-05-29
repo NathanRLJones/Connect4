@@ -9,9 +9,8 @@
  */
 
 /**
- * The Interface BoardInterface.
- * Acts as a restricted board limited to methods related to querying 
- * the board
+ * The Interface BoardInterface acts as a restricted board limiting a 
+ * board to methods related to querying information.
  */
 public interface BoardInterface {
 	

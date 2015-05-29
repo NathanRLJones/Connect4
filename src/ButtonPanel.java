@@ -15,8 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The Class ButtonPanel.
- * Panel at the bottom of the window for buttons.
+ * The Class ButtonPanel is a panel at the bottom of the window for 
+ * actions on the current game such as undo and hint.
  */
 public class ButtonPanel extends JPanel{
 

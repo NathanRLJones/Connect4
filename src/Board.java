@@ -14,8 +14,7 @@
 import java.util.ArrayList;
 
 /**
- * The Class Board.
- * Creates empty board on the screen
+ * The Class Board creates empty board on the screen
  */
 public class Board implements BoardInterface{
 	

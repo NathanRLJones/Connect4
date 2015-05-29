@@ -14,8 +14,6 @@
  * with that class is registered with a component. When
  * the animation event occurs, that object's appropriate
  * method is invoked.
- *
- * @see AnimationEvent
  */
 public interface AnimationListener {
 

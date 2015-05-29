@@ -12,8 +12,7 @@ import java.awt.event.*;
 import javax.swing.Timer;
 
 /**
- * The Class Animation.
- * Contains mechanism in which to time animations
+ * The Class Animation contains mechanism in which to time animations
  * and query easing values for animation frames
  */
 public class Animation {

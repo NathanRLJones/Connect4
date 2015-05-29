@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * The Class ConnectFour.
+ * The Class ConnectFour is the main game class that holds information
+ * about running games. New games are greated and managed here. Events
+ * of the game are given to a GameListener (The gui in this case).
  */
 public class ConnectFour {
 		

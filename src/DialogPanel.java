@@ -13,7 +13,9 @@ import java.util.*;
 import javax.swing.*;
 
 /**
- * The Class DialogPanel.
+ * The Class DialogPanel manages the layers of base panel (the main game)
+ * and the game menu dialog panel that floats ontop. It allows a dialog
+ * panel to be hidden and shown in a visually pleasing way.
  */
 class DialogPanel extends JLayeredPane {
 

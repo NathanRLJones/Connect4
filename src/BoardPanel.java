@@ -1,6 +1,5 @@
 /**
  * Implements BoardPanel class.
- * Displays the game board and handles user interaction with the board.
  * 
  * @author      Alen Bou-Haidar z5019028
  *              Nathan Jones z5021296
@@ -18,6 +17,12 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.*;
 import javax.swing.*;
+
+/**
+ * The BoardPanel is the visual board representation of the game board.
+ * Allows a user to select a column to insert a token. Actions on the 
+ * board are animated here.
+ */
 
 public class BoardPanel extends JPanel implements MouseMotionListener,
                                                   MouseListener,
