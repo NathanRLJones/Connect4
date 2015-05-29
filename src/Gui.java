@@ -1,3 +1,14 @@
+/**
+ * Implements Gui class
+ * 
+ * @author      Alen Bou-Haidar z5019028
+ *              Lawrence z5018371
+ *              Nathan Jones z5021296
+ *
+ * @version     0.1
+ * @since       2015-05-29
+ */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

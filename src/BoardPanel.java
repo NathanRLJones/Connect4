@@ -1,6 +1,15 @@
-/*
+/**
+ * Implements BoardPanel class
  * 
+ * @author      Alen Bou-Haidar z5019028
+ *              Nathan Jones z5021296
+ *              Lawrence z5018371
+ *              Nicholas Yuwono z5016198
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
+
 import java.awt.image.BufferedImage;
 import java.awt.GradientPaint;
 import java.awt.*;
@@ -9,7 +18,7 @@ import java.awt.geom.*;
 import java.util.*;
 import javax.swing.*;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class BoardPanel.
  */

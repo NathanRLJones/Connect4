@@ -1,3 +1,13 @@
+/**
+ * Implements Move class
+ * 
+ * @author      Nicholas Yuwono z5016198
+ *              Minjee Son z3330687
+ *              Lawrence z5018371
+ *
+ * @version     0.1
+ * @since       2015-05-29
+ */
 
 /**
  * The Class Move.

@@ -1,6 +1,12 @@
-/*
+/**
+ * Implements InfoPanel class
  * 
+ * @author      Lawrence z5018371
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

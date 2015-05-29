@@ -1,3 +1,12 @@
+/**
+ * Implements BoardInterface interface class
+ * 
+ * @author      Nathan Jones z5021296
+ *              Alen Bou-Haidar z5019028
+ *
+ * @version     0.1
+ * @since       2015-05-29
+ */
 
 /**
  * The Interface BoardInterface.

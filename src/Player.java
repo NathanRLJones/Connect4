@@ -1,6 +1,13 @@
-/*
+/**
+ * Implements Player interface class
  * 
+ * @author      Nathan Jones z5021296
+ *              Lawrence z5018371
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
+
 import java.awt.Color;
 import java.util.List;
 

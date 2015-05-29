@@ -1,5 +1,12 @@
-/*
+/**
+ * Implements Token class
  * 
+ * @author      Nathan Jones z5021296
+ *              Lawrence z5018371
+ *              Alen Bou-Haidar z5019028
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
 import java.awt.Color;
 

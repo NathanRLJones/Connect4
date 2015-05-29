@@ -1,3 +1,13 @@
+/**
+ * Implements MoveGenie class
+ * 
+ * @author      Minjee Son z3330687
+ *              Nathan Jones z5021296
+ *
+ * @version     0.1
+ * @since       2015-05-29
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 

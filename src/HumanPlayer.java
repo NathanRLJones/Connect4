@@ -1,6 +1,14 @@
-/*
+/**
+ * Implements HumanPlayer class
  * 
+ * @author      Minjee Son z3330687
+ *              Nathan Jones z5021296
+ *              Lawrence z5018371
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
+
 import java.awt.Color;
 import java.util.List;
 

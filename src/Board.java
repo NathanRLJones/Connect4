@@ -1,32 +1,31 @@
-/*
+/**
+ * Implements Board class
  * 
+ * @author      Nathan Jones z5021296
+ *              Minjee Son z3330687
+ *              Lawrence z5018371
+ *              Nicholas Yuwono z5016198
+ *              Alen Bou-Haidar z5019028
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
+
 import java.util.ArrayList;
 
 /**
  * The Class Board.
-<<<<<<< HEAD
- * Represents a game board in connect 4, that can hold tokens in columns
-=======
  * Creates empty board on the screen
->>>>>>> 7824ad5ccfaf2d82b446feef10eb48a9af986fe1
  */
 public class Board implements BoardInterface{
 	
 	/** The list of columns. */
 	private ArrayList<ArrayList<Token>> columns;
-	
-<<<<<<< HEAD
+
 	/** The board height. */
 	private int height;
 	
 	/** The board width. */
-=======
-	/** The height of the board. */
-	private int height;
-	
-	/** The width of the board. */
->>>>>>> 7824ad5ccfaf2d82b446feef10eb48a9af986fe1
 	private int width;
 
 	/**

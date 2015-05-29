@@ -1,3 +1,12 @@
+/**
+ * Implements AIPlayer class
+ * 
+ * @author      Minjee Son z3330687
+ *
+ * @version     0.1
+ * @since       2015-05-29
+ */
+
 import java.awt.Color;
 import java.util.List;
 

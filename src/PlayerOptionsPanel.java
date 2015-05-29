@@ -1,5 +1,11 @@
-/*
+/**
+ * Implements PlayerOptionsPanel class
  * 
+ * @author      Alen Bou-Haidar z5019028
+ *              Nathan Jones z5021296
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
 import java.awt.*;
 import java.awt.geom.*;
