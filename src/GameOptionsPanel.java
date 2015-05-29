@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * The Class GameOptionsPanel.
  * Menu panel for user when they pressed new game button.
  */
 public class GameOptionsPanel extends JPanel{
