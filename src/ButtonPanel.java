@@ -3,13 +3,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ButtonPanel.
+ * Panel at the bottom of the window for buttons.
  */
 public class ButtonPanel extends JPanel{
 
-	/** The game. */
+	/** The main class used for reference. */
 	private ConnectFour game;
 	
 	/** The hint button. */
@@ -28,7 +27,7 @@ public class ButtonPanel extends JPanel{
     private JButton newGameButton;
 
     /**
-     * Method to create button panel at the bottom of the window.
+     * Create button panel at the bottom of the window.
      *
      * @param game used to reference methods in ConnectFour to button commands
      * @param actionListener used for button commands
@@ -106,7 +105,7 @@ public class ButtonPanel extends JPanel{
     }
 
     /**
-     * Method to enable/disable buttons based on events.
+     * Enable/disable buttons based on events.
      */
     public void updateMoveButtons() {
         //Disable undo, redo and hint button when the game is over
