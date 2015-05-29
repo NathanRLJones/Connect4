@@ -1,11 +1,9 @@
 
-// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving board events.
  * The class that is interested in processing a board
  * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addBoardListener<code> method. When
+ * with that class is registered with a component. When
  * the board event occurs, that object's appropriate
  * method is invoked.
  *
@@ -14,19 +12,19 @@
 public interface BoardListener {
 	
     /**
-     * Column selected.
+     * A Column was selected.
      *
-     * @param column the column
+     * @param column the index of the selected column
      */
     public void columnSelected(int column);
     
     /**
-     * Placed animation complete.
+     * Placed animation is complete.
      */
     public void placedAnimationComplete();
     
     /**
-     * Animation queue emptied.
+     * Animation queue is emptied.
      */
     public void animationQueueEmptied();
     

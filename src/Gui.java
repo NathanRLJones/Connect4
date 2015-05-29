@@ -160,7 +160,7 @@ public class Gui implements GameListener, BoardListener, ActionListener{
     }
     
 	/**
-	 * Display.
+	 * Construct and display the gui.
 	 */
 	public void display() {
         JPanel basePanel = new JPanel(new BorderLayout());
@@ -215,8 +215,8 @@ public class Gui implements GameListener, BoardListener, ActionListener{
 	}
 
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	/* *
+     * Based on a gui action perform a game action
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -256,7 +256,7 @@ public class Gui implements GameListener, BoardListener, ActionListener{
 	}
 
     /**
-     * Start game.
+     * Start game using info from player list and game option panels
      */
     private void startGame() {
         int[] size = goPanel.getBoardSize();
