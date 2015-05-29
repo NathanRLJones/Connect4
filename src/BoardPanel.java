@@ -9,9 +9,9 @@ import java.awt.geom.*;
 import java.util.*;
 import javax.swing.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BoardPanel.
+ * JPanel for displaying the game board and handling user interaction with the board.
  */
 public class BoardPanel extends JPanel implements MouseMotionListener,
                                                   MouseListener,

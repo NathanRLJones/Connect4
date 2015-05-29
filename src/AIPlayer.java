@@ -3,7 +3,8 @@ import java.util.List;
 
 /** 
  * Class AIPlayer
- *
+ * Represents a computer-controller player that has a difficulty level
+ * and queries the moveGenie to get appropriate moves.
  */
 public class AIPlayer implements Player {
 	public static final int TOKENS_TO_WIN = 4;
