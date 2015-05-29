@@ -22,10 +22,10 @@ public class Board implements BoardInterface{
 	/** The list of columns. */
 	private ArrayList<ArrayList<Token>> columns;
 
-	/** The board height. */
+	/** The height of the board. */
 	private int height;
 	
-	/** The board width. */
+	/** The width of the board. */
 	private int width;
 
 	/**

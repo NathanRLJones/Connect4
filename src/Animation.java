@@ -58,16 +58,18 @@ public class Animation {
         timer.setRepeats(true);
     }
 
-     * Sets the duration given the integer duration
-     *
-     * @param duration integer duration value
+
+    /**
+     * Sets the duration of animation
+     * 
+     * @param duration the new duration in ms
      */
     public void setDuration(int duration) {
         this.duration = Math.max(1, duration);
     }
 
     /**
-     * Method to start the timer
+     * Method to start the timer for the animation
      */
     public void start() {
         time = 0;
@@ -75,18 +77,18 @@ public class Animation {
     }
 
     /**
-     * Method to stop the timer
+     * Method to stop the timer for the animation
      */
     public void stop() {
         timer.stop();
     }
 
     /**
-     * Method to ease out the bounce
+     * Gives the current position for an ease out bounce animation
      *
-     * @param start integer start position
-     * @param end integer end position
-     * @return current integer position
+     * @param start the start value
+     * @param end the end value
+     * @return the current value based on animation time/duration
      */
     public int easeOutBounce (int start, int end) {
         double p = (double)time/(double)duration;
@@ -106,11 +108,11 @@ public class Animation {
     }
 
     /**
-     * Method to linearly change a value
+     * Gives the current position for an ease linear animation
      *
-     * @param start integer start value
-     * @param end integer end value
-     * @return current integer value
+     * @param start the start value
+     * @param end the end value
+     * @return the current value based on animation time/duration
      */
     public int easeLinear (int start, int end) {
         double p = (double)time/(double)duration;
