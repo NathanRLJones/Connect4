@@ -15,6 +15,8 @@ import javax.swing.*;
 
 /**
  * The Class PlayerListPanel.
+ * Holds a number of PlayerOptionsPanels hold player information
+ * that can be lengthened, shortened and reordered.
  */
 class PlayerListPanel extends JLayeredPane 
                       implements MouseListener, 

@@ -21,7 +21,7 @@ import javax.swing.*;
 /**
  * The Class Gui.
  * The main view of the game, connects all the panels together
- * providing a graphical means to play the game
+ * providing a graphical means to play the game.
  */
 public class Gui implements GameListener, BoardListener, ActionListener{
 

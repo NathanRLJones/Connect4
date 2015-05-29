@@ -15,6 +15,7 @@ import javax.swing.*;
 
 /**
  * The Class PlayerOptionsPanel.
+ * Provides a graphical way for the user to customize a player.
  */
 class PlayerOptionsPanel extends JPanel implements ActionListener{
 

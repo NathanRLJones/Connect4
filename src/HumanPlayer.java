@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * The Class HumanPlayer.
+ * Holds the player's name and token color.
  */
 public class HumanPlayer implements Player {
 
