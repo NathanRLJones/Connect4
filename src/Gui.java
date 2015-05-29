@@ -21,6 +21,7 @@ public class Gui implements GameListener, BoardListener, ActionListener{
     private ConnectFour game;
     private PlayerListPanel plPanel;
     private GameOptionsPanel goPanel;
+    private boolean paused;
 	
 	public Gui(ConnectFour game) {
 
@@ -31,15 +32,11 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         dialogPanel = new DialogPanel();
         plPanel = new PlayerListPanel();
         goPanel = new GameOptionsPanel(this);
-        
+        paused = false;
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setMinimumSize(new Dimension(DEFAULT_WIDTH, 
                                                DEFAULT_HEIGHT/2));
 		this.game = game;
-
-
-
-
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 display();
@@ -70,6 +67,8 @@ public class Gui implements GameListener, BoardListener, ActionListener{
     }
 
     public void newTurn(Player player) {
+        if (paused) 
+            return;
     	infoPanel.setStatusLabel(player.getName() + "'s turn!");
     	infoPanel.setStatusLabelColor(player.getColor().darker());
         infoPanel.paintImmediately(infoPanel.getBounds());
@@ -168,13 +167,15 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         	game.getHint();
         	break;
         case "NewGame":
+            paused = true;
         	dialogPanel.showDialog();
         	break;
         case "StartGame":
+            paused = false;
             startGame();
         	dialogPanel.hideDialog();
             break;
-        case "Restart":        	
+        case "Restart":
         	startGame();
         	break;
         case "changeNumOfPlayers":
@@ -182,6 +183,9 @@ public class Gui implements GameListener, BoardListener, ActionListener{
             break;
         case "CancelNewGame":
         	dialogPanel.hideDialog();
+            paused = false;
+            newTurn(game.getCurrentPlayer());
+
         	break;
         }
 	}
