@@ -1,25 +1,26 @@
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BoardAction.
+ * Represents an action to be performed on a board
+ * example actions are place, and remove.
  */
 public class BoardAction {
 
-    /** The name. */
+    /** The action name. */
     private String name;
     
-    /** The token. */
+    /** The action token. */
     private Token token;
     
-    /** The column. */
+    /** The action column. */
     private int column;
 
     /**
      * Instantiates a new board action.
      *
-     * @param name the name
-     * @param column the column
-     * @param token the token
+     * @param name the action name
+     * @param column the action column
+     * @param token the action token
      */
     public BoardAction(String name, int column, Token token) {
         this.name = name;
@@ -28,27 +29,27 @@ public class BoardAction {
     }
 
     /**
-     * Gets the name.
+     * Gets the action name.
      *
-     * @return the name
+     * @return the action name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Gets the token.
+     * Gets the action token.
      *
-     * @return the token
+     * @return the action token
      */
     public Token getToken() {
         return token;
     }
 
     /**
-     * Gets the column.
+     * Gets the action column.
      *
-     * @return the column
+     * @return the action column
      */
     public int getColumn() {
         return column;

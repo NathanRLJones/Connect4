@@ -1,22 +1,22 @@
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MoveGenie.
+ * Given game information will figure out what move to play.
  */
 public class MoveGenie {
 
 	/** The board. */
 	private static Board board;
 	
-	/** The all players. */
+	/** The list of all players. */
 	private static List<Player> allPlayers;
 	
-	/** The no of players. */
+	/** The number of players. */
 	private static int noOfPlayers;
 	
-	/** The ai turn ind. */
+	/** The ai turn index. */
 	private static int aiTurnInd;
 	
 	/** The tokens to win. */

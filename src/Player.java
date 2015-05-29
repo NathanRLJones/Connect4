@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface Player.
  */
@@ -10,29 +9,29 @@ public interface Player {
 	/**
 	 * Gets the move.
 	 *
-	 * @param board the board
-	 * @param players the players
+	 * @param board the board of game
+	 * @param players the players of game
 	 * @param tokensToWin the tokens to win
-	 * @return the move
+	 * @return the move chosen
 	 */
 	public Move getMove(BoardInterface board, List<Player> players, int tokensToWin);
 	
 	/**
-	 * Gets the name.
+	 * Gets the name of player.
 	 *
-	 * @return the name
+	 * @return the name of player
 	 */
 	public String getName();
 	
 	/**
-	 * Gets the color.
+	 * Gets the color of player.
 	 *
-	 * @return the color
+	 * @return the color of player
 	 */
 	public Color getColor();
 	
 	/**
-	 * Checks if is interactive.
+	 * Checks if player requires interaction
 	 *
 	 * @return true, if is interactive
 	 */

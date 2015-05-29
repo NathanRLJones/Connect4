@@ -4,33 +4,32 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PlayerOptionsPanel.
  */
 class PlayerOptionsPanel extends JPanel implements ActionListener{
 
-    /** The start y. */
+    /** The start y of an animation. */
     private int startY;
     
-    /** The name box. */
+    /** The name text field. */
     private JTextField nameBox;
     
     /** The player type. */
     private JComboBox<String> playerType;
     
-    /** The color. */
+    /** The color of token. */
     private Color color;
     
-    /** The name. */
+    /** The name of the player. */
     private String name;
 
     /**
      * Instantiates a new player options panel.
      *
-     * @param n the n
-     * @param t the t
-     * @param c the c
+     * @param n the name of player
+     * @param t the type of player
+     * @param c the color of player
      */
     public PlayerOptionsPanel (String n, String t, Color c) {
         super(new GridBagLayout());
@@ -41,11 +40,8 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
         playerType =  new JComboBox<String>(typeLabels);
         playerType.setSelectedItem(t);
         playerType.addActionListener(this);
-
-
-        nameBox = new JTextField(n);
-        // nameBox.setFont(nameBox.getFont().deriveFont(14f));
         
+        nameBox = new JTextField(n);
         gbc.insets = new Insets(1,55,0,5);
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -77,9 +73,9 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
     }
 
     /**
-     * Gets the color.
+     * Gets the color of the token.
      *
-     * @return the color
+     * @return the color of the token
      */
     public Color getColor() {
         return color;
@@ -95,7 +91,7 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
 
 
     /**
-     * Gets the start y.
+     * Gets the start y of animation.
      *
      * @return the start y
      */
@@ -104,13 +100,12 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
     }
 
     /**
-     * Sets the start y.
+     * Sets the start y of animation.
      *
      * @param startY the start y
-     * @return the int
      */
-    public int setStartY(int startY) {
-        return this.startY = startY;
+    public void setStartY(int startY) {
+        this.startY = startY;
     }
 
     /**
@@ -157,8 +152,6 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
         circle.setFrame(12, y+2, 36, 36);
         g2.setColor(color);
         g2.fill(circle);
-        
-        // Paint some gripers
 
     } 
 }

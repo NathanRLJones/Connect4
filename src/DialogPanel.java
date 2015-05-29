@@ -3,20 +3,18 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class DialogPanel.
  */
 class DialogPanel extends JLayeredPane {
 
-    /** The base panel. */
+    /** The base background panel. */
     private Component basePanel;
     
-    /** The dialog pane. */
+    /** The dialog model pane. */
     private Component dialogPane;
     
-    /** The glass pane. */
+    /** The glass pane to block mouse events. */
     private Component glassPane;
 
     
@@ -31,7 +29,7 @@ class DialogPanel extends JLayeredPane {
                 resizePanels();
             }
         });
-
+        // create dark glass pane to block mouse events
         glassPane = new JComponent() {
             public void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
@@ -46,10 +44,10 @@ class DialogPanel extends JLayeredPane {
     }
 
     /**
-     * Sets the panels.
+     * Sets the base and dialog panels.
      *
      * @param basePanel the base panel
-     * @param dialogPane the dialog pane
+     * @param dialogPane the dialog panel
      */
     public void setPanels(Component basePanel, Component dialogPane) {
         this.basePanel = basePanel;
@@ -68,7 +66,7 @@ class DialogPanel extends JLayeredPane {
     }
 
     /**
-     * Resize panels.
+     * Resize the panels.
      */
     private void resizePanels() {
         basePanel.setSize(new Dimension(getWidth(), getHeight()));
@@ -84,7 +82,7 @@ class DialogPanel extends JLayeredPane {
     }
     
     /**
-     * Show dialog.
+     * Show the dialog panel.
      */
     public void showDialog(){
     	dialogPane.setVisible(true);
@@ -92,7 +90,7 @@ class DialogPanel extends JLayeredPane {
     }
     
     /**
-     * Hide dialog.
+     * Hide the dialog panel.
      */
     public void hideDialog(){
     	dialogPane.setVisible(false);

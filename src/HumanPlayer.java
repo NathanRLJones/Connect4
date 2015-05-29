@@ -1,16 +1,15 @@
 import java.awt.Color;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class HumanPlayer.
  */
 public class HumanPlayer implements Player {
 
-	/** The color. */
+	/** The color of player. */
 	private Color color;
 	
-	/** The name. */
+	/** The name of player. */
 	private String name;
 	
 	/**
