@@ -14,8 +14,6 @@
  * with that class is registered with a component. When
  * the board event occurs, that object's appropriate
  * method is invoked.
- *
- * @see BoardEvent
  */
 public interface BoardListener {
 	
