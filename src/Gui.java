@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,9 +30,11 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         buttonPanel = new ButtonPanel(game, this);
         dialogPanel = new DialogPanel();
         plPanel = new PlayerListPanel();
-        goPanel = new GameOptionsPanel();
+        goPanel = new GameOptionsPanel(this);
         
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setMinimumSize(new Dimension(DEFAULT_WIDTH, 
+                                               DEFAULT_HEIGHT/2));
 		this.game = game;
 
 
@@ -100,7 +103,6 @@ public class Gui implements GameListener, BoardListener, ActionListener{
     
 	public void display() {
         JPanel basePanel = new JPanel(new BorderLayout());
-        JPanel newGamePanel = new JPanel(new BorderLayout());
         
         basePanel.add(infoPanel, BorderLayout.NORTH);
         basePanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -114,16 +116,35 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         cancelNewGameButton.addActionListener(this);
         cancelNewGameButton.setActionCommand("CancelNewGame");
         
-        newGamePanel.add(plPanel, BorderLayout.CENTER);
-        newGamePanel.add(goPanel, BorderLayout.EAST);
-        JPanel coolNewPanel = new JPanel(new BorderLayout());
-        coolNewPanel.add(startGameButton, BorderLayout.NORTH);
-        coolNewPanel.add(cancelNewGameButton, BorderLayout.SOUTH);
-        newGamePanel.add(coolNewPanel, BorderLayout.SOUTH);
-        
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        buttonPane.add(Box.createHorizontalGlue());
+        buttonPane.add(cancelNewGameButton);
+        buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
+        buttonPane.add(startGameButton);
+        plPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        JPanel newGamePanel = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.VERTICAL;
+        c.weighty = 1.0;
+        c.gridx = 0;
+        c.gridy = 0;
+        newGamePanel.add(plPanel, c);
+        c.gridx = 1;
+        c.gridy = 0;
+        newGamePanel.add(goPanel,  c);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 2;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
+        newGamePanel.add(new JSeparator(SwingConstants.HORIZONTAL),  c);
+        c.gridx = 0;
+        c.gridy = 2;
+        newGamePanel.add(buttonPane,  c);
+
         dialogPanel.setPanels(basePanel, newGamePanel);
-        
-        //mainFrame.getContentPane().add(dialogPanel, BorderLayout.CENTER);
         mainFrame.add(dialogPanel);        
 		mainFrame.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		mainFrame.pack();
@@ -131,6 +152,7 @@ public class Gui implements GameListener, BoardListener, ActionListener{
 		mainFrame.setVisible(true);
         startGame();
 	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -149,10 +171,15 @@ public class Gui implements GameListener, BoardListener, ActionListener{
         	dialogPanel.showDialog();
         	break;
         case "StartGame":
+            startGame();
         	dialogPanel.hideDialog();
+            break;
         case "Restart":        	
         	startGame();
         	break;
+        case "changeNumOfPlayers":
+            plPanel.setNumberOfPlayers(goPanel.getNumberOfPlayers());
+            break;
         case "CancelNewGame":
         	dialogPanel.hideDialog();
         	break;

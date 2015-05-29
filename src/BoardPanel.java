@@ -275,13 +275,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
                 paintToken(g2, token, temp.x, temp.y);
                 col += dcol;
                 row += drow;
-
             }
-
         }
-
     }
-
 
 
     private void paintInputToken(Graphics2D g2) {

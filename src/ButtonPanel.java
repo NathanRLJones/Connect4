@@ -39,7 +39,7 @@ public class ButtonPanel extends JPanel{
         undoButton = new JButton("UNDO");           //Adding undo button
         undoButton.addActionListener(actionListener);
         undoButton.setActionCommand("Undo");
-        c.insets = new Insets(10,10,0,10);                  //Button extra space(top, left, bottom, right)
+        c.insets = new Insets(10,10,0,10);       //Button extra space(top, left, bottom, right)
 
         redoButton = new JButton("REDO");
         redoButton.addActionListener(actionListener);
@@ -61,11 +61,7 @@ public class ButtonPanel extends JPanel{
         bottomPanel.add(redoButton, c);
         bottomPanel.add(restartButton, c);
         bottomPanel.add(newGameButton, c);
-        //bottomPanel.add(undoButton);
-        //bottomPanel.add(redoButton);
         add(bottomPanel);
-        //add(undoButton);
-        //add(redoButton);
         
         updateMoveButtons();
     }

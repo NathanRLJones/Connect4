@@ -10,17 +10,17 @@ class PlayerListPanel extends JLayeredPane
                                  AnimationListener {
 
     private LinkedList<PlayerOptionsPanel> panels; // list of player panels
+    private LinkedList<PlayerOptionsPanel> hidden; // list of hidden player panels
     private PlayerOptionsPanel dragPanel;          // currently dragged panel
     private int yAdjustment;                // cursor offset
     private int panelWidth;                 // player panel width
     private int panelHeight;                // player panel height
     private int dragIndex;                  // last index of drag panel
+    private ArrayList<Color> colors;
     private Animation animation;            // animation info
 
     public PlayerListPanel () {
         super();
-        setBackground( Color.WHITE );
-        setOpaque(true);
         panels = new LinkedList<PlayerOptionsPanel>();
 
         addComponentListener(new ComponentAdapter(){
@@ -31,19 +31,32 @@ class PlayerListPanel extends JLayeredPane
         addMouseListener(this);
         addMouseMotionListener(this);
         
-        // ArrayList<Color> colors = new ArrayList<Color>();
-        // colors.add(new Color(255, 106, 52)); // red   --- ? orang
-        // colors.add(new Color(255, 153, 0)); // orange --- ? yelow?
-        // colors.add(new Color(255, 217, 0)); // yellowrgb(253, 110, 37)
-        // colors.add(new Color(56, 197, 255)); // blue   -
-        // colors.add(new Color(0, 233, 181)); // teal
-        // colors.add(new Color(148, 214, 53)); // green -
-        
-        addPlayerPanel(new PlayerOptionsPanel("Player 1", "Human", Color.RED));
-        addPlayerPanel(new PlayerOptionsPanel("Player 2", "Easy", Color.YELLOW));
+        colors = new ArrayList<Color>();
+        colors.add(new Color(255, 41, 31));     // red
+        colors.add(new Color(255, 238, 6));     // yellow
+        colors.add(new Color(123, 211, 8));     // green
+        colors.add(new Color(45, 185, 255));    // blue
+
+        addPlayerPanel(new PlayerOptionsPanel("Player 1", "Human", 
+                                              colors.get(0)));
+        addPlayerPanel(new PlayerOptionsPanel("Player 2", "Easy", 
+                                              colors.get(1)));
 
         animation = new Animation(this);
-        animation.setDuration(150);
+        animation.setDuration(200);
+    }
+
+
+    public void setNumberOfPlayers(int number) {
+        while (panels.size() < number) {
+            addPlayerPanel(new PlayerOptionsPanel(
+                                "Player " + panels.size(), 
+                                "Human", colors.get(panels.size())));
+        }
+        while (panels.size() > number) {
+            removePlayerPanel(colors.get(panels.size()-1));
+        }
+        repaint();
     }
 
 
@@ -58,8 +71,30 @@ class PlayerListPanel extends JLayeredPane
         pp.setSize(pp.getPreferredSize());
         panels.add(pp);
         add(pp, JLayeredPane.DEFAULT_LAYER);
-        size = new Dimension(panelWidth, panelHeight * panels.size());
+        size = new Dimension(panelWidth, panelHeight * 4);
         setPreferredSize(size);
+        if (getParent() != null)
+            getParent().doLayout();
+
+    }
+
+    public void removePlayerPanel(Color c) {
+        PlayerOptionsPanel pp;
+        Dimension size;
+        for (int i=0; i < panels.size(); i++) {
+            pp = panels.get(i);
+            if (pp.getColor().equals(c)) {
+                panels.remove(pp);
+                remove(pp);
+                size = new Dimension(panelWidth, panelHeight * 4);
+                setPreferredSize(size);
+                setupAnimation();
+                break;
+            }
+        }
+        if (getParent() != null)
+            getParent().doLayout();
+
     }
 
     private void resizePanels() {
@@ -87,6 +122,7 @@ class PlayerListPanel extends JLayeredPane
             pp.setLocation(0, current);
         }
     }
+
     public void lastFrame() {};
 
     private void setupAnimation() {
@@ -100,23 +136,21 @@ class PlayerListPanel extends JLayeredPane
     
     public ArrayList<Player> getPlayers(){
     	ArrayList<Player> players = new ArrayList<Player>();
-    	
-    	for(PlayerOptionsPanel po : panels){
+    	for (PlayerOptionsPanel po : panels)
     		players.add(po.getPlayer());
-    	}
-    	
     	return players;
     }
 
     public void mousePressed(MouseEvent e) {
         Point location;
         int index;
+        if (e.getY() > panels.size() * panelHeight)
+            return;
 
         index = e.getY()/panelHeight;
         dragPanel = panels.get(index);
         location = dragPanel.getLocation();
         yAdjustment = location.y - e.getY();
-
         dragIndex = panels.indexOf(dragPanel);
         setLayer(dragPanel, JLayeredPane.DRAG_LAYER);
     }
@@ -130,7 +164,6 @@ class PlayerListPanel extends JLayeredPane
         if (dragPanel == null) return;
 
         minY = 0;
-        // maxY = getHeight() - panelHeight;
         maxY = (panels.size() - 1) * panelHeight;
 
         panelY = e.getY() + yAdjustment;
@@ -150,12 +183,11 @@ class PlayerListPanel extends JLayeredPane
 
     public void mouseReleased(MouseEvent e)
     {
-        if (dragPanel == null) return;
-
+        if (dragPanel == null) 
+            return;
         setLayer(dragPanel, JLayeredPane.DEFAULT_LAYER);
         dragPanel = null;
         setupAnimation();
-        resizePanels();
     }
 
     public void mouseClicked(MouseEvent e) {}
