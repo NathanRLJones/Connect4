@@ -26,7 +26,7 @@ public class Animation {
     /**
      * Instantiates a new animation.
      *
-     * @param al the al
+     * @param al AnimationListener
      */
     public Animation (AnimationListener al) {
         listener = al;
@@ -49,16 +49,16 @@ public class Animation {
     }
 
     /**
-     * Sets the duration.
+     * Sets the duration given the integer duration
      *
-     * @param duration the new duration
+     * @param duration integer duration value
      */
     public void setDuration(int duration) {
         this.duration = Math.max(1, duration);
     }
 
     /**
-     * Start.
+     * Method to start the timer
      */
     public void start() {
         time = 0;
@@ -66,18 +66,18 @@ public class Animation {
     }
 
     /**
-     * Stop.
+     * Method to stop the timer
      */
     public void stop() {
         timer.stop();
     }
 
     /**
-     * Ease out bounce.
+     * Method to ease out the bounce
      *
-     * @param start the start
-     * @param end the end
-     * @return the int
+     * @param start integer start position
+     * @param end integer end position
+     * @return current integer position
      */
     public int easeOutBounce (int start, int end) {
         double p = (double)time/(double)duration;
@@ -97,11 +97,11 @@ public class Animation {
     }
 
     /**
-     * Ease linear.
+     * Method to linearly change a value
      *
-     * @param start the start
-     * @param end the end
-     * @return the int
+     * @param start integer start value
+     * @param end integer end value
+     * @return current integer value
      */
     public int easeLinear (int start, int end) {
         double p = (double)time/(double)duration;
