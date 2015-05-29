@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Board.
+ * Creates empty board on the screen
  */
 public class Board implements BoardInterface{
 	
-	/** The columns. */
+	/** The list of columns. */
 	private ArrayList<ArrayList<Token>> columns;
 	
-	/** The height. */
+	/** The height of the board. */
 	private int height;
 	
-	/** The width. */
+	/** The width of the board. */
 	private int width;
 
 	/**
