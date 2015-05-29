@@ -7,12 +7,7 @@ public class AIPlayer implements Player {
 	
 	String name;
 	Color color;
-	int difficultyLevel; //Depth of search 
-	int depth;
-	Board board;
-	List<Player> allPlayers;
-	int noOfPlayers;
-	int aiTurnInd;
+	int difficultyLevel; 
 	
 	/**
 	 * Constructor for AIPlayer
