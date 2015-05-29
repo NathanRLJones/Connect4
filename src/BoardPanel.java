@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 import java.awt.image.BufferedImage;
 import java.awt.GradientPaint;
 import java.awt.*;

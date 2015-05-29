@@ -1,18 +1,32 @@
+/*
+ * 
+ */
 import java.util.ArrayList;
 
 /**
  * The Class Board.
+<<<<<<< HEAD
  * Represents a game board in connect 4, that can hold tokens in columns
+=======
+ * Creates empty board on the screen
+>>>>>>> 7824ad5ccfaf2d82b446feef10eb48a9af986fe1
  */
 public class Board implements BoardInterface{
 	
 	/** The list of columns. */
 	private ArrayList<ArrayList<Token>> columns;
 	
+<<<<<<< HEAD
 	/** The board height. */
 	private int height;
 	
 	/** The board width. */
+=======
+	/** The height of the board. */
+	private int height;
+	
+	/** The width of the board. */
+>>>>>>> 7824ad5ccfaf2d82b446feef10eb48a9af986fe1
 	private int width;
 
 	/**

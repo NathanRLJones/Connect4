@@ -1,12 +1,17 @@
 import java.awt.Color;
 import java.util.List;
 
-
+/** 
+ * Class AIPlayer
+ *
+ */
 public class AIPlayer implements Player {
 	public static final int TOKENS_TO_WIN = 4;
-	
+	/** The name of the Player */
 	String name;
+	/** The Color of the Player Token */
 	Color color;
+	/** The level of AI smartness */
 	int difficultyLevel; 
 	
 	/**
