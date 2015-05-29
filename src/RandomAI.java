@@ -17,6 +17,7 @@ import java.util.Random;
 
 /**
  * The Class RandomAI.
+ * When asked for a move returns a random move.
  */
 public class RandomAI implements Player {
 

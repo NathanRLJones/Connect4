@@ -18,7 +18,8 @@ import javax.swing.JPanel;
 
 /**
  * The class InfoPanel
- * Displays information about the game.
+ * Displays information about the game, either the active player's name
+ * or the end result of the game.
  */
 public class InfoPanel extends JPanel {
 	

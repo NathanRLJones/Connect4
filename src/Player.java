@@ -12,7 +12,7 @@ import java.awt.Color;
 import java.util.List;
 
 /**
- * The Interface Player.
+ * The Interface for Player.
  */
 public interface Player {
 

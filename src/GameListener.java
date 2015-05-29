@@ -15,7 +15,6 @@
  * with that class is registered with a component. When
  * the game event occurs, that object's appropriate
  * method is invoked.
- *
  */
 public interface GameListener {
 
