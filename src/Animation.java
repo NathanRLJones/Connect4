@@ -2,31 +2,32 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.Timer;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Animation.
+ * Contains mechanism in which to time animations
+ * and query easing values for animation frames
  */
 public class Animation {
 
-    /** The listener. */
-    private AnimationListener listener; // widget to repaint
+    /** The animation listener. */
+    private AnimationListener listener;
     
-    /** The duration. */
-    private int duration;               // current duration
+    /** The current duration. */
+    private int duration;
     
-    /** The delay. */
-    private int delay;                  // current delay
+    /** The current delay. */
+    private int delay;
     
-    /** The time. */
-    private int time;                   // current time
+    /** The current time. */
+    private int time;
     
-    /** The timer. */
-    private Timer timer;                // timer of animation
+    /** The timer of animation. */
+    private Timer timer; 
 
     /**
      * Instantiates a new animation.
      *
-     * @param al the al
+     * @param al the animation listener
      */
     public Animation (AnimationListener al) {
         listener = al;
@@ -49,16 +50,16 @@ public class Animation {
     }
 
     /**
-     * Sets the duration.
+     * Sets the duration of animation
      *
-     * @param duration the new duration
+     * @param duration the new duration in ms
      */
     public void setDuration(int duration) {
         this.duration = Math.max(1, duration);
     }
 
     /**
-     * Start.
+     * Start the animation
      */
     public void start() {
         time = 0;
@@ -66,18 +67,18 @@ public class Animation {
     }
 
     /**
-     * Stop.
+     * Stop the animation
      */
     public void stop() {
         timer.stop();
     }
 
     /**
-     * Ease out bounce.
+     * Ease out bounce function.
      *
-     * @param start the start
-     * @param end the end
-     * @return the int
+     * @param start the start value
+     * @param end the end value
+     * @return the current value based on animation time/duration
      */
     public int easeOutBounce (int start, int end) {
         double p = (double)time/(double)duration;
@@ -97,11 +98,11 @@ public class Animation {
     }
 
     /**
-     * Ease linear.
+     * Ease linear function.
      *
-     * @param start the start
-     * @param end the end
-     * @return the int
+     * @param start the start value
+     * @param end the end value
+     * @return the current value based on animation time/duration
      */
     public int easeLinear (int start, int end) {
         double p = (double)time/(double)duration;

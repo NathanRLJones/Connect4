@@ -3,8 +3,6 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class PlayerListPanel.
  */
