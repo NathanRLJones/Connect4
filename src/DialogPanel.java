@@ -53,7 +53,8 @@ class DialogPanel extends JLayeredPane {
         basePanel.setSize(new Dimension(getWidth(), getHeight()));
         Dimension size = dialogPane.getPreferredSize();
         int x = (getWidth() - size.width)/2;
-        dialogPane.setLocation(x, 0);
+        int y = (getHeight() - size.height)/2;
+        dialogPane.setLocation(x, y);
         dialogPane.setSize(size);
 
         glassPane.setLocation(0, 0);

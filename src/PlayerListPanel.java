@@ -10,7 +10,6 @@ class PlayerListPanel extends JLayeredPane
                                  AnimationListener {
 
     private LinkedList<PlayerOptionsPanel> panels; // list of player panels
-    private LinkedList<PlayerOptionsPanel> hidden; // list of hidden player panels
     private PlayerOptionsPanel dragPanel;          // currently dragged panel
     private int yAdjustment;                // cursor offset
     private int panelWidth;                 // player panel width
