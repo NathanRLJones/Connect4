@@ -13,29 +13,29 @@ class PlayerListPanel extends JLayeredPane
                                  MouseMotionListener, 
                                  AnimationListener {
 
-    /** The panels. */
-    private LinkedList<PlayerOptionsPanel> panels; // list of player panels
+    /** The list of player panels. */
+    private LinkedList<PlayerOptionsPanel> panels;
     
-    /** The drag panel. */
-    private PlayerOptionsPanel dragPanel;          // currently dragged panel
+    /** The currently dragged panel. */
+    private PlayerOptionsPanel dragPanel;
     
-    /** The y adjustment. */
-    private int yAdjustment;                // cursor offset
+    /** The y adjustment cursor offset. */
+    private int yAdjustment;
     
-    /** The panel width. */
-    private int panelWidth;                 // player panel width
+    /** The player panel width. */
+    private int panelWidth;
     
-    /** The panel height. */
-    private int panelHeight;                // player panel height
+    /** The player panel height. */
+    private int panelHeight;
     
-    /** The drag index. */
-    private int dragIndex;                  // last index of drag panel
+    /** The last index of drag panel. */
+    private int dragIndex;
     
-    /** The colors. */
+    /** The list of colors. */
     private ArrayList<Color> colors;
     
-    /** The animation. */
-    private Animation animation;            // animation info
+    /** The animation info. */
+    private Animation animation;
 
     /**
      * Instantiates a new player list panel.
@@ -87,9 +87,9 @@ class PlayerListPanel extends JLayeredPane
 
 
     /**
-     * Adds the player panel.
+     * Adds a player panel.
      *
-     * @param pp the pp
+     * @param pp the player panel
      */
     public void addPlayerPanel(PlayerOptionsPanel pp) {
         Dimension size;
@@ -110,9 +110,9 @@ class PlayerListPanel extends JLayeredPane
     }
 
     /**
-     * Removes the player panel.
+     * Removes a player panel.
      *
-     * @param c the c
+     * @param c the color of player panel to remove
      */
     public void removePlayerPanel(Color c) {
         PlayerOptionsPanel pp;
@@ -134,7 +134,7 @@ class PlayerListPanel extends JLayeredPane
     }
 
     /**
-     * Resize panels.
+     * Resize panels to fit.
      */
     private void resizePanels() {
         PlayerOptionsPanel pp;
@@ -171,7 +171,7 @@ class PlayerListPanel extends JLayeredPane
     public void lastFrame() {};
 
     /**
-     * Setup animation.
+     * Setup animation and start it.
      */
     private void setupAnimation() {
         PlayerOptionsPanel pp;
@@ -183,9 +183,9 @@ class PlayerListPanel extends JLayeredPane
     }
     
     /**
-     * Gets the players.
+     * Gets the list of players.
      *
-     * @return the players
+     * @return the list of players
      */
     public ArrayList<Player> getPlayers(){
     	ArrayList<Player> players = new ArrayList<Player>();
@@ -252,23 +252,8 @@ class PlayerListPanel extends JLayeredPane
         setupAnimation();
     }
 
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-     */
     public void mouseClicked(MouseEvent e) {}
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
-     */
     public void mouseMoved(MouseEvent e) {}
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-     */
     public void mouseEntered(MouseEvent e) {}
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-     */
     public void mouseExited(MouseEvent e) {}
 }

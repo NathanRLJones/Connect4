@@ -5,19 +5,19 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Gui.
+ * The main view of the game, connects all the panels together
+ * providing a graphical means to play the game
  */
 public class Gui implements GameListener, BoardListener, ActionListener{
 
-	/** The Constant DEFAULT_WIDTH. */
+	/** The Constant DEFAULT_WIDTH for window width */
 	public static final int DEFAULT_WIDTH = 600;
 	
-	/** The Constant DEFAULT_HEIGHT. */
+	/** The Constant DEFAULT_HEIGHT for window height */
 	public static final int DEFAULT_HEIGHT = 700;
 	
 	/** The main frame. */
@@ -38,13 +38,13 @@ public class Gui implements GameListener, BoardListener, ActionListener{
     /** The game. */
     private ConnectFour game;
     
-    /** The pl panel. */
+    /** The player list panel. */
     private PlayerListPanel plPanel;
     
-    /** The go panel. */
+    /** The game options panel. */
     private GameOptionsPanel goPanel;
     
-    /** The paused. */
+    /** The paused status. */
     private boolean paused;
 	
 	/**

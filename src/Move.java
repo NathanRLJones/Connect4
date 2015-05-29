@@ -1,10 +1,11 @@
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class Move.
+ * Represents a move by a player
  */
 public class Move {
 	
-	/** The column. */
+	/** The column index. */
 	private int column;
 	
 	/** The token. */

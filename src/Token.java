@@ -1,6 +1,5 @@
 import java.awt.Color;
 
-// TODO: Auto-generated Javadoc
 /**
  * Piece to be placed on the connect four board.
  */

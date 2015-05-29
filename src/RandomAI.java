@@ -3,19 +3,18 @@ import java.util.List;
 import java.util.Random;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class RandomAI.
  */
 public class RandomAI implements Player {
 
-	/** The color. */
+	/** The color of player. */
 	Color color;
 	
-	/** The name. */
+	/** The name of player. */
 	String name;
 	
-	/** The rand. */
+	/** The random object to genrerate moves. */
 	Random rand;
 	
 	/**
