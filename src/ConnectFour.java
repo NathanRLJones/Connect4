@@ -121,8 +121,6 @@ public class ConnectFour {
 	
 	/**
 	 * Get a hint and get the gui to display it.
-	 *
-	 * @return the hint
 	 */
 	public void getHint() {		
 		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, 
