@@ -3,19 +3,18 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class GameOptionsPanel.
+ * Menu panel for user when they pressed new game button.
  */
 public class GameOptionsPanel extends JPanel{
 
-	/** The board sizes. */
+	/** The size of the board. */
 	private JComboBox<String> boardSizes;
 	
-	/** The win in a rows. */
+	/** The number of tokens in a row needed to win. */
 	private JComboBox<Integer> winInARows;
     
-    /** The num of players. */
+    /** The number of players. */
     private JComboBox<Integer> numOfPlayers;
 
 	/**
@@ -81,7 +80,7 @@ public class GameOptionsPanel extends JPanel{
 }
 
     /**
-     * Gets the number of players.
+     * Get the number of players.
      *
      * @return the number of players
      */
