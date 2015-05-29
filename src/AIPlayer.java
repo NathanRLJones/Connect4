@@ -1,7 +1,5 @@
 /**
  * Implements AIPlayer class
- * Represents a computer-controller player that has a difficulty level
- * and queries the moveGenie to get appropriate moves.
  * @author      Minjee Son z3330687
  *
  * @version     0.1
@@ -11,6 +9,10 @@
 import java.awt.Color;
 import java.util.List;
 
+/**
+ * Represents a computer-controller player that has a difficulty level
+ * and queries the moveGenie to get appropriate moves.
+ */
 public class AIPlayer implements Player {
 	public static final int TOKENS_TO_WIN = 4;
 	/** The name of the Player */

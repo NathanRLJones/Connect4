@@ -47,7 +47,6 @@ public class MoveGenie {
 	 */
 	public static Move getMove(BoardInterface currBoard, int maxDepth, 
 			List<Player> players, Player target, int toWin) {
-		System.out.println("Getting move, depth of: " + maxDepth);
 
 		board = getBoardCopy(currBoard);
 		allPlayers = players;

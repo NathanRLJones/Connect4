@@ -112,8 +112,6 @@ public class GameOptionsPanel extends JPanel{
 	public int[] getBoardSize(){
 		int[] size = new int[2];
 		
-		System.out.println("\"" + boardSizes.getSelectedItem() + "\"");
-		
 		switch((String) boardSizes.getSelectedItem()){
 		case "4 x 3":
 			size[0] = 4;

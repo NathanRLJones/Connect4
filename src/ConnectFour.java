@@ -138,7 +138,6 @@ public class ConnectFour {
 		} else {
 			move = currentPlayer.getMove(getBoard(), players, tokensToWin);
 		}
-		System.out.println("Adding a token: " + currentPlayer.getName());
 		board.placeToken(move.getColumn(), move.getToken());
 		moveHistory.add(move);
 		undoneMoves.clear();
