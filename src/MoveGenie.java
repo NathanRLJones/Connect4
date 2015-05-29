@@ -45,7 +45,7 @@ public class MoveGenie {
 		tokensToWin = toWin;
 		gameEndScore = (int)Math.pow(toWin, 2)*100;
 		aiTurnInd = players.indexOf(target);
-		int depth = noOfPlayers * maxDepth;
+		int depth;
 		int columns = board.getWidth();
 		Token token = new Token(target);
 		int maxScoreColumn = -1;
@@ -53,7 +53,15 @@ public class MoveGenie {
 		int nextTurnInd = (aiTurnInd + 1) % noOfPlayers;
 		Player nextPlayer = players.get(nextTurnInd);
 		int newScore;
-
+		
+		if(noOfPlayers==2 && columns < 7){
+			depth = (maxDepth+1)*noOfPlayers;
+		}
+		else if(noOfPlayers==2 && columns < 14){
+			depth = maxDepth*noOfPlayers;
+		}else{
+			depth = maxDepth+1;
+		}
 		for (int i = 0; i < columns; i++) {
 			if (!board.isColumnFull(i)) {
 				board.placeToken(i, token);
