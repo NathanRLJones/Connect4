@@ -49,7 +49,12 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         addComponentListener(this);
         setBoardSize(7, 6);
     }
-	
+
+    /**
+     * Setup the initial board size
+     * @param width width of the board
+     * @param height height of the board
+     */
     public void setBoardSize(int width, int height) {
         animation.stop();
         hasHighlight = false;
@@ -62,7 +67,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Set the size of the panel
+     * Set the default size of the panel
      */
 	public Dimension getPreferredSize() {
         return new Dimension(500,500);
@@ -133,13 +138,23 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         return column;
     }
 
+    /**
+     * Place token on the board
+     * @param column column selected by player
+     * @param token token to be placed on the board
+     */
     public void placeToken(int column, Token token) {
     	hasHint = false;
         actions.add(new BoardAction("place", column, token));
         if (actions.size() == 1)
             animation.start();
     }
-    
+
+    /**
+     * Place a hint on the board
+     * @param column column selected by player
+     * @param token token to be placed on the board
+     */
     public void placeHint(int column, Token token) {
     	//actions.add(new BoardAction("hint"))
     	hasHint = true;
@@ -149,6 +164,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         repaint();
     }
 
+    /**
+     * Remove token from the board
+     * @param column column selected by player
+     * @param token token to be placed on the board
+     */
     public void removeToken(int column, Token token) {
         hasHint = false;
     	actions.add(new BoardAction("remove", column, token));
@@ -175,6 +195,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         input = token;
     }
 
+    /**
+     * Paint the board on screen
+     * @param g2 graphic 2d object
+     */
     private void paintBoard(Graphics2D g2) {
         BufferedImage bufferedImage;
         AlphaComposite ac;
@@ -206,6 +230,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         g2.drawImage(bufferedImage, null, 0, 0);
     }
 
+    /**
+     * Paint the token placed on the board
+     * @param g2 graphic 2d object
+     */
     private void paintPlacedTokens(Graphics2D g2) {
         Token token;
         Point temp;
@@ -285,6 +313,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             paintToken(g2, input, inputX-x-(tokenSize/2), -tokenSize);
     }
 
+    /**
+     * Highlight selected column
+     * @param g2 graphic 2d object
+     */
     private void paintColumnHighlight(Graphics2D g2) {
         int col = getColumnNumber();
         if (input != null && actions.isEmpty() && col >= 0) {
@@ -319,6 +351,13 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         }
     }
 
+    /**
+     * Set the colour of the tokens
+     * @param g2 graphic 2d object
+     * @param token selected token
+     * @param x x size of the token
+     * @param y y size of the token
+     */
     private void paintToken(Graphics2D g2, Token token, int x, int y) {
         g2.setColor(token.getColor().darker());
         g2.fill(getTokenShape(x, y, 0.15));

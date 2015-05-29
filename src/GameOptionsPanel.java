@@ -9,17 +9,22 @@ public class GameOptionsPanel extends JPanel{
 	private JComboBox<Integer> winInARows;
     private JComboBox<Integer> numOfPlayers;
 
-	public GameOptionsPanel(ActionListener actionListener){
-		super(new GridBagLayout());
+	/**
+	 * Create game option panel for new game
+	 */
+    public GameOptionsPanel(ActionListener actionListener){
+        super(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         String[] sizeLabels = {"4 x 3", "7 x 6", "10 x 9", "14 x 12"};
         boardSizes = new JComboBox<String>(sizeLabels);
         boardSizes.setSelectedIndex(1);
 
+		//Add options to how many tokens to win
         Integer[] winInARowLabels = {3, 4, 5, 6};
         winInARows = new JComboBox<Integer>(winInARowLabels);
         winInARows.setSelectedIndex(1);
+
 
         Integer[] numOfPlayersLabels = {2, 3, 4};
         numOfPlayers = new JComboBox<Integer>(numOfPlayersLabels);
@@ -46,6 +51,7 @@ public class GameOptionsPanel extends JPanel{
 
         gbc.insets = new Insets(5, 5, 0, 5);
 
+        //Add indicator labels  for the menu
         gbc.gridy = 0;
         add(new JLabel("Board Size:"), gbc);
         gbc.gridy = 2;
@@ -67,10 +73,18 @@ public class GameOptionsPanel extends JPanel{
         return (int) numOfPlayers.getSelectedItem();
     }
 
+	/**
+	 * Get number of tokens to win from the user
+	 * @return number of tokens to win
+	 */
 	public int getTokensToWin(){
 		return (int) winInARows.getSelectedItem();
 	}
-	
+
+	/**
+	 * Get board size select by the user
+	 * @return selected board size by the user
+	 */
 	public int[] getBoardSize(){
 		int[] size = new int[2];
 		
