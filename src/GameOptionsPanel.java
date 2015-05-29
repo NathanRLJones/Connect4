@@ -20,12 +20,13 @@ public class GameOptionsPanel extends JPanel{
 	/**
 	 * Create game option panel for new game.
 	 *
-	 * @param actionListener the action listener
+	 * @param actionListener the gui action listener
 	 */
     public GameOptionsPanel(ActionListener actionListener){
         super(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
+        //Add options for board sizes
         String[] sizeLabels = {"4 x 3", "7 x 6", "10 x 9", "14 x 12"};
         boardSizes = new JComboBox<String>(sizeLabels);
         boardSizes.setSelectedIndex(1);
@@ -35,22 +36,19 @@ public class GameOptionsPanel extends JPanel{
         winInARows = new JComboBox<Integer>(winInARowLabels);
         winInARows.setSelectedIndex(1);
 
-
+        //Add options for number of player
         Integer[] numOfPlayersLabels = {2, 3, 4};
         numOfPlayers = new JComboBox<Integer>(numOfPlayersLabels);
         numOfPlayers.setSelectedIndex(0);
         numOfPlayers.addActionListener(actionListener);
         numOfPlayers.setActionCommand("changeNumOfPlayers");
 
-
-        // gbc.insets = new Insets(int top, int left, int bottom, int right)
+        //Place using gridbag layout
         gbc.insets = new Insets(0, 5, 5, 5);
-
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         gbc.gridheight = 1;
         gbc.gridwidth = 1;
-
         gbc.gridx = 0;
         gbc.gridy = 1;
         add(boardSizes, gbc);
@@ -58,10 +56,9 @@ public class GameOptionsPanel extends JPanel{
         add(winInARows, gbc);
         gbc.gridy = 5;
         add(numOfPlayers, gbc);
-
         gbc.insets = new Insets(5, 5, 0, 5);
 
-        //Add indicator labels  for the menu
+        //Add indicator labels
         gbc.gridy = 0;
         add(new JLabel("Board Size:"), gbc);
         gbc.gridy = 2;
@@ -71,8 +68,6 @@ public class GameOptionsPanel extends JPanel{
         gbc.gridy = 7;
         add(new JLabel("<html>Drag player <br>token to <br>rearrage." +
                         "<br> &nbsp;<br> &nbsp;</html>"), gbc);
-    
-
         gbc.gridy = 6;
         gbc.weighty = 1.0;
         add(new JLabel(), gbc);

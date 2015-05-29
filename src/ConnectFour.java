@@ -3,14 +3,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class ConnectFour.
  */
 public class ConnectFour {
 		
-	/** The listener. */
+	/** The game listener (Gui in this case). */
 	private GameListener listener;
 	
 	/** The board. */
@@ -19,7 +17,7 @@ public class ConnectFour {
 	/** The current player. */
 	private Player currentPlayer;
 	
-	/** The players. */
+	/** The list of players. */
 	private List<Player> players;
 	
 	/** The move history. */
@@ -28,10 +26,10 @@ public class ConnectFour {
 	/** The undone moves. */
 	private Stack<Move> undoneMoves;
 	
-	/** The suggested move. */
+	/** The suggested move (for a human player). */
 	private Move suggestedMove;
 	
-	/** The tokens to win. */
+	/** The number of tokens to win. */
 	private int tokensToWin;
 
 	/**
@@ -114,7 +112,9 @@ public class ConnectFour {
 	 * @return the hint
 	 */
 	public void getHint() {		
-		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, currentPlayer, tokensToWin).getColumn(), new Token(currentPlayer));
+		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, 
+							currentPlayer, tokensToWin).getColumn(), 
+							new Token(currentPlayer));
 	}
 
 	/**

@@ -1,29 +1,31 @@
-// TODO: Auto-generated Javadoc
+
 /**
  * The Interface BoardInterface.
+ * Acts as a restricted board limitd to methods related to querying 
+ * the board
  */
 public interface BoardInterface {
 	
 	/**
-	 * Gets the height.
+	 * Gets the board height.
 	 *
-	 * @return the height
+	 * @return the board height
 	 */
 	public int getHeight();
 	
 	/**
-	 * Gets the width.
+	 * Gets the board width.
 	 *
-	 * @return the width
+	 * @return the board width
 	 */
 	public int getWidth();
 	
 	/**
-	 * Who owns token.
+	 * Who owns token at a position
 	 *
 	 * @param column the column
 	 * @param row the row
-	 * @return the player
+	 * @return the player who owns the position
 	 */
 	public Player whoOwnsToken(int column, int row);
 	
@@ -37,12 +39,12 @@ public interface BoardInterface {
 	public boolean isSpaceTaken(int column, int row);
 	
 	/**
-	 * Checks if is players token.
+	 * Checks if it is a players token.
 	 *
 	 * @param player the player
 	 * @param column the column
 	 * @param row the row
-	 * @return true, if is players token
+	 * @return true, if it is the players token
 	 */
 	public boolean isPlayersToken(Player player, int column, int row);
 	
