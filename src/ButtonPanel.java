@@ -1,6 +1,14 @@
-/*
+/**
+ * Implements ButtonPanel class
  * 
+ * @author      Nicholas Yuwono z5016198
+ *              Lawrence z5018371
+ *              Nathan Jones z5021296
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

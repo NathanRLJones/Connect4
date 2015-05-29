@@ -1,3 +1,12 @@
+/**
+ * Implements Animation class
+ * 
+ * @author      Alen Bou-Haidar z5019028
+ *
+ * @version     0.1
+ * @since       2015-05-29
+ */
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.Timer;
@@ -49,6 +58,7 @@ public class Animation {
         timer.setRepeats(true);
     }
 
+
     /**
      * Sets the duration of animation
      * 
@@ -74,7 +84,7 @@ public class Animation {
     }
 
     /**
-     * Gives the current position for an ease out bounce animation, given a start and end position
+     * Gives the current position for an ease out bounce animation
      *
      * @param start the start value
      * @param end the end value
@@ -98,7 +108,7 @@ public class Animation {
     }
 
     /**
-     * Gives the current position for an ease linear animation, given a start and end position
+     * Gives the current position for an ease linear animation
      *
      * @param start the start value
      * @param end the end value

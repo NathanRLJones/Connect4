@@ -1,6 +1,14 @@
-/*
+/**
+ * Implements GameOptionsPanel class
  * 
+ * @author      Nathan Jones z5021296
+ *              Alen Bou-Haidar z5019028
+ *              Nicholas Yuwono z5016198
+ *
+ * @version     0.1
+ * @since       2015-05-29
  */
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;

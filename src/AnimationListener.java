@@ -1,3 +1,11 @@
+/**
+ * Implements AnimationListener class
+ * 
+ * @author      Alen Bou-Haidar z5019028
+ *
+ * @version     0.1
+ * @since       2015-05-29
+ */
 
 /**
  * The listener interface for receiving animation events.

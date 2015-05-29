@@ -1,3 +1,12 @@
+/**
+ * Implements GameListener interface class
+ * 
+ * @author      Alen Bou-Haidar z5019028
+ *              Nathan Jones z5021296
+ *
+ * @version     0.1
+ * @since       2015-05-29
+ */
 
 /**
  * The listener interface for receiving game events.
