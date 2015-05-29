@@ -3,13 +3,24 @@ import java.util.List;
 import java.util.Random;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RandomAI.
+ */
 public class RandomAI implements Player {
 
+	/** The color. */
 	Color color;
+	
+	/** The name. */
 	String name;
+	
+	/** The rand. */
 	Random rand;
+	
 	/**
-	 * Default constructor for players
+	 * Default constructor for players.
+	 *
 	 * @param aiName name for the player
 	 * @param aiColor colour indicator for the player
 	 */
@@ -20,7 +31,11 @@ public class RandomAI implements Player {
 	}
 	
 	/**
-	 * Method to get the player's move
+	 * Method to get the player's move.
+	 *
+	 * @param board the board
+	 * @param players the players
+	 * @param tokensToWin the tokens to win
 	 * @return the move of the player
 	 */
 	@Override
@@ -33,7 +48,8 @@ public class RandomAI implements Player {
 	}
 
 	/**
-	 * Method to get the name of the player
+	 * Method to get the name of the player.
+	 *
 	 * @return String name of the Player
 	 */
 	@Override
@@ -42,7 +58,8 @@ public class RandomAI implements Player {
 	}
 
 	/**
-	 * Method to get the color of the player
+	 * Method to get the color of the player.
+	 *
 	 * @return Color of the player
 	 */
 	@Override
@@ -51,7 +68,8 @@ public class RandomAI implements Player {
 	}
 	
 	/**
-	 * Method to check if the player is interactive
+	 * Method to check if the player is interactive.
+	 *
 	 * @return true if the player is human and false otherwise
 	 */
 	@Override

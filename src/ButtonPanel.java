@@ -3,17 +3,33 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ButtonPanel.
+ */
 public class ButtonPanel extends JPanel{
 
+	/** The game. */
 	private ConnectFour game;
+	
+	/** The hint button. */
 	private JButton hintButton;
+    
+    /** The redo button. */
     private JButton redoButton;
+    
+    /** The undo button. */
     private JButton undoButton;
+    
+    /** The restart button. */
     private JButton restartButton;
+    
+    /** The new game button. */
     private JButton newGameButton;
 
     /**
-     * Method to create button panel at the bottom of the window
+     * Method to create button panel at the bottom of the window.
+     *
      * @param game used to reference methods in ConnectFour to button commands
      * @param actionListener used for button commands
      */
@@ -81,7 +97,8 @@ public class ButtonPanel extends JPanel{
     }
 
     /**
-     * Set default size of the panel
+     * Set default size of the panel.
+     *
      * @return size of the panel
      */
     public Dimension getPreferredSize() {
@@ -89,7 +106,7 @@ public class ButtonPanel extends JPanel{
     }
 
     /**
-     * Method to enable/disable buttons based on events
+     * Method to enable/disable buttons based on events.
      */
     public void updateMoveButtons() {
         //Disable undo, redo and hint button when the game is over
@@ -115,7 +132,7 @@ public class ButtonPanel extends JPanel{
     }
 
     /**
-     * Method to disable buttons
+     * Method to disable buttons.
      */
     public void disableMoveButtons() {
     	undoButton.setEnabled(false);

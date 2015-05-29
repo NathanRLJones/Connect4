@@ -4,19 +4,39 @@ import java.util.List;
 import java.util.Stack;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConnectFour.
+ */
 public class ConnectFour {
 		
+	/** The listener. */
 	private GameListener listener;
+	
+	/** The board. */
 	private Board board;
+	
+	/** The current player. */
 	private Player currentPlayer;
+	
+	/** The players. */
 	private List<Player> players;
+	
+	/** The move history. */
 	private Stack<Move> moveHistory;
+	
+	/** The undone moves. */
 	private Stack<Move> undoneMoves;
+	
+	/** The suggested move. */
 	private Move suggestedMove;
+	
+	/** The tokens to win. */
 	private int tokensToWin;
 
 	/**
-	 * Main method for the ConnectFour
+	 * Main method for the ConnectFour.
+	 *
 	 * @param args are ignored
 	 */
 	public static void main(String[] args) {
@@ -24,7 +44,7 @@ public class ConnectFour {
 	}
 
 	/**
-	 * Connect4 constructor
+	 * Connect4 constructor.
 	 */
 	public ConnectFour() {
 		listener = new Gui(this);
@@ -90,6 +110,8 @@ public class ConnectFour {
 	
 	/**
 	 * Get a hint and get the gui to display it.
+	 *
+	 * @return the hint
 	 */
 	public void getHint() {		
 		listener.tokenHinted(MoveGenie.getMove(getBoard(), 3, players, currentPlayer, tokensToWin).getColumn(), new Token(currentPlayer));
@@ -127,9 +149,10 @@ public class ConnectFour {
 
 
 	/**
-	 * Method to check if the game is over
+	 * Method to check if the game is over.
+	 *
 	 * @return true if there are tokensToWin connected same-colour tokens
-	 *			 or if the game is drawn
+	 * 			 or if the game is drawn
 	 *         false otherwise
 	 */
 	public boolean isGameOver() {

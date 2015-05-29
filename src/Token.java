@@ -1,17 +1,17 @@
 import java.awt.Color;
 
+// TODO: Auto-generated Javadoc
 /**
- * Piece to be placed on the connect four board
+ * Piece to be placed on the connect four board.
  */
 public class Token {
 
-	/**
-	 * Player who placed this token
-	 */
+	/** Player who placed this token. */
 	private Player owner;
 	
 	/**
-	 * Creates a new token with a given owner
+	 * Creates a new token with a given owner.
+	 *
 	 * @param owner the player who placed this token
 	 */
 	public Token(Player owner) {
@@ -19,7 +19,8 @@ public class Token {
 	}
 	
 	/**
-	 * Gets the color of this token
+	 * Gets the color of this token.
+	 *
 	 * @return color of this token
 	 */
 	public Color getColor() {
@@ -27,7 +28,8 @@ public class Token {
 	}
 	
 	/**
-	 * Gets the owner of this token
+	 * Gets the owner of this token.
+	 *
 	 * @return owner of this token
 	 */
 	public Player getOwner() {

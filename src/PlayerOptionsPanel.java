@@ -4,14 +4,34 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PlayerOptionsPanel.
+ */
 class PlayerOptionsPanel extends JPanel implements ActionListener{
 
+    /** The start y. */
     private int startY;
+    
+    /** The name box. */
     private JTextField nameBox;
+    
+    /** The player type. */
     private JComboBox<String> playerType;
+    
+    /** The color. */
     private Color color;
+    
+    /** The name. */
     private String name;
 
+    /**
+     * Instantiates a new player options panel.
+     *
+     * @param n the n
+     * @param t the t
+     * @param c the c
+     */
     public PlayerOptionsPanel (String n, String t, Color c) {
         super(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -45,6 +65,9 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
         color = c;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#getPreferredSize()
+     */
     public Dimension getPreferredSize() {
         int width = 280;
         int height = 10;
@@ -53,24 +76,48 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
         return new Dimension(width, height);
     }
 
+    /**
+     * Gets the color.
+     *
+     * @return the color
+     */
     public Color getColor() {
         return color;
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         JComboBox cb = (JComboBox)e.getSource();
         String type = (String)cb.getSelectedItem();
     }
 
 
+    /**
+     * Gets the start y.
+     *
+     * @return the start y
+     */
     public int getStartY() {
         return startY;
     }
 
+    /**
+     * Sets the start y.
+     *
+     * @param startY the start y
+     * @return the int
+     */
     public int setStartY(int startY) {
         return this.startY = startY;
     }
 
+    /**
+     * Gets the player.
+     *
+     * @return the player
+     */
     public Player getPlayer(){
     	Player player = null;
     	
@@ -91,6 +138,9 @@ class PlayerOptionsPanel extends JPanel implements ActionListener{
     	return player;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2;          // 2D graphics 
