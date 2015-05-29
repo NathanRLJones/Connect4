@@ -28,67 +28,67 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
                                                   AnimationListener {
 
     /** The list of actions queue. */
-    private LinkedList<BoardAction> actions;    // Actions queue
+    private LinkedList<BoardAction> actions;
     
     /** The board listener. */
-    private BoardListener listener;             // Board listener
+    private BoardListener listener;
     
     /** The animation controller. */
-    private Animation animation;                // Animation controller
+    private Animation animation; 
     
     /** The board state. */
-    private Board board;                        // Board state
+    private Board board;
     
     /** The token to be placed. */
-    private Token input;                        // Token to be slotted
+    private Token input;
     
     /** The coordinate of input x. */
-    private int inputX;                         // X coordinate of input
+    private int inputX;
     
     /** The number of cols. */
-    private int cols;                           // Number of columns
+    private int cols;
     
     /** The number of rows. */
-    private int rows;                           // Number of rows
+    private int rows;
     
     /** The token size pixels. */
-    private int tokenSize;                      // Token size pixels
+    private int tokenSize; 
     
     /** The width of the board. */
-    private int width;                          // Board width pixel
+    private int width;
     
     /** The height of the board. */
-    private int height;                         // Board height pixels
+    private int height;
     
     /** The x coordinate of the board. */
-    private int x;                              // Board X coordinate
+    private int x;
     
     /** The y coordinate of the board. */
-    private int y;                              // Board Y coordinate
+    private int y;
     
     /** The highlight of col1. */
-    private int hlCol1;                         // Hightlight col1
+    private int hlCol1;
     
     /** The highlight of row1. */
-    private int hlRow1;                         // Hightlight row1
+    private int hlRow1;
     
     /** The highlight of col2. */
-    private int hlCol2;                         // Hightlight col2
+    private int hlCol2;
     
     /** The highlight of row2. */
-    private int hlRow2;                         // Hightlight row2
+    private int hlRow2;
     
     /** The number of tokens to win. */
-    private int tokensToWin;					// Number of winning tokens
+    private int tokensToWin;
     
     /** The visible highlight. */
-    private boolean hasHighlight;               // Hightlight visible
+    private boolean hasHighlight;
     
     /** The visible hint. */
-    private boolean hasHint;					// Hinted Token visible
+    private boolean hasHint;
     
     /** The coordinate of the hint . */
-    private int hintCol, hintRow;				// Coordinates of hint token
+    private int hintCol, hintRow;
     
     /** The hint token. */
     private Token hintToken;
@@ -192,7 +192,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Calculate metrics.
+     * Calculate metrics of the board.
      */
     public void calculateMetrics() {
         cols = board.getWidth();
@@ -205,9 +205,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Gets the column number.
+     * Gets the column number that pointer is under.
      *
-     * @return the column number
+     * @return the column number that pointer is under
      */
     public int getColumnNumber() {
         int column = -1;        // selected column
@@ -261,12 +261,12 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Highlight connected.
+     * Highlight connected based on coordinates.
      *
-     * @param col1 the col1
-     * @param row1 the row1
-     * @param col2 the col2
-     * @param row2 the row2
+     * @param col1 the col1 coordinate
+     * @param row1 the row1 coordinate
+     * @param col2 the col2 coordinate
+     * @param row2 the row2 coordinate
      * @param numTokens the num tokens
      */
     public void highlightConnected(int col1, int row1, 
@@ -283,9 +283,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
 
 
     /**
-     * Sets the input.
+     * Sets the input token.
      *
-     * @param token the new input
+     * @param token the new input token
      */
     public void setInput(Token token) {
         input = token;
@@ -328,7 +328,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Paint the token placed on the board.
+     * Paint the tokens placed on the board.
      *
      * @param g2 graphic 2d object
      */
@@ -409,7 +409,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     /**
      * Paint input token.
      *
-     * @param g2 the g2
+     * @param g2 the graphic 2d object
      */
     private void paintInputToken(Graphics2D g2) {
         if (input != null && actions.isEmpty())
@@ -419,7 +419,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     /**
      * Highlight selected column.
      *
-     * @param g2 graphic 2d object
+     * @param g2 the graphic 2d object
      */
     private void paintColumnHighlight(Graphics2D g2) {
         int col = getColumnNumber();
@@ -433,7 +433,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     /**
      * Paint action token.
      *
-     * @param g2 the g2
+     * @param g2 tthe graphic 2d object
      */
     private void paintActionToken(Graphics2D g2) {
         BoardAction action;     // A polled action to draw
@@ -522,44 +522,13 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
             listener.columnSelected(column);
         }
     };
-
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
-     */
+    
     public void mouseDragged(MouseEvent e) {};
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-     */
     public void mouseEntered(MouseEvent e) {};
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-     */
     public void mouseExited(MouseEvent e) {};
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
-     */
     public void mousePressed(MouseEvent e) {};
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-     */
     public void mouseReleased(MouseEvent e) {};
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.ComponentListener#componentHidden(java.awt.event.ComponentEvent)
-     */
     public void componentHidden(ComponentEvent e) {};
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.ComponentListener#componentMoved(java.awt.event.ComponentEvent)
-     */
     public void componentMoved(ComponentEvent e) {};
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.ComponentListener#componentShown(java.awt.event.ComponentEvent)
-     */
     public void componentShown(ComponentEvent e) {};
 }
