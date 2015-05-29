@@ -7,18 +7,17 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+// TODO: Auto-generated Javadoc
 /**
- * Displays information about the game
+ * Displays information about the game.
  */
 public class InfoPanel extends JPanel {
 	
-	/**
-	 * Displays the current status of the game
-	 */
+	/** Displays the current status of the game. */
 	private JLabel statusLabel;
 	
 	/**
-	 * Creates a new InfoPanel
+	 * Creates a new InfoPanel.
 	 */
 	public InfoPanel() {
 		// Set panel properties
@@ -43,14 +42,17 @@ public class InfoPanel extends JPanel {
     }
 
 	/**
-	 * Sets the preferred size for this panel
+	 * Sets the preferred size for this panel.
+	 *
+	 * @return the preferred size
 	 */
 	public Dimension getPreferredSize() {
         return new Dimension(500, 50);
     }
 	
 	/**
-	 * Changes the text of the status label
+	 * Changes the text of the status label.
+	 *
 	 * @param text new text to display for the label
 	 */
 	public void setStatusLabel(String text) {
@@ -58,7 +60,8 @@ public class InfoPanel extends JPanel {
 	}
 	
 	/**
-	 * Changes the foreground color of the status label
+	 * Changes the foreground color of the status label.
+	 *
 	 * @param color new color of the label
 	 */
 	public void setStatusLabelColor(Color color) {

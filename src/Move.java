@@ -1,10 +1,18 @@
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Move.
+ */
 public class Move {
 	
+	/** The column. */
 	private int column;
+	
+	/** The token. */
 	private Token token;
 
 	/**
-	 * Default constructor to set a move
+	 * Default constructor to set a move.
+	 *
 	 * @param column the column position on the board
 	 * @param token the player token to place on the board
 	 */
@@ -14,7 +22,8 @@ public class Move {
 	}
 	
 	/**
-	 * Method to return the column for the Move
+	 * Method to return the column for the Move.
+	 *
 	 * @return integer column position in the board for the Move
 	 */
 	public int getColumn() {
@@ -22,7 +31,8 @@ public class Move {
 	}
 	
 	/**
-	 * Method to return the Token used in the Move
+	 * Method to return the Token used in the Move.
+	 *
 	 * @return Token used in the Move
 	 */
 	public Token getToken() {

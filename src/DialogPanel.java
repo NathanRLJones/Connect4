@@ -4,13 +4,25 @@ import java.util.*;
 import javax.swing.*;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DialogPanel.
+ */
 class DialogPanel extends JLayeredPane {
 
+    /** The base panel. */
     private Component basePanel;
+    
+    /** The dialog pane. */
     private Component dialogPane;
+    
+    /** The glass pane. */
     private Component glassPane;
 
     
+    /**
+     * Instantiates a new dialog panel.
+     */
     public DialogPanel () {
         super();
         setOpaque(false);
@@ -33,6 +45,12 @@ class DialogPanel extends JLayeredPane {
         glassPane.addMouseMotionListener(new MouseMotionAdapter(){});
     }
 
+    /**
+     * Sets the panels.
+     *
+     * @param basePanel the base panel
+     * @param dialogPane the dialog pane
+     */
     public void setPanels(Component basePanel, Component dialogPane) {
         this.basePanel = basePanel;
         this.dialogPane = dialogPane;        
@@ -49,6 +67,9 @@ class DialogPanel extends JLayeredPane {
         setPreferredSize(size);
     }
 
+    /**
+     * Resize panels.
+     */
     private void resizePanels() {
         basePanel.setSize(new Dimension(getWidth(), getHeight()));
         Dimension size = dialogPane.getPreferredSize();
@@ -62,11 +83,17 @@ class DialogPanel extends JLayeredPane {
         validate();
     }
     
+    /**
+     * Show dialog.
+     */
     public void showDialog(){
     	dialogPane.setVisible(true);
         glassPane.setVisible(true);
     }
     
+    /**
+     * Hide dialog.
+     */
     public void hideDialog(){
     	dialogPane.setVisible(false);
         glassPane.setVisible(false);

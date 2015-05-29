@@ -6,37 +6,85 @@ import java.awt.geom.*;
 import java.util.*;
 import javax.swing.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BoardPanel.
+ */
 public class BoardPanel extends JPanel implements MouseMotionListener,
                                                   MouseListener,
                                                   ComponentListener,
                                                   AnimationListener {
 
+    /** The actions. */
     private LinkedList<BoardAction> actions;    // Actions queue
+    
+    /** The listener. */
     private BoardListener listener;             // Board listener
+    
+    /** The animation. */
     private Animation animation;                // Animation controller
+    
+    /** The board. */
     private Board board;                        // Board state
+    
+    /** The input. */
     private Token input;                        // Token to be slotted
+    
+    /** The input x. */
     private int inputX;                         // X coordinate of input
+    
+    /** The cols. */
     private int cols;                           // Number of columns
+    
+    /** The rows. */
     private int rows;                           // Number of rows
+    
+    /** The token size. */
     private int tokenSize;                      // Token size pixels
+    
+    /** The width. */
     private int width;                          // Board width pixel
+    
+    /** The height. */
     private int height;                         // Board height pixels
+    
+    /** The x. */
     private int x;                              // Board X coordinate
+    
+    /** The y. */
     private int y;                              // Board Y coordinate
+    
+    /** The hl col1. */
     private int hlCol1;                         // Hightlight col1
+    
+    /** The hl row1. */
     private int hlRow1;                         // Hightlight row1
+    
+    /** The hl col2. */
     private int hlCol2;                         // Hightlight col2
+    
+    /** The hl row2. */
     private int hlRow2;                         // Hightlight row2
+    
+    /** The tokens to win. */
     private int tokensToWin;					// Number of winning tokens
+    
+    /** The has highlight. */
     private boolean hasHighlight;               // Hightlight visible
     
+    /** The has hint. */
     private boolean hasHint;					// Hinted Token visible
+    
+    /** The hint row. */
     private int hintCol, hintRow;				// Coordinates of hint token
+    
+    /** The hint token. */
     private Token hintToken;
     
 	/**
-	 * Constructor for a panel
+	 * Constructor for a panel.
+	 *
+	 * @param listener the listener
 	 */
 	public BoardPanel(BoardListener listener) {
         super();
@@ -51,7 +99,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Setup the initial board size
+     * Setup the initial board size.
+     *
      * @param width width of the board
      * @param height height of the board
      */
@@ -67,16 +116,24 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Set the default size of the panel
+     * Set the default size of the panel.
+     *
+     * @return the preferred size
      */
 	public Dimension getPreferredSize() {
         return new Dimension(500,500);
     }
 
+    /* (non-Javadoc)
+     * @see AnimationListener#newFrame()
+     */
     public void newFrame() {
         repaint();
     }
 
+    /* (non-Javadoc)
+     * @see AnimationListener#lastFrame()
+     */
     public void lastFrame() {
         BoardAction action = actions.poll();
         String name = action.getName();
@@ -103,7 +160,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
 	/**
-	 * Method to paint the board on the screen
+	 * Method to paint the board on the screen.
+	 *
+	 * @param g the g
 	 */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -120,6 +179,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
 
     }
 
+    /**
+     * Calculate metrics.
+     */
     public void calculateMetrics() {
         cols = board.getWidth();
         rows = board.getHeight();
@@ -130,6 +192,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         y = ((getHeight() - height - tokenSize)/2) + tokenSize;
     }
 
+    /**
+     * Gets the column number.
+     *
+     * @return the column number
+     */
     public int getColumnNumber() {
         int column = -1;        // selected column
         int relX = inputX - x;  // calculate relative input x coordinate
@@ -139,7 +206,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Place token on the board
+     * Place token on the board.
+     *
      * @param column column selected by player
      * @param token token to be placed on the board
      */
@@ -151,7 +219,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Place a hint on the board
+     * Place a hint on the board.
+     *
      * @param column column selected by player
      * @param token token to be placed on the board
      */
@@ -165,7 +234,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Remove token from the board
+     * Remove token from the board.
+     *
      * @param column column selected by player
      * @param token token to be placed on the board
      */
@@ -178,6 +248,15 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         }
     }
 
+    /**
+     * Highlight connected.
+     *
+     * @param col1 the col1
+     * @param row1 the row1
+     * @param col2 the col2
+     * @param row2 the row2
+     * @param numTokens the num tokens
+     */
     public void highlightConnected(int col1, int row1, 
                                    int col2, int row2, int numTokens) {
 
@@ -191,12 +270,18 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
 
+    /**
+     * Sets the input.
+     *
+     * @param token the new input
+     */
     public void setInput(Token token) {
         input = token;
     }
 
     /**
-     * Paint the board on screen
+     * Paint the board on screen.
+     *
      * @param g2 graphic 2d object
      */
     private void paintBoard(Graphics2D g2) {
@@ -231,7 +316,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Paint the token placed on the board
+     * Paint the token placed on the board.
+     *
      * @param g2 graphic 2d object
      */
     private void paintPlacedTokens(Graphics2D g2) {
@@ -308,13 +394,19 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
 
+    /**
+     * Paint input token.
+     *
+     * @param g2 the g2
+     */
     private void paintInputToken(Graphics2D g2) {
         if (input != null && actions.isEmpty())
             paintToken(g2, input, inputX-x-(tokenSize/2), -tokenSize);
     }
 
     /**
-     * Highlight selected column
+     * Highlight selected column.
+     *
      * @param g2 graphic 2d object
      */
     private void paintColumnHighlight(Graphics2D g2) {
@@ -326,6 +418,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         }
     }
 
+    /**
+     * Paint action token.
+     *
+     * @param g2 the g2
+     */
     private void paintActionToken(Graphics2D g2) {
         BoardAction action;     // A polled action to draw
         Token token;            // Token
@@ -352,7 +449,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Set the colour of the tokens
+     * Set the colour of the tokens.
+     *
      * @param g2 graphic 2d object
      * @param token selected token
      * @param x x size of the token
@@ -365,6 +463,14 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         g2.fill(getTokenShape(x, y, 0.20));
     }
 
+    /**
+     * Gets the token shape.
+     *
+     * @param x the x
+     * @param y the y
+     * @param pad the pad
+     * @return the token shape
+     */
     private Ellipse2D getTokenShape(int x, int y, double pad) {
         Ellipse2D circle = new Ellipse2D.Double();
         int diff = (int)(tokenSize * pad);
@@ -373,16 +479,25 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         return circle;
     } 
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ComponentListener#componentResized(java.awt.event.ComponentEvent)
+     */
     public void componentResized(ComponentEvent e) {
     	calculateMetrics();
     	repaint();
     };
     
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+     */
     public void mouseMoved(MouseEvent e) {
         inputX = e.getX();
         repaint();
     }
     
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+     */
     public void mouseClicked(MouseEvent e) {
         // non interactive state
         if (!actions.isEmpty() || input == null) 
@@ -396,12 +511,43 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
         }
     };
 
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+     */
     public void mouseDragged(MouseEvent e) {};
+    
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+     */
     public void mouseEntered(MouseEvent e) {};
+    
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+     */
     public void mouseExited(MouseEvent e) {};
+    
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+     */
     public void mousePressed(MouseEvent e) {};
+    
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+     */
     public void mouseReleased(MouseEvent e) {};
+    
+    /* (non-Javadoc)
+     * @see java.awt.event.ComponentListener#componentHidden(java.awt.event.ComponentEvent)
+     */
     public void componentHidden(ComponentEvent e) {};
+    
+    /* (non-Javadoc)
+     * @see java.awt.event.ComponentListener#componentMoved(java.awt.event.ComponentEvent)
+     */
     public void componentMoved(ComponentEvent e) {};
+    
+    /* (non-Javadoc)
+     * @see java.awt.event.ComponentListener#componentShown(java.awt.event.ComponentEvent)
+     */
     public void componentShown(ComponentEvent e) {};
 }

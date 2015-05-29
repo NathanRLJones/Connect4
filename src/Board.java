@@ -1,15 +1,25 @@
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Board.
+ */
 public class Board implements BoardInterface{
 	
+	/** The columns. */
 	private ArrayList<ArrayList<Token>> columns;
+	
+	/** The height. */
 	private int height;
+	
+	/** The width. */
 	private int width;
 
 	/**
-	 * Default constructor to create an empty board
-	 * @param height the height of the board
+	 * Default constructor to create an empty board.
+	 *
 	 * @param width the width of the board
+	 * @param height the height of the board
 	 */
 	public Board(int width, int height) {
 		columns = new ArrayList<ArrayList<Token>>();
@@ -23,10 +33,11 @@ public class Board implements BoardInterface{
 	}
 
 	/**
-	 * Method to get the token located in the given position
+	 * Method to get the token located in the given position.
+	 *
 	 * @param column the column position on the board
 	 * @param row the row position on the board
-	 * @return the token in the given row and column. 
+	 * @return the token in the given row and column.
 	 * 		   null if the given position is empty or outside the board size limit
 	 */
 	public Token getToken(int column, int row) {
@@ -36,7 +47,8 @@ public class Board implements BoardInterface{
 	}
 
 	/**
-	 * Method to place token on the board if column is not full
+	 * Method to place token on the board if column is not full.
+	 *
 	 * @param column the column position on the board
 	 * @param token the player token to place on the board
 	 */
@@ -48,7 +60,8 @@ public class Board implements BoardInterface{
 	}
 	
 	/**
-	 * Method to remove token from the board
+	 * Method to remove token from the board.
+	 *
 	 * @param column the column position on the board
 	 */
 	public void removeToken(int column) {
@@ -57,7 +70,8 @@ public class Board implements BoardInterface{
 	}
 
 	/**
-	 * Method to check if the column is full
+	 * Method to check if the column is full.
+	 *
 	 * @param column the column position on the board
 	 * @return true if the level of the stacked token is
 	 * 		   is equal to the height of the board
@@ -66,24 +80,30 @@ public class Board implements BoardInterface{
 	public boolean isColumnFull(int column) {
 		return (getColumnLevel(column) == height);
 	}
+	
 	/**
-	 * Method to return the column level
+	 * Method to return the column level.
+	 *
 	 * @param column integer position on the board
 	 * @return integer height of the column
 	 */
 	public int getColumnLevel(int column) {
 		return (isValidColumn(column) ? columns.get(column).size() : 0);
 	}
+	
 	/**
-	 * Method to check if the column is valid
+	 * Method to check if the column is valid.
+	 *
 	 * @param column the column position on the board
 	 * @return true if the column number given is valid for the board and false otherwise
 	 */
 	public boolean isValidColumn(int column) {
 		return (column >= 0 && column < width);
 	}
+	
 	/**
-	 * Method to check if the space at the given column and row is valid in the board
+	 * Method to check if the space at the given column and row is valid in the board.
+	 *
 	 * @param column integer position on the board
 	 * @param row integer position on the board
 	 * @return true if the space is valid and false otherwise
@@ -92,32 +112,42 @@ public class Board implements BoardInterface{
 		return (isValidColumn(column) && 
 				row >= 0 && row < columns.get(column).size());
 	}
+	
 	/**
-	 * Method to return the height of the board
+	 * Method to return the height of the board.
+	 *
 	 * @return integer height of the board
 	 */
 	@Override
 	public int getHeight(){
 		return height;
 	}
+	
 	/**
-	 * Method to return the width of the board
+	 * Method to return the width of the board.
+	 *
 	 * @return integer width of the board
 	 */
 	@Override
 	public int getWidth(){
 		return width;
 	}
+	
 	/**
-	 * Method to check if the space at given column and row is already occupied
+	 * Method to check if the space at given column and row is already occupied.
+	 *
+	 * @param column the column
+	 * @param row the row
 	 * @return true if the space is occupied and false if free
 	 */
 	@Override
 	public boolean isSpaceTaken(int column, int row) {
 		return (row < columns.get(column).size());
 	}
+	
 	/**
-	 * Method to check if the token in the given column and row belongs to the player
+	 * Method to check if the token in the given column and row belongs to the player.
+	 *
 	 * @param player Player for checking the ownership of the token
 	 * @param column integer column position of the token in the board
 	 * @param row integer row position of the token in the board
@@ -131,8 +161,10 @@ public class Board implements BoardInterface{
 		}
 		return false;
 	}
+	
 	/**
-	 * Method to return the Player who is the owner of the token located in the given column and row
+	 * Method to return the Player who is the owner of the token located in the given column and row.
+	 *
 	 * @param column integer column position of the token in the board
 	 * @param row integer row position of the token in the board
 	 * @return Player who owns the token and null if there are no tokens in the given position
@@ -143,8 +175,10 @@ public class Board implements BoardInterface{
 		if(token == null) return null;
 		return token.getOwner();
 	}
+	
 	/**
-	 * Method to check if the board is symmetric
+	 * Method to check if the board is symmetric.
+	 *
 	 * @return true if the board is symmetric and false otherwise
 	 */
 	public boolean isSymmetric(){
@@ -155,8 +189,10 @@ public class Board implements BoardInterface{
 		}
 		return true;
 	}
+	
 	/**
-	 * Method to check if two given columns in a board are equal
+	 * Method to check if two given columns in a board are equal.
+	 *
 	 * @param col1 integer position of the column in the board
 	 * @param col2 integer position of the column in the board
 	 * @return true if all the corresponding tokens in the two columns are located in equal positions and false otherwise

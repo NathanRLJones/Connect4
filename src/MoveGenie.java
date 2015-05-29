@@ -1,19 +1,35 @@
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MoveGenie.
+ */
 public class MoveGenie {
 
+	/** The board. */
 	private static Board board;
+	
+	/** The all players. */
 	private static List<Player> allPlayers;
+	
+	/** The no of players. */
 	private static int noOfPlayers;
+	
+	/** The ai turn ind. */
 	private static int aiTurnInd;
+	
+	/** The tokens to win. */
 	private static int tokensToWin;
+	
+	/** The game end score. */
 	private static int gameEndScore;
 
 	/**
-	 * Function to calculate the best Move for the Player target
+	 * Function to calculate the best Move for the Player target.
+	 *
 	 * @param currBoard BoardInterface showing the current state of the board
-	 * @param maxDepth integer value limiting the depth of the search 
+	 * @param maxDepth integer value limiting the depth of the search
 	 * @param players List of Players in the order of the play
 	 * @param target Player for which the best Move will be calculated
 	 * @param toWin integer number of tokens in a line required for a Player to win
@@ -59,7 +75,8 @@ public class MoveGenie {
 	}
 	
 	/**
-	 * Function to calculate individual scores for each of the Players
+	 * Function to calculate individual scores for each of the Players.
+	 *
 	 * @return ArrayList<Integer> containing integer value scores for each of the Players
 	 */
 	private static ArrayList<Integer> calculateScore() {
@@ -315,8 +332,10 @@ public class MoveGenie {
 		
 		return scores;
 	}
+	
 	/**
-	 * Function to return a list of scores for each Players based on minmax search algorithm
+	 * Function to return a list of scores for each Players based on minmax search algorithm.
+	 *
 	 * @param depth integer value limiting the depth of search
 	 * @param currTurn Player for which score is chosen at the current tree level
 	 * @return ArrayList<Integer> of scores for each Players at the given depth
@@ -388,7 +407,8 @@ public class MoveGenie {
 	}
 
 	/**
-	 * Function to return a list of scores for each Players based on alpha-beta search algorithm
+	 * Function to return a list of scores for each Players based on alpha-beta search algorithm.
+	 *
 	 * @param alpha probable minimum integer score
 	 * @param beta probable maximum integer score
 	 * @param depth integer value limiting the depth of search
@@ -467,7 +487,8 @@ public class MoveGenie {
 	}
 	
 	/**
-	 * Returns the score for the line of tokens given the number of the tokens
+	 * Returns the score for the line of tokens given the number of the tokens.
+	 *
 	 * @param noOfTokens integer number of tokens in a line
 	 * @return integer score
 	 */
@@ -476,7 +497,8 @@ public class MoveGenie {
 	}
 	
 	/**
-	 * Returns a copy of the BoardInterface
+	 * Returns a copy of the BoardInterface.
+	 *
 	 * @param currBoard BoardInterface
 	 * @return Board copy of the currBoard
 	 */

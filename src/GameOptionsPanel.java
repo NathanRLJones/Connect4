@@ -3,14 +3,25 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GameOptionsPanel.
+ */
 public class GameOptionsPanel extends JPanel{
 
+	/** The board sizes. */
 	private JComboBox<String> boardSizes;
+	
+	/** The win in a rows. */
 	private JComboBox<Integer> winInARows;
+    
+    /** The num of players. */
     private JComboBox<Integer> numOfPlayers;
 
 	/**
-	 * Create game option panel for new game
+	 * Create game option panel for new game.
+	 *
+	 * @param actionListener the action listener
 	 */
     public GameOptionsPanel(ActionListener actionListener){
         super(new GridBagLayout());
@@ -69,12 +80,18 @@ public class GameOptionsPanel extends JPanel{
 
 }
 
+    /**
+     * Gets the number of players.
+     *
+     * @return the number of players
+     */
     public int getNumberOfPlayers() {
         return (int) numOfPlayers.getSelectedItem();
     }
 
 	/**
-	 * Get number of tokens to win from the user
+	 * Get number of tokens to win from the user.
+	 *
 	 * @return number of tokens to win
 	 */
 	public int getTokensToWin(){
@@ -82,7 +99,8 @@ public class GameOptionsPanel extends JPanel{
 	}
 
 	/**
-	 * Get board size select by the user
+	 * Get board size select by the user.
+	 *
 	 * @return selected board size by the user
 	 */
 	public int[] getBoardSize(){
