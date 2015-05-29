@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * The Class ButtonPanel.
  * Panel at the bottom of the window for buttons.
  */
 public class ButtonPanel extends JPanel{

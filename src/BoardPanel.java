@@ -15,67 +15,67 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
                                                   ComponentListener,
                                                   AnimationListener {
 
-    /** The actions. */
+    /** The list of actions queue. */
     private LinkedList<BoardAction> actions;    // Actions queue
     
-    /** The listener. */
+    /** The board listener. */
     private BoardListener listener;             // Board listener
     
-    /** The animation. */
+    /** The animation controller. */
     private Animation animation;                // Animation controller
     
-    /** The board. */
+    /** The board state. */
     private Board board;                        // Board state
     
-    /** The input. */
+    /** The token to be placed. */
     private Token input;                        // Token to be slotted
     
-    /** The input x. */
+    /** The coordinate of input x. */
     private int inputX;                         // X coordinate of input
     
-    /** The cols. */
+    /** The number of cols. */
     private int cols;                           // Number of columns
     
-    /** The rows. */
+    /** The number of rows. */
     private int rows;                           // Number of rows
     
-    /** The token size. */
+    /** The token size pixels. */
     private int tokenSize;                      // Token size pixels
     
-    /** The width. */
+    /** The width of the board. */
     private int width;                          // Board width pixel
     
-    /** The height. */
+    /** The height of the board. */
     private int height;                         // Board height pixels
     
-    /** The x. */
+    /** The x coordinate of the board. */
     private int x;                              // Board X coordinate
     
-    /** The y. */
+    /** The y coordinate of the board. */
     private int y;                              // Board Y coordinate
     
-    /** The hl col1. */
+    /** The highlight of col1. */
     private int hlCol1;                         // Hightlight col1
     
-    /** The hl row1. */
+    /** The highlight of row1. */
     private int hlRow1;                         // Hightlight row1
     
-    /** The hl col2. */
+    /** The highlight of col2. */
     private int hlCol2;                         // Hightlight col2
     
-    /** The hl row2. */
+    /** The highlight of row2. */
     private int hlRow2;                         // Hightlight row2
     
-    /** The tokens to win. */
+    /** The number of tokens to win. */
     private int tokensToWin;					// Number of winning tokens
     
-    /** The has highlight. */
+    /** The visible highlight. */
     private boolean hasHighlight;               // Hightlight visible
     
-    /** The has hint. */
+    /** The visible hint. */
     private boolean hasHint;					// Hinted Token visible
     
-    /** The hint row. */
+    /** The coordinate of the hint . */
     private int hintCol, hintRow;				// Coordinates of hint token
     
     /** The hint token. */
@@ -464,7 +464,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener,
     }
 
     /**
-     * Gets the token shape.
+     * Get the token shape.
      *
      * @param x the x
      * @param y the y
